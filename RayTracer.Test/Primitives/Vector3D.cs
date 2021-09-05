@@ -17,10 +17,12 @@ namespace RayTracer.Test
 
         public static IEnumerable<TestCaseData> EqualTestData()
         {
-            yield return new TestCaseData(1, 2, 3, 1, 2, 3, true);
-            yield return new TestCaseData(1, 2, 3, 4, 2, 3, false);
-            yield return new TestCaseData(1, 2, 3, 1, 4, 3, false);
-            yield return new TestCaseData(1, 2, 3, 1, 2, 4, false);
+            return new[] {
+                new TestCaseData(1, 2, 3, 1, 2, 3, true),
+                new TestCaseData(1, 2, 3, 4, 2, 3, false),
+                new TestCaseData(1, 2, 3, 1, 4, 3, false),
+                new TestCaseData(1, 2, 3, 1, 2, 4, false)
+            };
         }
 
         [TestCaseSource(nameof(EqualTestData))]
@@ -53,7 +55,7 @@ namespace RayTracer.Test
             Vector3D vector1 = new Vector3D(x1, y1, z1);
             Vector3D vector2 = new Vector3D(x2, y2, z2);
             Vector3D vector3 = new Vector3D(x3, y3, z3);
-            Assert.IsTrue(vector1 + vector2 == vector3);
+            Assert.That(vector1 + vector2, Is.EqualTo(vector3));
         }
 
         [TestCase(5, 6, 7, 1, 3, 5, 4, 3, 2)]
@@ -62,12 +64,75 @@ namespace RayTracer.Test
             Vector3D vector1 = new Vector3D(x1, y1, z1);
             Vector3D vector2 = new Vector3D(x2, y2, z2);
             Vector3D vector3 = new Vector3D(x3, y3, z3);
-            Assert.IsTrue(vector1 - vector2 == vector3);
+            Assert.That(vector1 - vector2, Is.EqualTo(vector3));
         }
 
-        public void MultiplyDoubleOperator()
+        public static IEnumerable<TestCaseData> MultiplyDoubleTestData()
         {
+            return new[] {
+                new TestCaseData(2, 1, 2, 3, 2, 4, 6)
+            };
+        }
 
+        [TestCaseSource(nameof(MultiplyDoubleTestData))]
+        public void MultiplyDoubleFirstOperator(double a, double x1, double y1, double z1, double x2, double y2, double z2)
+        {
+            Vector3D vector1 = new Vector3D(x1, y1, z1);
+            Vector3D vector2 = new Vector3D(x2, y2, z2);
+            Assert.That(a * vector1, Is.EqualTo(vector2));
+        }
+
+        [TestCaseSource(nameof(MultiplyDoubleTestData))]
+        public void MultiplyDoubleSecondOperator(double a, double x1, double y1, double z1, double x2, double y2, double z2)
+        {
+            Vector3D vector1 = new Vector3D(x1, y1, z1);
+            Vector3D vector2 = new Vector3D(x2, y2, z2);
+            Assert.That(vector1 * a, Is.EqualTo(vector2));
+        }
+
+        [TestCase(4, 8, 12, 4, 1, 2, 3)]
+        public void MultiplyDivideDoubleOperator(double x1, double y1, double z1, double a, double x2, double y2, double z2)
+        {
+            Vector3D vector1 = new Vector3D(x1, y1, z1);
+            Vector3D vector2 = new Vector3D(x2, y2, z2);
+            Assert.That(vector1 / a, Is.EqualTo(vector2));
+        }
+
+        [TestCase(1, 0, 0, 1)]
+        [TestCase(0, 1, 0, 1)]
+        [TestCase(0, 0, 1, 1)]
+        [TestCase(-1, 0, 0, 1)]
+        [TestCase(0, -1, 0, 1)]
+        [TestCase(0, 0, -1, 1)]
+        [TestCase(1, 1, 1, 1.7320508075688772)]
+        [TestCase(-1, -1, -1, 1.7320508075688772)]
+        public void Length(double x, double y, double z, double expectedLength)
+        {
+            Vector3D vector = new Vector3D(x, y, z);
+            Assert.That(vector.Length, Is.EqualTo(expectedLength));
+        }
+
+        [TestCase(1, 0, 0, 1)]
+        [TestCase(0, 1, 0, 1)]
+        [TestCase(0, 0, 1, 1)]
+        [TestCase(-1, 0, 0, 1)]
+        [TestCase(0, -1, 0, 1)]
+        [TestCase(0, 0, -1, 1)]
+        [TestCase(1, 1, 1, 3)]
+        [TestCase(-1, -1, -1, 3)]
+        public void SquaredLength(double x, double y, double z, double expectedSquaredLength)
+        {
+            Vector3D vector = new Vector3D(x, y, z);
+            Assert.That(vector.SquaredLength, Is.EqualTo(expectedSquaredLength));
+        }
+
+        [TestCase(1, 2, 3, 2, 3, 4, 20)]
+        [TestCase(1, 2, 3, 2, 3, -4, -4)]
+        public void Dot(double x1, double y1, double z1, double x2, double y2, double z2, double expectedDotProduct)
+        {
+            Vector3D vector1 = new Vector3D(x1, y1, z1);
+            Vector3D vector2 = new Vector3D(x2, y2, z2);
+            Assert.That(vector1.Dot(vector2), Is.EqualTo(expectedDotProduct));
         }
     }
 }

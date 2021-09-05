@@ -7,17 +7,20 @@ namespace RayTracer.Primitives
     /// A 3D vector represented by an X, Y and Z coordinate.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// This is a struct instead of a class due to its small size (technically over the 16 byte rule of thumb, however), immutability and use as a single value. It is inspired by:
-    /// </para>
-    /// <para>
-    /// <list type="number">
-    /// <item>
-    /// <description>
-    /// Unity's Vector3 class: https://docs.unity3d.com/ScriptReference/Vector3.html 
-    /// </description>
-    /// </item>
-    /// </para>
+    ///     <para>
+    ///         This is a struct instead of a class due to its small size (technically over the 16 byte rule of thumb, however), immutability and use as a single value. It is inspired by:
+    ///     </para>
+    ///     <para>
+    ///     <list type="number">
+    ///         <item>
+    ///             <description>
+    ///                 Unity's Vector3 class: https://docs.unity3d.com/ScriptReference/Vector3.html 
+    ///             </description>
+    ///         </item>
+    ///     </para>
+    ///     <para>
+    ///         Avoid overriding "*" for dot or cross products to avoid confusion.
+    ///     </para>
     /// </remarks>
     public struct Vector3D : IEquatable<Vector3D>
     {
@@ -41,6 +44,7 @@ namespace RayTracer.Primitives
 
         public bool Equals(Vector3D other)
         {
+            // TODO: Consider epsilon
             return X == other.X &&
                    Y == other.Y && 
                    Z == other.Z;
@@ -79,6 +83,31 @@ namespace RayTracer.Primitives
         public static Vector3D operator *(double a, Vector3D v)
         {
             return new Vector3D(a * v.X, a * v.Y, a * v.Z);
+        }
+
+        public static Vector3D operator *(Vector3D v, double a)
+        {
+            return new Vector3D(a * v.X, a * v.Y, a * v.Z);
+        }
+
+        public static Vector3D operator /(Vector3D v, double a)
+        {
+            return new Vector3D(v.X / a, v.Y / a, v.Z / a);
+        }
+
+        public double Length()
+        {
+            return Math.Sqrt(X * X + Y * Y + Z * Z);
+        }
+
+        public double SquaredLength()
+        {
+            return X * X + Y * Y + Z * Z;
+        }
+
+        public double Dot(Vector3D v)
+        {
+            return X * v.X + Y * v.Y + Z * v.Z;
         }
     }
 }
