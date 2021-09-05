@@ -17,6 +17,11 @@ namespace RayTracer.Primitives
     ///                 Unity's Vector3 class: https://docs.unity3d.com/ScriptReference/Vector3.html 
     ///             </description>
     ///         </item>
+    ///         <item>
+    ///             <description>
+    ///                 p26 of "Ray Tracing fromm the Ground Up" by Kevin Suffern (2007)
+    ///             </description>
+    ///         </item>         
     ///     </para>
     ///     <para>
     ///         Avoid overriding "*" for dot or cross products to avoid confusion.
@@ -108,6 +113,16 @@ namespace RayTracer.Primitives
         public double Dot(Vector3D v)
         {
             return X * v.X + Y * v.Y + Z * v.Z;
+        }
+
+        public Vector3D Cross(Vector3D v)
+        {
+            return new Vector3D(Y * v.Z - Z * v.Y, Z * v.X - X * v.Z, X * v.Y - Y * v.X);
+        }
+
+        public static Vector3D operator -(Vector3D v)
+        {
+            return new Vector3D(-v.X, -v.Y, -v.Z);
         }
     }
 }
