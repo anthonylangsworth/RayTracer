@@ -154,5 +154,23 @@ namespace RayTracer.Test
             Vector3D vector2 = new Vector3D(x2, y2, z2);
             Assert.That(-vector1, Is.EqualTo(vector2));
         }
+
+        [TestCase(0, 0, 0)]
+        [TestCase(1, 2, 3)]
+        [TestCase(-1, -2, -3)]
+        public void Normalized(double x1, double y1, double z1)
+        {
+            Vector3D vector1 = new Vector3D(x1, y1, z1);
+            Vector3D normalizedVector = vector1.Normalized();
+            double newLength = normalizedVector.Length();
+            if (newLength == 0)
+            {
+                Assert.That(normalizedVector, Is.EqualTo(new Vector3D(0, 0, 0)));
+            }
+            else
+            {
+                Assert.That(newLength, Is.EqualTo(1));
+            }
+        }
     }
 }

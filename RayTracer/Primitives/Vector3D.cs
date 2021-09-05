@@ -124,5 +124,18 @@ namespace RayTracer.Primitives
         {
             return new Vector3D(-v.X, -v.Y, -v.Z);
         }
+
+        /// <summary>
+        /// Return the vector with a length of 1. If the vector's length is zero, return a vector of 0, 0, 0.
+        /// </summary>
+        /// <returns>
+        /// The normalized vector.
+        /// </returns>
+        public Vector3D Normalized()
+        {
+            double length = Length();
+            Vector3D result = length != 0 ? this / length : new Vector3D(0, 0, 0);
+            return result;
+        }
     }
 }
