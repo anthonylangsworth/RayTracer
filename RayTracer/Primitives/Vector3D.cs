@@ -65,5 +65,20 @@ namespace RayTracer.Primitives
         {
             return $"x: {X}, y: {Y}, z:{Z}";
         }
+
+        public static Vector3D operator+(Vector3D v1, Vector3D v2)
+        {
+            return new Vector3D(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
+        }
+
+        public static Vector3D operator -(Vector3D v1, Vector3D v2)
+        {
+            return new Vector3D(v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z);
+        }
+
+        public static Vector3D operator *(double a, Vector3D v)
+        {
+            return new Vector3D(a * v.X, a * v.Y, a * v.Z);
+        }
     }
 }
