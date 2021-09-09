@@ -33,8 +33,9 @@ namespace RayTracer.Primitives
 
         public bool Equals(Point3D other)
         {
+            // TODO: Consider epsilon
             return X == other.X &&
-                   Y == other.Y && 
+                   Y == other.Y &&
                    Z == other.Z;
         }
 
@@ -43,19 +44,30 @@ namespace RayTracer.Primitives
             return HashCode.Combine(X, Y, Z);
         }
 
-        public static bool operator ==(Point3D left, Vector3D right)
+        public static bool operator ==(Point3D left, Point3D right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Point3D left, Vector3D right)
+        public static bool operator !=(Point3D left, Point3D right)
         {
             return !(left == right);
         }
 
         public override string? ToString()
         {
-            return $"x: {X}, y: {Y}, z:{Z}";
+            return $"x: {X}, y: {Y}, z: {Z}";
         }
+
+        public static Point3D operator +(Point3D point, Vector3D vector)
+        {
+            return new Point3D(point.X + vector.X, point.Y + vector.Y, point.Z + vector.Z);
+        }
+
+        public static Point3D operator +(Vector3D vector, Point3D point)
+        {
+            return new Point3D(point.X + vector.X, point.Y + vector.Y, point.Z + vector.Z);
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace RayTracer.Primitives
 {
     /// <summary>
-    /// A 3D vector represented by an X, Y and Z coordinate.
+    /// An immutable 3D vector represented by an X, Y and Z coordinate.
     /// </summary>
     /// <remarks>
     ///     <para>
@@ -51,7 +51,7 @@ namespace RayTracer.Primitives
         {
             // TODO: Consider epsilon
             return X == other.X &&
-                   Y == other.Y && 
+                   Y == other.Y &&
                    Z == other.Z;
         }
 
@@ -72,10 +72,10 @@ namespace RayTracer.Primitives
 
         public override string? ToString()
         {
-            return $"x: {X}, y: {Y}, z:{Z}";
+            return $"x: {X}, y: {Y}, z: {Z}";
         }
 
-        public static Vector3D operator+(Vector3D v1, Vector3D v2)
+        public static Vector3D operator +(Vector3D v1, Vector3D v2)
         {
             return new Vector3D(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
         }
@@ -131,7 +131,7 @@ namespace RayTracer.Primitives
         /// <returns>
         /// The normalized vector.
         /// </returns>
-        public Vector3D Normalized()
+        public Vector3D Normalize()
         {
             double length = Length();
             Vector3D result = length != 0 ? this / length : new Vector3D(0, 0, 0);

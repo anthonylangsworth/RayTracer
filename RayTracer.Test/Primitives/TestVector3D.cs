@@ -4,7 +4,7 @@ using RayTracer.Primitives;
 
 namespace RayTracer.Test
 {
-    public class Tests
+    public class TestVector3D
     {
         [TestCase(1, 2, 3)]
         public void Ctor(double x, double y, double z)
@@ -158,10 +158,10 @@ namespace RayTracer.Test
         [TestCase(0, 0, 0)]
         [TestCase(1, 2, 3)]
         [TestCase(-1, -2, -3)]
-        public void Normalized(double x1, double y1, double z1)
+        public void Normalize(double x1, double y1, double z1)
         {
             Vector3D vector1 = new Vector3D(x1, y1, z1);
-            Vector3D normalizedVector = vector1.Normalized();
+            Vector3D normalizedVector = vector1.Normalize();
             double newLength = normalizedVector.Length();
             if (newLength == 0)
             {
