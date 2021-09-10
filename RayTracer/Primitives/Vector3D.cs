@@ -8,7 +8,7 @@ namespace RayTracer.Primitives
     /// </summary>
     /// <remarks>
     ///     <para>
-    ///         This is a struct instead of a class due to its small size (technically over the 16 byte rule of thumb, however), immutability and use as a single value. It is inspired by:
+    ///         This is close to being a struct but it is too large.
     ///     </para>
     ///     <para>
     ///     <list type="number">
@@ -27,7 +27,7 @@ namespace RayTracer.Primitives
     ///         Avoid overriding "*" for dot or cross products to avoid confusion.
     ///     </para>
     /// </remarks>
-    public struct Vector3D : IEquatable<Vector3D>
+    public class Vector3D : IEquatable<Vector3D?>
     {
         public Vector3D(double x, double y, double z)
         {
@@ -47,10 +47,11 @@ namespace RayTracer.Primitives
             return obj is Vector3D d && Equals(d);
         }
 
-        public bool Equals(Vector3D other)
+        public bool Equals(Vector3D? other)
         {
             // TODO: Consider epsilon
-            return X == other.X &&
+            return !(other is null) &&
+                   X == other.X &&
                    Y == other.Y &&
                    Z == other.Z;
         }
