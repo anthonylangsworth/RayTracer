@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using RayTracer.Primitives;
 
-namespace RayTracer.Test
+namespace RayTracer.Test.Primitives
 {
     public class TestVector3D
     {

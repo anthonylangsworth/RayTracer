@@ -69,5 +69,35 @@ namespace RayTracer.Primitives
             return new Point3D(point.X + vector.X, point.Y + vector.Y, point.Z + vector.Z);
         }
 
+        public static Vector3D operator -(Point3D p1, Point3D p2)
+        {
+            return new Vector3D(p1.X - p2.X, p1.Y - p2.Y, p1.Z - p2.Z);
+        }
+
+        public static Point3D operator -(Point3D p, Vector3D v)
+        {
+            return new Point3D(p.X - v.X, p.Y - v.Y, p.Z - v.Z);
+        }
+
+        public double Distance(Point3D point)
+        {
+            return Math.Sqrt(
+                (X - point.X) * (X - point.X) +
+                (Y - point.Y) * (Y - point.Y) +
+                (Z - point.Z) * (Z - point.Z)
+            );
+        }
+
+        public static readonly Point3D Origin = new Point3D(0, 0, 0);
+
+        public static Point3D operator *(double d, Point3D point)
+        {
+            return new Point3D(d * point.X, d * point.Y, d * point.Z);
+        }
+
+        public static Point3D operator *(Point3D point, double d)
+        {
+            return new Point3D(d * point.X, d * point.Y, d * point.Z);
+        }
     }
 }
