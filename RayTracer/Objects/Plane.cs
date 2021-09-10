@@ -17,7 +17,7 @@ namespace RayTracer.Objects
 
         public override bool Hit(Ray ray, out double tmin, out ShadeRecord shadeRecord)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

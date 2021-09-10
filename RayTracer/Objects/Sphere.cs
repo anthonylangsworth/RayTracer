@@ -20,7 +20,7 @@ namespace RayTracer.Objects
 
         public double Radius { get; set; }
 
-        public override ShadeRecord? Hit(Ray ray, double tmin)
+        public override bool Hit(Ray ray, out double tmin, out ShadeRecord shadeRecord)
         {
             throw new NotImplementedException();
         }
