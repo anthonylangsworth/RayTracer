@@ -25,7 +25,7 @@ namespace RayTracer
         /// <summary>
         /// The default allowable variance. Use the same value as he Unity framework.
         /// </summary>
-        public const double DefaultEpsilon = 1e5;
+        public const double DefaultEpsilon = 1e-5;
 
         public DoubleEpsilonEqualityComparer(double epsilon = DefaultEpsilon)
         {

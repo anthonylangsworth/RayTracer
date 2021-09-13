@@ -126,11 +126,13 @@ namespace RayTracer.Test.Primitives
             };
         }
 
+        [TestCaseSource(nameof(MultiplyTestData))]
         public void MultiplyDoublePoint(double d, double x, double y, double z, double expectedX, double expectedY, double expectedZ)
         {
             Assert.That(d * new Point3D(x, y, z), Is.EqualTo(new Point3D(expectedX, expectedY, expectedZ)));
         }
 
+        [TestCaseSource(nameof(MultiplyTestData))]
         public void MultiplyPointDouble(double d, double x, double y, double z, double expectedX, double expectedY, double expectedZ)
         {
             Assert.That(new Point3D(x, y, z) * d, Is.EqualTo(new Point3D(expectedX, expectedY, expectedZ)));

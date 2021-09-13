@@ -9,11 +9,6 @@ namespace RayTracer.Objects
     {
         protected GeometricObject(Point3D location, Material material)
         {
-            if (material == null)
-            {
-                throw new ArgumentNullException(nameof(material));
-            }
-
             Location = location;
             Material = material;
         }
