@@ -34,6 +34,12 @@ namespace RayTracer.Test.Objects
                     1
                 ),
                 new TestCaseData(
+                    new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, -1)), // Vector inverted
+                    new Ray(new Point3D (0, 0, 1), new Vector3D(0, 0, -1)),
+                    true,
+                    1
+                ),
+                new TestCaseData(
                     new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, 1)),
                     new Ray(new Point3D (0, 0, 2), new Vector3D(0, 0, -1)),
                     true,
@@ -53,7 +59,7 @@ namespace RayTracer.Test.Objects
                 ),
                 new TestCaseData(
                     new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, 1)),
-                    new Ray(new Point3D (0, 0, 1), new Vector3D(0, 0, 1)),
+                    new Ray(new Point3D (0, 0, 1), new Vector3D(0, 0, 1)), // Missing
                     false,
                     double.NaN
                 )
