@@ -30,17 +30,10 @@ namespace RayTracer.Objects
         /// <param name="ray">
         /// The <see cref="Ray"/> to intersect.
         /// </param>
-        /// <param name="distance">
-        /// Receives the distance to the ray origin of the closest intersection to the 
-        /// <paramref name="ray"/>'s origin. The result is undefined if there is no intersection.
-        /// </param>
-        /// <param name="shadeRecord">
-        /// Receives a <see cref="ShadeRecord"/> with details on how to colour or shade that point.
-        /// The result is undefined if there is no intersection.
-        /// </param>
         /// <returns>
-        /// <c>true</c> if the ray intersects the object, <c>false</c> if not.
+        /// A <see cref="RayTracer.Hit"/> or <see cref="RayTracer.Miss"/> indicating whether the ray
+        /// hit or missed the object.
         /// </returns>
-        public abstract bool Hit(Ray ray, out double distance, out ShadeRecord? shadeRecord);
+        public abstract HitResult Hit(Ray ray);
     }
 }

@@ -45,11 +45,15 @@ namespace RayTracer.Test.Objects
         [TestCaseSource(nameof(HitTestCases))]
         public void Hit(Sphere sphere, Ray ray, bool expectedHit, double expectedDistance)
         {
-            bool hit = sphere.Hit(ray, out double distance, out ShadeRecord shadeRecord);
-            Assert.That(hit, Is.EqualTo(expectedHit));
+            HitResult hitResult = sphere.Hit(ray);
             if (expectedHit)
             {
-                Assert.That(distance, Is.EqualTo(expectedDistance));
+                Assert.That(hitResult, Is.TypeOf<Hit>());
+                Assert.That((hitResult as Hit).Distance, Is.EqualTo(expectedDistance));
+            }
+            else
+            {
+                Assert.That(hitResult, Is.TypeOf<Miss>());
             }
         }
     }

@@ -57,20 +57,20 @@ namespace RayTracer.Objects
         }
 
         /// <inheritdoc/>
-        public override bool Hit(Ray ray, out double distance, out ShadeRecord? shadeRecord)
+        public override HitResult Hit(Ray ray)
         {
-            distance = (Location - ray.Origin).Dot(Normal) / (ray.Direction.Dot(Normal));
-            bool result;
+            double distance = (Location - ray.Origin).Dot(Normal) / (ray.Direction.Dot(Normal));
+            HitResult result;
 
             if (distance > DoubleEpsilonEqualityComparer.DefaultEpsilon)
             {
-                shadeRecord = new ShadeRecord(Normal, ray.Origin + distance * ray.Direction);
-                result = true;
+                result = new Hit(
+                    distance, 
+                    new ShadeRecord(Normal, ray.Origin + distance * ray.Direction));
             }
             else
             {
-                shadeRecord = null;
-                result = false;
+                result = new Miss();
             }
 
             return result;
