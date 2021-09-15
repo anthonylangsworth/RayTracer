@@ -109,7 +109,7 @@ namespace RayTracer.Test.Primitives
         public void Length(double x, double y, double z, double expectedLength)
         {
             Vector3D vector = new Vector3D(x, y, z);
-            Assert.That(vector.Length, Is.EqualTo(expectedLength));
+            Assert.That(vector.Length(), Is.EqualTo(expectedLength));
         }
 
         [TestCase(1, 0, 0, 1)]
@@ -123,7 +123,7 @@ namespace RayTracer.Test.Primitives
         public void SquaredLength(double x, double y, double z, double expectedSquaredLength)
         {
             Vector3D vector = new Vector3D(x, y, z);
-            Assert.That(vector.SquaredLength, Is.EqualTo(expectedSquaredLength));
+            Assert.That(vector.SquaredLength(), Is.EqualTo(expectedSquaredLength));
         }
 
         [TestCase(1, 2, 3, 2, 3, 4, 20)]

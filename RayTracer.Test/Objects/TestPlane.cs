@@ -69,11 +69,12 @@ namespace RayTracer.Test.Objects
         [TestCaseSource(nameof(HitTestCases))]
         public void Hit(Plane plane, Ray ray, bool expectedHit, double expectedDistance)
         {
-            HitResult hitResult= plane.Hit(ray);
+            HitResult hitResult = plane.Hit(ray);
             if(expectedHit)
             {
-                Assert.That(hitResult, Is.TypeOf<Hit>());
-                Assert.That((hitResult as Hit).Distance, Is.EqualTo(expectedDistance));
+                Hit? hit = hitResult as Hit;
+                Assert.That(hit, Is.Not.Null);
+                Assert.That(hit?.Distance, Is.EqualTo(expectedDistance));
             }
             else
             {

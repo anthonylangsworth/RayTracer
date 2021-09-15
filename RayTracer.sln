@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.31521.260
+VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer", "RayTracer\RayTracer.csproj", "{C3A91051-B682-4543-B37D-01F115D6206D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracer", "RayTracer\RayTracer.csproj", "{A32124B6-45D5-41EB-83C9-7129BDF69F74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracer.Test", "RayTracer.Test\RayTracer.Test.csproj", "{C7495C03-7C23-40F8-ABFF-26C6338BF314}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracer.Test", "RayTracer.Test\RayTracer.Test.csproj", "{BAD08A5D-7A8A-477F-912B-39541D5FBED4}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C3A91051-B682-4543-B37D-01F115D6206D} = {C3A91051-B682-4543-B37D-01F115D6206D}
+		{A32124B6-45D5-41EB-83C9-7129BDF69F74} = {A32124B6-45D5-41EB-83C9-7129BDF69F74}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC33F3B7-C290-4632-BDDE-B1A128905A03}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70E4E5A4-E5EB-4564-8085-7F88AF90ACAA}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
@@ -21,19 +21,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C3A91051-B682-4543-B37D-01F115D6206D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3A91051-B682-4543-B37D-01F115D6206D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3A91051-B682-4543-B37D-01F115D6206D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3A91051-B682-4543-B37D-01F115D6206D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7495C03-7C23-40F8-ABFF-26C6338BF314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7495C03-7C23-40F8-ABFF-26C6338BF314}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7495C03-7C23-40F8-ABFF-26C6338BF314}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7495C03-7C23-40F8-ABFF-26C6338BF314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9C51F5B2-4F2A-481A-A79B-2525917EAEC4}
+		SolutionGuid = {15093CD1-FE3F-494D-8E16-29D0999CCB48}
 	EndGlobalSection
 EndGlobal

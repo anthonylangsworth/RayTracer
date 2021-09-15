@@ -48,8 +48,9 @@ namespace RayTracer.Test.Objects
             HitResult hitResult = sphere.Hit(ray);
             if (expectedHit)
             {
-                Assert.That(hitResult, Is.TypeOf<Hit>());
-                Assert.That((hitResult as Hit).Distance, Is.EqualTo(expectedDistance));
+                Hit? hit = hitResult as Hit;
+                Assert.That(hit, Is.Not.Null);
+                Assert.That(hit?.Distance, Is.EqualTo(expectedDistance));
             }
             else
             {
