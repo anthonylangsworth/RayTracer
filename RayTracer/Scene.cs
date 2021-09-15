@@ -9,19 +9,6 @@ namespace RayTracer
     {
         public Scene(Camera camera, IEnumerable<GeometricObject> objects, IEnumerable<LightSource> lightSources)
         {
-            if (camera == null) 
-            {
-                throw new ArgumentNullException(nameof(camera));
-            }
-            if (objects == null)
-            {
-                throw new ArgumentNullException(nameof(objects));
-            }
-            if (lightSources == null)
-            {
-                throw new ArgumentNullException(nameof(lightSources));
-            }
-
             Camera = camera;
             Objects = new HashSet<GeometricObject>(objects);
             LightSources = new HashSet<LightSource>(lightSources);
@@ -29,8 +16,8 @@ namespace RayTracer
 
         public Camera Camera { get; }
 
-        public HashSet<GeometricObject> Objects { get; }
+        public ISet<GeometricObject> Objects { get; }
 
-        public HashSet<LightSource> LightSources { get; }
+        public ISet<LightSource> LightSources { get; }
     }
 }
