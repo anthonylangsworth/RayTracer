@@ -29,18 +29,49 @@ namespace RayTracer.Primitives
     /// </remarks>
     public class Vector3D : IEquatable<Vector3D?>
     {
-        public Vector3D(double x, double y, double z)
+        /// <summary>
+        /// Create a new <see cref="Vector3D"/>.
+        /// </summary>
+        /// <param name="x">
+        /// The x portion.
+        /// </param>
+        /// <param name="y">
+        /// The y portion.
+        /// </param>
+        /// <param name="z">
+        /// The z portion.
+        /// </param>
+        /// <param name="doubleComparer">
+        /// Used to compare <see cref="X"/>, <see cref="Y"/> and <see cref="Z"/>.
+        /// </param>
+        public Vector3D(double x, double y, double z,
+            IEqualityComparer<double>? doubleComparer = null)
         {
             X = x;
             Y = y;
             Z = z;
+            DoubleComparer = doubleComparer ?? DoubleEpsilonEqualityComparer.Instance;
         }
 
+        /// <summary>
+        /// X portion.
+        /// </summary>
         public double X { get; }
 
+        /// <summary>
+        /// Y portion.
+        /// </summary>
         public double Y { get; }
 
+        /// <summary>
+        /// Z portion.
+        /// </summary>
         public double Z { get; }
+
+        /// <summary>
+        /// Used to compare <see cref="X"/>, <see cref="Y"/> and <see cref="Z"/>.
+        /// </summary>
+        public IEqualityComparer<double> DoubleComparer { get; }
 
         public override bool Equals(object? obj)
         {
@@ -51,9 +82,9 @@ namespace RayTracer.Primitives
         {
             // TODO: Consider epsilon
             return !(other is null) &&
-                   X == other.X &&
-                   Y == other.Y &&
-                   Z == other.Z;
+                   DoubleComparer.Equals(X, other.X) &&
+                   DoubleComparer.Equals(Y, other.Y) &&
+                   DoubleComparer.Equals(Z, other.Z);
         }
 
         public override int GetHashCode()

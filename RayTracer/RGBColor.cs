@@ -22,7 +22,7 @@ namespace RayTracer
         /// The blue portion of the color.
         /// </param>
         /// <param name="doubleComparer">
-        /// Optionable comparer for comparing Red, Green and Blue.
+        /// Used to compare <see cref="Red"/>, <see cref="Green"/> and <see cref="Blue"/>.
         /// </param>
         public RGBColor(double red, double green, double blue,
             IEqualityComparer<double>? doubleComparer = null)
@@ -49,7 +49,7 @@ namespace RayTracer
         public double Blue { get; }
 
         /// <summary>
-        /// Compare the individual <see cref="Red"/>, <see cref="Green"/> and <see cref="Blue"/> components.
+        /// Used to compare <see cref="Red"/>, <see cref="Green"/> and <see cref="Blue"/>.
         /// </summary>
         public IEqualityComparer<double> DoubleComparer { get; }
 
