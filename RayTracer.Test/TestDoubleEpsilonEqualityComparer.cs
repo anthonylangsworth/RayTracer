@@ -25,7 +25,7 @@ namespace RayTracer.Test
         {
             if (expectedException)
             {
-                // Debugger will stop here otherwise
+                // Debugger will stop here otherwise 
                 // Assert.Throws<ArgumentException>(() => new DoubleEpsilonEqualityComparer(epsilon));
             }
             else
@@ -34,12 +34,17 @@ namespace RayTracer.Test
             }
         }
 
-        [TestCase(1, 2, false)]
+        // Get an even smaller epsilon to emulate number just above or below epsilon
+        const double epsilonVariance = DoubleEpsilonEqualityComparer.DefaultEpsilon / 16;
+
+        // Tests for +/- DoubleEpsilonEqualityComparer.DefaultEpsilon exactly are prone to
+        // rounding, platform or .Net implementation errors so omit them.
+        [TestCase(0, 1, false)]
         [TestCase(1, 1, true)]
-        [TestCase(1, 1 + DoubleEpsilonEqualityComparer.DefaultEpsilon - double.Epsilon, true)]
-        [TestCase(1, 1 + DoubleEpsilonEqualityComparer.DefaultEpsilon, false)]
-        [TestCase(1, 1 - DoubleEpsilonEqualityComparer.DefaultEpsilon + double.Epsilon, true)]
-        [TestCase(1, 1 - DoubleEpsilonEqualityComparer.DefaultEpsilon, false)]
+        [TestCase(0, DoubleEpsilonEqualityComparer.DefaultEpsilon - epsilonVariance, true)]
+        [TestCase(0, DoubleEpsilonEqualityComparer.DefaultEpsilon + epsilonVariance, false)]
+        [TestCase(0, -DoubleEpsilonEqualityComparer.DefaultEpsilon + epsilonVariance, true)]
+        [TestCase(0, -DoubleEpsilonEqualityComparer.DefaultEpsilon - epsilonVariance, false)]
         public void Equals(double d1, double d2, bool expectedResult)
         {
             Assert.That(DoubleEpsilonEqualityComparer.Instance.Equals(d1, d2), Is.EqualTo(expectedResult));

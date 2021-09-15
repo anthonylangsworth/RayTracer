@@ -17,13 +17,14 @@ namespace RayTracer
     /// However, there is a legitimate need to handle small errors common to floating
     /// point mathematics, so this should be used with care.
     /// 
-    /// See https://stackoverflow.com/questions/11258962/iequalitycomparerdouble-with-a-tolerance-how-to-implement-gethashcode
-    /// and https://docs.unity3d.com/ScriptReference/Mathf.Epsilon.html for discussion.
+    /// See https://stackoverflow.com/questions/11258962/iequalitycomparerdouble-with-a-tolerance-how-to-implement-gethashcode, 
+    /// https://docs.microsoft.com/en-us/dotnet/api/system.double.equals?view=net-5.0#System_Double_Equals_System_Double_ and
+    /// https://docs.unity3d.com/ScriptReference/Mathf.Epsilon.html for discussion.
     /// </remarks>
     public class DoubleEpsilonEqualityComparer: IEqualityComparer<double>
     {
         /// <summary>
-        /// The default allowable variance. Use the same value as he Unity framework.
+        /// The default allowable variance. Use the same value as the Unity framework.
         /// </summary>
         public const double DefaultEpsilon = 1e-5;
 
@@ -46,7 +47,10 @@ namespace RayTracer
 
         public bool Equals(double x, double y)
         {
-            return Math.Abs(x - y) < Epsilon;
+            // Uses the first method described under
+            // https://docs.microsoft.com/en-us/dotnet/api/system.double.equals?view=net-5.0#System_Double_Equals_System_Double_
+            // exceptit uses a fixed value. Most comparisons will be between numbers between 0 and 1 so this is sufficient.
+            return Math.Abs(x - y) <= Epsilon;
         }
 
         public int GetHashCode([DisallowNull] double obj)
