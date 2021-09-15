@@ -37,6 +37,11 @@ namespace RayTracer
             Epsilon = epsilon;
         }
 
+        /// <summary>
+        /// Prevent unnecessary duplicate instances
+        /// </summary>
+        public static readonly DoubleEpsilonEqualityComparer Instance = new DoubleEpsilonEqualityComparer();
+
         public double Epsilon { get; }
 
         public bool Equals(double x, double y)
