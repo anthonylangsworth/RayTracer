@@ -21,6 +21,7 @@ namespace RayTracer
 
         public World(int horizontalResolution, int verticalResolution)
         {
+            // TODO: Pass in the ViewPlane?
             ViewPlane = new ViewPlane(horizontalResolution, verticalResolution, 1, 1);
             Tracer = new Tracer();
             Serializer = new ImageSerializer();
@@ -38,7 +39,7 @@ namespace RayTracer
                 new Camera(), 
                 new[] 
                 { 
-                    new Sphere(new Point3D(0, 0, 0), new Material(), 10) 
+                    new Sphere(new Point3D(0, 0, 0), new Material(), 20) 
                 }, 
                 new LightSource[0],
                 new RGBColor(0, 0, 0));
