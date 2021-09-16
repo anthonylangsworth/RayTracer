@@ -1,5 +1,6 @@
 ﻿using RayTracer.Objects;
 using RayTracer.Primitives;
+using RayTracer.Tracers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,24 @@ namespace RayTracer
     {
         public static void Main()
         {
-            World world = new World();
+            World world = new World(200, 200);
             Scene scene = world.Build();
-            world.Render(scene, 200, 200);
+            RGBColor[,] result = world.Render(scene);
+            world.Save(result, "image.png");
         }
+
+        public World(int horizontalResolution, int verticalResolution)
+        {
+            ViewPlane = new ViewPlane(horizontalResolution, verticalResolution, 1, 1);
+            Tracer = new Tracer();
+            Serializer = new ImageSerializer();
+        }
+
+        public ViewPlane ViewPlane { get; }
+
+        public Tracer Tracer { get; }
+
+        public ImageSerializer Serializer { get; }
 
         public Scene Build()
         {
@@ -23,14 +38,38 @@ namespace RayTracer
                 new Camera(), 
                 new[] 
                 { 
-                    new Sphere(new Point3D(0, 0, 0), new Material(), 1) 
+                    new Sphere(new Point3D(0, 0, 0), new Material(), 10) 
                 }, 
-                new LightSource[0]);
+                new LightSource[0],
+                new RGBColor(0, 0, 0));
         }
 
-        public void Render(Scene scene, int hres, int vres)
+        public RGBColor[,] Render(Scene scene)
         {
-            ViewPlane viewPlane = new ViewPlane(100, 100, 1, 1);
+            Vector3D rayDirection = new Vector3D(0, 0, -1);
+            const double zw = 100.0;
+            double x, y;
+            Ray ray;
+
+            RGBColor[,] result = new RGBColor[ViewPlane.VerticalResolution, ViewPlane.HorizontalResolution];
+
+            for(int row = 0; row < ViewPlane.VerticalResolution; row++)
+            {
+                for(int column = 0; column < ViewPlane.HorizontalResolution; column++)
+                {
+                    x = ViewPlane.PixelSize * (column - 0.5 * (ViewPlane.HorizontalResolution - 1.0));
+                    y = ViewPlane.PixelSize * (row - 0.5 * (ViewPlane.VerticalResolution - 1.0));
+                    ray = new Ray(new Point3D(x, y, zw), rayDirection);
+                    result[row, column] = Tracer.TraceRay(scene, ray);
+                }
+            }
+
+            return result;
+        }
+
+        public void Save(RGBColor[,] output, string fileName)
+        {
+            Serializer.Save(output, fileName);
         }
     }
 }
