@@ -13,21 +13,18 @@ namespace RayTracer
     {
         public static void Main()
         {
-            World world = new World(200, 200);
+            World world = new World();
             Scene scene = world.Build();
-            RGBColor[,] result = world.Render(scene);
+            ViewPlane viewPlane = new ViewPlane(200, 200, 1, 1);
+            RGBColor[,] result = world.Render(viewPlane, scene);
             world.Save(result, "image.png");
         }
 
-        public World(int horizontalResolution, int verticalResolution)
+        public World()
         {
-            // TODO: Pass in the ViewPlane?
-            ViewPlane = new ViewPlane(horizontalResolution, verticalResolution, 1, 1);
             Tracer = new Tracer();
             Serializer = new ImageSerializer();
         }
-
-        public ViewPlane ViewPlane { get; }
 
         public Tracer Tracer { get; }
 
@@ -45,21 +42,21 @@ namespace RayTracer
                 new RGBColor(0, 0, 0));
         }
 
-        public RGBColor[,] Render(Scene scene)
+        public RGBColor[,] Render(ViewPlane viewPlane, Scene scene)
         {
             Vector3D rayDirection = new Vector3D(0, 0, -1);
             const double zw = 100.0;
             double x, y;
             Ray ray;
 
-            RGBColor[,] result = new RGBColor[ViewPlane.VerticalResolution, ViewPlane.HorizontalResolution];
+            RGBColor[,] result = new RGBColor[viewPlane.VerticalResolution, viewPlane.HorizontalResolution];
 
-            for(int row = 0; row < ViewPlane.VerticalResolution; row++)
+            for(int row = 0; row < viewPlane.VerticalResolution; row++)
             {
-                for(int column = 0; column < ViewPlane.HorizontalResolution; column++)
+                for(int column = 0; column < viewPlane.HorizontalResolution; column++)
                 {
-                    x = ViewPlane.PixelSize * (column - 0.5 * (ViewPlane.HorizontalResolution - 1.0));
-                    y = ViewPlane.PixelSize * (row - 0.5 * (ViewPlane.VerticalResolution - 1.0));
+                    x = viewPlane.PixelSize * (column - 0.5 * (viewPlane.HorizontalResolution - 1.0));
+                    y = viewPlane.PixelSize * (row - 0.5 * (viewPlane.VerticalResolution - 1.0));
                     ray = new Ray(new Point3D(x, y, zw), rayDirection);
                     result[row, column] = Tracer.TraceRay(scene, ray);
                 }
