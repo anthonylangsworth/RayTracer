@@ -14,10 +14,24 @@ namespace RayTracer
         public static void Main()
         {
             World world = new World();
-            Scene scene = world.BuildTwoSpheresAndPlane();
             ViewPlane viewPlane = new ViewPlane(300, 300, 1, 1);
-            RGBColor[,] result = world.Render(scene, viewPlane);
-            world.Save(result, "image.png", viewPlane.Gamma);
+            foreach (var entry in new[]
+            {
+                new {
+                    Scene = world.BuildSingleSphere(),
+                    ViewPlane = new ViewPlane(200, 200, 1, 1),
+                    FileName = "3.18.png"
+                },
+                new {
+                    Scene = world.BuildTwoSpheresAndPlane(),
+                    ViewPlane = new ViewPlane(300, 300, 1, 1),
+                    FileName = "3.21.png"
+                }
+            })
+            {
+                RGBColor[,] result = world.Render(entry.Scene, entry.ViewPlane);
+                world.Save(result, entry.FileName, viewPlane.Gamma);
+            }
         }
 
         public World()
@@ -36,7 +50,7 @@ namespace RayTracer
                 new Camera(), 
                 new[] 
                 { 
-                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 20) 
+                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 85) 
                 }, 
                 new LightSource[0],
                 RGBColor.Black);
@@ -55,7 +69,6 @@ namespace RayTracer
                 new LightSource[0],
                 RGBColor.Black);
         }
-
 
         /// <summary>
         /// Render the <see cref="Scene"/> to the <see cref="ViewPlane"/>.
