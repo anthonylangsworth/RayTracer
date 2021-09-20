@@ -18,7 +18,7 @@ namespace RayTracer.Samplers
             // Do nothing
         }
 
-        protected override Point2D[][] GenerateSamples()
+        protected override Point2D[][] GenerateSamples(Random random)
         {
             Point2D[][] result = new Point2D[1][];
             result[0] = new Point2D[] { new Point2D(0.5, 0.5) };

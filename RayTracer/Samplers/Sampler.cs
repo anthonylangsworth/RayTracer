@@ -14,6 +14,7 @@ namespace RayTracer.Samplers
     {
         private Point2D[][] _samples;
         int _currentSample;
+        Random _random;
 
         /// <summary>
         /// Create a new <see cref="Sampler"/>.
@@ -41,7 +42,8 @@ namespace RayTracer.Samplers
 
             SamplesPerSet = samplesPerSet;
             SampleSets = sampleSets;
-            _samples = GenerateSamples();
+            _random = new Random();
+            _samples = GenerateSamples(_random);
             _currentSample = 0;
         }
 
@@ -53,11 +55,11 @@ namespace RayTracer.Samplers
             lock (_samples)
             {
                 IEnumerable<Point2D> result = _samples[_currentSample];
-                _currentSample = (_currentSample + 1) % SampleSets;
+                _currentSample = (_currentSample + _random.Next()) % SampleSets;
                 return result;
             }
         }
 
-        protected abstract Point2D[][] GenerateSamples();
+        protected abstract Point2D[][] GenerateSamples(Random random);
     }
 }

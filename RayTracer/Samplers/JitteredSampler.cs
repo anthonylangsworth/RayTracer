@@ -30,9 +30,8 @@ namespace RayTracer.Samplers
         }
 
         /// <inheritdoc/>
-        protected override Point2D[][] GenerateSamples()
+        protected override Point2D[][] GenerateSamples(Random random)
         {
-            Random random = new Random();
             Point2D[][] result = new Point2D[SampleSets][];
 
             int sampleMax = (int) Math.Sqrt(SamplesPerSet);
