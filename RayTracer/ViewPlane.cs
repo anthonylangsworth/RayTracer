@@ -31,13 +31,11 @@ namespace RayTracer
             VerticalResolution = verticalResolution;
             PixelSize = pixelSize;
             Gamma = gamma;
-            InvertedGamma = 1 / Gamma;
         }
 
         public int HorizontalResolution { get; }
         public int VerticalResolution { get; }
         public double PixelSize { get; }
         public double Gamma { get; }
-        public double InvertedGamma { get; }
     }
 }

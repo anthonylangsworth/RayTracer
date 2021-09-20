@@ -17,7 +17,7 @@ namespace RayTracer
             Scene scene = world.Build();
             ViewPlane viewPlane = new ViewPlane(200, 200, 1, 1);
             RGBColor[,] result = world.Render(scene, viewPlane);
-            world.Save(result, "image.png");
+            world.Save(result, "image.png", viewPlane.Gamma);
         }
 
         public World()
@@ -36,12 +36,21 @@ namespace RayTracer
                 new Camera(), 
                 new[] 
                 { 
-                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 20) 
+                    new Sphere(new Point3D(0, 0, 00), new Material(RGBColor.BrightRed), 20) 
                 }, 
                 new LightSource[0],
-                new RGBColor(0, 0, 0));
+                RGBColor.Black);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="viewPlane"></param>
+        /// <returns>
+        /// A 2D array of <see cref="RGBColor"/>s representing pixels. The rows are returned in 
+        /// bottom-up order, not top-down.
+        /// </returns>
         public RGBColor[,] Render(Scene scene, ViewPlane viewPlane)
         {
             Vector3D rayDirection = new Vector3D(0, 0, -1);
@@ -65,9 +74,9 @@ namespace RayTracer
             return result;
         }
 
-        public void Save(RGBColor[,] output, string fileName)
+        public void Save(RGBColor[,] output, string fileName, double gamma)
         {
-            Serializer.Save(output, fileName);
+            Serializer.Save(output, fileName, gamma);
         }
     }
 }

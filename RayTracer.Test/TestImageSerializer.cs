@@ -18,7 +18,7 @@ namespace RayTracer.Test
         public void TestConvertColor(double red, double green, double blue, byte expectedRed, byte expectedGreen, byte expectedBlue)
         {
             Assert.That(
-                new ImageSerializer().ConvertColor(new RGBColor(red, green, blue)),
+                new ImageSerializer().ConvertColor(new RGBColor(red, green, blue), 1.0),
                 Is.EqualTo(Color.FromArgb(expectedRed, expectedGreen, expectedBlue)));
         }
     }

@@ -15,13 +15,11 @@ namespace RayTracer.Test
             int testVerticalResolution = 200;
             double testPixelSize = 1.0;
             double testGamma = 2.0;
-            double testInvertedGamma = 0.5;
             ViewPlane viewPlane = new ViewPlane(testHorizontalResolution, testVerticalResolution, testPixelSize, testGamma);
             Assert.That(viewPlane.HorizontalResolution, Is.EqualTo(testHorizontalResolution));
             Assert.That(viewPlane.VerticalResolution, Is.EqualTo(testVerticalResolution));
             Assert.That(viewPlane.PixelSize, Is.EqualTo(testPixelSize));
             Assert.That(viewPlane.Gamma, Is.EqualTo(testGamma));
-            Assert.That(viewPlane.InvertedGamma, Is.EqualTo(testInvertedGamma));
         }
     }
 }
