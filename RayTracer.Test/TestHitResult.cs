@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using RayTracer.Objects;
 using RayTracer.Primitives;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,11 @@ namespace RayTracer.Test
         {
             double distance = Math.PI;
             ShadeRecord shadeRecord= new ShadeRecord(new Vector3D(0, 0, 1), new Point3D(0, 0, 2));
-            Hit hit = new Hit(distance, shadeRecord);
+            Sphere sphere = new Sphere(Point3D.Origin, Material.White, 10);
+            Hit hit = new Hit(distance, shadeRecord, sphere);
             Assert.That(hit.Distance, Is.EqualTo(distance));
             Assert.That(hit.ShadeRecord, Is.EqualTo(shadeRecord));
+            Assert.That(hit.GeometricObject, Is.EqualTo(sphere));
         }
 
         [TestCase(0.1, false)]

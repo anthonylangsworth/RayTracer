@@ -22,7 +22,7 @@ namespace RayTracer.Tracers
             if (hit != null)
             {
                 // hit.ShadeRecord.
-                result = new RGBColor(1.0, 0, 0);
+                result = hit.GeometricObject.Material.Color;
             }
             else
             {

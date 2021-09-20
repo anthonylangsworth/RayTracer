@@ -36,7 +36,7 @@ namespace RayTracer
                 new Camera(), 
                 new[] 
                 { 
-                    new Sphere(new Point3D(0, 0, 0), new Material(), 20) 
+                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 20) 
                 }, 
                 new LightSource[0],
                 new RGBColor(0, 0, 0));

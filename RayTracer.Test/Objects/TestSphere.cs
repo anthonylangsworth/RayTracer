@@ -13,7 +13,7 @@ namespace RayTracer.Test.Objects
         public void Ctor()
         {
             Point3D point = new Point3D(1, 2, 3);
-            Material material = new Material();
+            Material material = Material.Black;
             double radius = 2;
 
             Sphere sphere = new Sphere(point, material, radius);
@@ -28,13 +28,13 @@ namespace RayTracer.Test.Objects
             return new[]
             {
                 new TestCaseData(
-                    new Sphere(new Point3D(0, 0, 0), new Material(), 1),
+                    new Sphere(new Point3D(0, 0, 0), Material.White, 1),
                     new Ray(new Point3D (0, 0, 2), new Vector3D(0, 0, -1)),
                     true,
                     1
                 ),
                 new TestCaseData(
-                    new Sphere(new Point3D(0, 0, 0), new Material(), 1),
+                    new Sphere(new Point3D(0, 0, 0), Material.White, 1),
                     new Ray(new Point3D (0, 0, 2), new Vector3D(1, 0, 0)),
                     false,
                     double.NaN

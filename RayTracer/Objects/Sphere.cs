@@ -70,7 +70,8 @@ namespace RayTracer.Objects
                             new ShadeRecord(
                                 (temp + t * ray.Direction) / Radius,
                                 ray.Origin + t * ray.Direction
-                            )
+                            ),
+                            this
                        );
                 }
             }

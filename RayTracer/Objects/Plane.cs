@@ -66,7 +66,8 @@ namespace RayTracer.Objects
             {
                 result = new Hit(
                     distance, 
-                    new ShadeRecord(Normal, ray.Origin + distance * ray.Direction));
+                    new ShadeRecord(Normal, ray.Origin + distance * ray.Direction),
+                    this);
             }
             else
             {

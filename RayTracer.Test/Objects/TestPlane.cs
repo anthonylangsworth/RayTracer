@@ -13,7 +13,7 @@ namespace RayTracer.Test.Objects
         public void Ctor()
         {
             Point3D point = new Point3D(1, 2, 3);
-            Material material = new Material();
+            Material material = Material.Black;
             Vector3D normal = new Vector3D(0, 0, 1); // Up the Z axis
 
             Plane plane = new Plane(point, material, normal);
@@ -28,37 +28,37 @@ namespace RayTracer.Test.Objects
             return new[]
             {
                 new TestCaseData(
-                    new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, 1)),
+                    new Plane(new Point3D(0, 0, 0), Material.Black, new Vector3D(0, 0, 1)),
                     new Ray(new Point3D (0, 0, 1), new Vector3D(0, 0, -1)),
                     true,
                     1
                 ),
                 new TestCaseData(
-                    new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, -1)), // Vector inverted
+                    new Plane(new Point3D(0, 0, 0), Material.Black, new Vector3D(0, 0, -1)), // Vector inverted
                     new Ray(new Point3D (0, 0, 1), new Vector3D(0, 0, -1)),
                     true,
                     1
                 ),
                 new TestCaseData(
-                    new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, 1)),
+                    new Plane(new Point3D(0, 0, 0), Material.Black, new Vector3D(0, 0, 1)),
                     new Ray(new Point3D (0, 0, 2), new Vector3D(0, 0, -1)),
                     true,
                     2
                 ),
                 new TestCaseData(
-                    new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, 1)),
+                    new Plane(new Point3D(0, 0, 0), Material.Black, new Vector3D(0, 0, 1)),
                     new Ray(new Point3D (0, 0, -2), new Vector3D(0, 0, 1)),
                     true,
                     2
                 ),
                 new TestCaseData(
-                    new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, 1)),
+                    new Plane(new Point3D(0, 0, 0), Material.Black, new Vector3D(0, 0, 1)),
                     new Ray(new Point3D (0, 0, 1), new Vector3D(1, 0, 0)), // Parallel with Plane
                     false,
                     double.NaN
                 ),
                 new TestCaseData(
-                    new Plane(new Point3D(0, 0, 0), new Material(), new Vector3D(0, 0, 1)),
+                    new Plane(new Point3D(0, 0, 0), Material.Black, new Vector3D(0, 0, 1)),
                     new Ray(new Point3D (0, 0, 1), new Vector3D(0, 0, 1)), // Missing
                     false,
                     double.NaN
