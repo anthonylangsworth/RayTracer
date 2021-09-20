@@ -16,7 +16,7 @@ namespace RayTracer
             World world = new World();
             Scene scene = world.Build();
             ViewPlane viewPlane = new ViewPlane(200, 200, 1, 1);
-            RGBColor[,] result = world.Render(viewPlane, scene);
+            RGBColor[,] result = world.Render(scene, viewPlane);
             world.Save(result, "image.png");
         }
 
@@ -42,7 +42,7 @@ namespace RayTracer
                 new RGBColor(0, 0, 0));
         }
 
-        public RGBColor[,] Render(ViewPlane viewPlane, Scene scene)
+        public RGBColor[,] Render(Scene scene, ViewPlane viewPlane)
         {
             Vector3D rayDirection = new Vector3D(0, 0, -1);
             const double zw = 100.0;
