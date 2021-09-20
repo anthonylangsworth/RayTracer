@@ -14,8 +14,8 @@ namespace RayTracer
         public static void Main()
         {
             World world = new World();
-            Scene scene = world.Build();
-            ViewPlane viewPlane = new ViewPlane(200, 200, 1, 1);
+            Scene scene = world.BuildTwoSpheresAndPlane();
+            ViewPlane viewPlane = new ViewPlane(300, 300, 1, 1);
             RGBColor[,] result = world.Render(scene, viewPlane);
             world.Save(result, "image.png", viewPlane.Gamma);
         }
@@ -30,23 +30,42 @@ namespace RayTracer
 
         public ImageSerializer Serializer { get; }
 
-        public Scene Build()
+        public Scene BuildSingleSphere()
         {
             return new Scene(
                 new Camera(), 
                 new[] 
                 { 
-                    new Sphere(new Point3D(0, 0, 00), new Material(RGBColor.BrightRed), 20) 
+                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 20) 
                 }, 
                 new LightSource[0],
                 RGBColor.Black);
         }
 
+        public Scene BuildTwoSpheresAndPlane()
+        {
+            return new Scene(
+                new Camera(),
+                new GeometricObject[]
+                {
+                    new Sphere(new Point3D(0, -25, 0), new Material(RGBColor.BrightRed), 80),
+                    new Sphere(new Point3D(0, 30, 0), new Material(RGBColor.Yellow), 60),
+                    new Plane(new Point3D(0, 0, 0), new Material(RGBColor.DarkGreen), new Vector3D(0, 1, 1))
+                },
+                new LightSource[0],
+                RGBColor.Black);
+        }
+
+
         /// <summary>
-        /// 
+        /// Render the <see cref="Scene"/> to the <see cref="ViewPlane"/>.
         /// </summary>
-        /// <param name="scene"></param>
-        /// <param name="viewPlane"></param>
+        /// <param name="scene">
+        /// The <see cref="Scene"/> to render.
+        /// </param>
+        /// <param name="viewPlane">
+        /// The <see cref="ViewPlane"/> to render to.
+        /// </param>
         /// <returns>
         /// A 2D array of <see cref="RGBColor"/>s representing pixels. The rows are returned in 
         /// bottom-up order, not top-down.
@@ -74,7 +93,19 @@ namespace RayTracer
             return result;
         }
 
-        public void Save(RGBColor[,] output, string fileName, double gamma)
+        /// <summary>
+        /// Serialize the image to a file.
+        /// </summary>
+        /// <param name="output">
+        /// The output from <see cref="Render(Scene, ViewPlane)"/>.
+        /// </param>
+        /// <param name="fileName">
+        /// The path or file name to output to.
+        /// </param>
+        /// <param name="gamma">
+        /// The gamem to use, defaulting to 1.0.
+        /// </param>
+        public void Save(RGBColor[,] output, string fileName, double gamma = 1.0)
         {
             Serializer.Save(output, fileName, gamma);
         }
