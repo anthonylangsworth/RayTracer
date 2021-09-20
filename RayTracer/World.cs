@@ -29,7 +29,7 @@ namespace RayTracer
                 //},
                 new {
                     Scene = world.BuildTwoSpheresAndPlane(),
-                    ViewPlane = new ViewPlane(300, 300, 1, 1, 36),
+                    ViewPlane = new ViewPlane(300, 300, 1, 1, 64),
                     FileName = "4.1.png"
                 }
             })
@@ -98,12 +98,12 @@ namespace RayTracer
             RGBColor[,] result = new RGBColor[viewPlane.VerticalResolution, viewPlane.HorizontalResolution];
             Random random = new Random();
 
-            for (int row = 0; row < viewPlane.VerticalResolution; row++) // up
+            Parallel.For(0, viewPlane.VerticalResolution, row => // up
             {
                 for (int column = 0; column < viewPlane.HorizontalResolution; column++) // left to right
                 {
                     RGBColor pixelColor = RGBColor.Black;
-                    int sampleMax = (int) Math.Sqrt(viewPlane.SampleCount);
+                    int sampleMax = (int)Math.Sqrt(viewPlane.SampleCount);
                     for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
                     {
                         for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
@@ -117,7 +117,7 @@ namespace RayTracer
                     pixelColor /= sampleMax * sampleMax; // In case viewPlane.SampleCount is not square
                     result[row, column] = pixelColor;
                 }
-            }
+            });
 
             return result;
         }
