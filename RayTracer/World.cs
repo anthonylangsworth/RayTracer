@@ -17,15 +17,20 @@ namespace RayTracer
             ViewPlane viewPlane = new ViewPlane(300, 300, 1, 1);
             foreach (var entry in new[]
             {
-                new {
-                    Scene = world.BuildSingleSphere(),
-                    ViewPlane = new ViewPlane(200, 200, 1, 1),
-                    FileName = "3.18.png"
-                },
+                //new {
+                //    Scene = world.BuildSingleSphere(),
+                //    ViewPlane = new ViewPlane(200, 200, 1, 1),
+                //    FileName = "3.18.png"
+                //},
+                //new {
+                //    Scene = world.BuildTwoSpheresAndPlane(),
+                //    ViewPlane = new ViewPlane(300, 300, 1, 1),
+                //    FileName = "3.21.png"
+                //},
                 new {
                     Scene = world.BuildTwoSpheresAndPlane(),
-                    ViewPlane = new ViewPlane(300, 300, 1, 1),
-                    FileName = "3.21.png"
+                    ViewPlane = new ViewPlane(300, 300, 1, 1, 36),
+                    FileName = "4.1.png"
                 }
             })
             {
@@ -91,15 +96,26 @@ namespace RayTracer
             Ray ray;
 
             RGBColor[,] result = new RGBColor[viewPlane.VerticalResolution, viewPlane.HorizontalResolution];
+            Random random = new Random();
 
-            for(int row = 0; row < viewPlane.VerticalResolution; row++)
+            for (int row = 0; row < viewPlane.VerticalResolution; row++) // up
             {
-                for(int column = 0; column < viewPlane.HorizontalResolution; column++)
+                for (int column = 0; column < viewPlane.HorizontalResolution; column++) // left to right
                 {
-                    x = viewPlane.PixelSize * (column - 0.5 * (viewPlane.HorizontalResolution - 1.0));
-                    y = viewPlane.PixelSize * (row - 0.5 * (viewPlane.VerticalResolution - 1.0));
-                    ray = new Ray(new Point3D(x, y, zw), rayDirection);
-                    result[row, column] = Tracer.TraceRay(scene, ray);
+                    RGBColor pixelColor = RGBColor.Black;
+                    int sampleMax = (int) Math.Sqrt(viewPlane.SampleCount);
+                    for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
+                    {
+                        for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
+                        {
+                            x = viewPlane.PixelSize * (column - 0.5 * viewPlane.HorizontalResolution + (sampleColumn + random.NextDouble()) / sampleMax);
+                            y = viewPlane.PixelSize * (row - 0.5 * viewPlane.VerticalResolution + (sampleRow + random.NextDouble()) / sampleMax);
+                            ray = new Ray(new Point3D(x, y, zw), rayDirection);
+                            pixelColor += Tracer.TraceRay(scene, ray);
+                        }
+                    }
+                    pixelColor /= sampleMax * sampleMax; // In case viewPlane.SampleCount is not square
+                    result[row, column] = pixelColor;
                 }
             }
 
