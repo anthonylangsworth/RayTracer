@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using RayTracer.Samplers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,13 @@ namespace RayTracer.Test
             int testVerticalResolution = 200;
             double testPixelSize = 1.0;
             double testGamma = 2.0;
-            int testSampleCount = 50;
-            ViewPlane viewPlane = new ViewPlane(testHorizontalResolution, testVerticalResolution, testPixelSize, testGamma, testSampleCount);
+            Sampler testSampler = new RegularSampler();
+            ViewPlane viewPlane = new ViewPlane(testHorizontalResolution, testVerticalResolution, testPixelSize, testGamma, testSampler);
             Assert.That(viewPlane.HorizontalResolution, Is.EqualTo(testHorizontalResolution));
             Assert.That(viewPlane.VerticalResolution, Is.EqualTo(testVerticalResolution));
             Assert.That(viewPlane.PixelSize, Is.EqualTo(testPixelSize));
             Assert.That(viewPlane.Gamma, Is.EqualTo(testGamma));
-            Assert.That(viewPlane.SampleCount, Is.EqualTo(testSampleCount));
+            Assert.That(viewPlane.Sampler, Is.EqualTo(testSampler));
         }
     }
 }

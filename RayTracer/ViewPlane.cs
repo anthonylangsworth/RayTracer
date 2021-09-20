@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RayTracer.Samplers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace RayTracer
 {
     public class ViewPlane
     {
-        public ViewPlane(int horizontalResolution, int verticalResolution, double pixelSize, double gamma, int sampleCount = 1)
+        public ViewPlane(int horizontalResolution, int verticalResolution, double pixelSize, double gamma, Sampler sampler)
         {
             if(horizontalResolution <= 0)
             {
@@ -26,22 +27,18 @@ namespace RayTracer
             {
                 throw new ArgumentException($"{ nameof(gamma) } must be positive", nameof(gamma));
             }
-            if (sampleCount <= 0)
-            {
-                throw new ArgumentException($"{ nameof(sampleCount) } must be positive", nameof(sampleCount));
-            }
 
             HorizontalResolution = horizontalResolution;
             VerticalResolution = verticalResolution;
             PixelSize = pixelSize;
             Gamma = gamma;
-            SampleCount = sampleCount;
+            Sampler = sampler;
         }
 
         public int HorizontalResolution { get; }
         public int VerticalResolution { get; }
         public double PixelSize { get; }
         public double Gamma { get; }
-        public int SampleCount { get; }
+        public Sampler Sampler { get; }
     }
 }

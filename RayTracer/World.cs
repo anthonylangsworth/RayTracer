@@ -1,5 +1,6 @@
 ﻿using RayTracer.Objects;
 using RayTracer.Primitives;
+using RayTracer.Samplers;
 using RayTracer.Tracers;
 using System;
 using System.Collections.Generic;
@@ -14,28 +15,27 @@ namespace RayTracer
         public static void Main()
         {
             World world = new World();
-            ViewPlane viewPlane = new ViewPlane(300, 300, 1, 1);
             foreach (var entry in new[]
             {
                 //new {
                 //    Scene = world.BuildSingleSphere(),
-                //    ViewPlane = new ViewPlane(200, 200, 1, 1),
+                //    ViewPlane = new ViewPlane(200, 200, 1, 1, new RegularSampler()),
                 //    FileName = "3.18.png"
                 //},
                 //new {
                 //    Scene = world.BuildTwoSpheresAndPlane(),
-                //    ViewPlane = new ViewPlane(300, 300, 1, 1),
+                //    ViewPlane = new ViewPlane(300, 300, 1, 1, new RegularSampler()),
                 //    FileName = "3.21.png"
                 //},
                 new {
                     Scene = world.BuildTwoSpheresAndPlane(),
-                    ViewPlane = new ViewPlane(300, 300, 1, 1, 64),
+                    ViewPlane = new ViewPlane(300, 300, 1, 1, new JitteredSampler(36)), // new RegularSampler()), // 
                     FileName = "4.1.png"
                 }
             })
             {
                 RGBColor[,] result = world.Render(entry.Scene, entry.ViewPlane);
-                world.Save(result, entry.FileName, viewPlane.Gamma);
+                world.Save(result, entry.FileName, entry.ViewPlane.Gamma);
             }
         }
 
@@ -92,29 +92,24 @@ namespace RayTracer
         {
             Vector3D rayDirection = new Vector3D(0, 0, -1);
             const double zw = 100.0;
-            double x, y;
-            Ray ray;
-
             RGBColor[,] result = new RGBColor[viewPlane.VerticalResolution, viewPlane.HorizontalResolution];
-            Random random = new Random();
 
             Parallel.For(0, viewPlane.VerticalResolution, row => // up
             {
+                // Declare here because they are thread local
+                double x, y;
+                Ray ray;
                 for (int column = 0; column < viewPlane.HorizontalResolution; column++) // left to right
                 {
                     RGBColor pixelColor = RGBColor.Black;
-                    int sampleMax = (int)Math.Sqrt(viewPlane.SampleCount);
-                    for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
+                    foreach (Point2D samplePoint in viewPlane.Sampler.GetSamplesOnUnitSquare())
                     {
-                        for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
-                        {
-                            x = viewPlane.PixelSize * (column - 0.5 * viewPlane.HorizontalResolution + (sampleColumn + random.NextDouble()) / sampleMax);
-                            y = viewPlane.PixelSize * (row - 0.5 * viewPlane.VerticalResolution + (sampleRow + random.NextDouble()) / sampleMax);
-                            ray = new Ray(new Point3D(x, y, zw), rayDirection);
-                            pixelColor += Tracer.TraceRay(scene, ray);
-                        }
+                        x = viewPlane.PixelSize * (column - 0.5 * viewPlane.HorizontalResolution + samplePoint.X);
+                        y = viewPlane.PixelSize * (row - 0.5 * viewPlane.VerticalResolution + samplePoint.Y);
+                        ray = new Ray(new Point3D(x, y, zw), rayDirection);
+                        pixelColor += Tracer.TraceRay(scene, ray);
                     }
-                    pixelColor /= sampleMax * sampleMax; // In case viewPlane.SampleCount is not square
+                    pixelColor /= viewPlane.Sampler.SamplesPerSet;
                     result[row, column] = pixelColor;
                 }
             });
@@ -132,7 +127,7 @@ namespace RayTracer
         /// The path or file name to output to.
         /// </param>
         /// <param name="gamma">
-        /// The gamem to use, defaulting to 1.0.
+        /// The gamma to use, defaulting to 1.0.
         /// </param>
         public void Save(RGBColor[,] output, string fileName, double gamma = 1.0)
         {
