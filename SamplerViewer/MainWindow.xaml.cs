@@ -25,7 +25,7 @@ namespace SamplerViewer
         public MainWindow()
         {
             InitializeComponent();
-            RegenerateSamplerPlot(this, EventArgs.Empty);
+            GenerateSamplerPlot(this, EventArgs.Empty);
         }
 
         public Sampler? Sampler { get; set; }
@@ -70,17 +70,30 @@ namespace SamplerViewer
             foreach(Point2D point2D in sampler.GetSamplesOnUnitSquare())
             {
                 double diameter = 10;
-                Ellipse dot = new Ellipse();
-                dot.Height = diameter;
-                dot.Width = diameter;
-                dot.Fill = Brushes.Black;
+                Ellipse dot = new Ellipse
+                {
+                    Height = diameter,
+                    Width = diameter,
+                    Fill = Brushes.Black
+                };
                 canvas.Children.Add(dot);
                 Canvas.SetLeft(dot, point2D.X * extent - diameter / 2);
                 Canvas.SetTop(dot, extent - point2D.Y * extent - diameter / 2); // Invert due top down drawing coordinate system
             }
         }
 
-        private void RegenerateSamplerPlot(object sender, EventArgs e)
+        private void FillPointsListBox(ListBox listbox, Sampler sampler)
+        {
+            listbox.Items.Clear();
+            foreach (Point2D point2D in sampler.GetSamplesOnUnitSquare())
+            {
+                ListBoxItem listBoxItem = new ListBoxItem();
+                listBoxItem.Content = point2D.ToString();
+                listbox.Items.Add(listBoxItem);
+            }
+        }
+
+        private void GenerateSamplerPlot(object sender, EventArgs e)
         {
             int samplesPerSet = Convert.ToInt32(((ComboBoxItem) samplesPerSetCombo.SelectedValue).Content);
             string? samplerName = Convert.ToString(((ComboBoxItem)samplersCombo.SelectedValue).Content);
@@ -99,11 +112,16 @@ namespace SamplerViewer
                     Sampler = new NRooksSampler(new Random(), samplesPerSet);
                     break;
                 default:
-                    MessageBox.Show($"Unknown samplerName: '{samplerName}'");
+                    MessageBox.Show($"Unknown sampler name: '{samplerName}'");
+                    Sampler = null;
                     break;
             }
 
-            CreateSamplePlot(samplerCanvas, Sampler);
+            if (Sampler != null)
+            {
+                CreateSamplePlot(samplerCanvas, Sampler);
+                FillPointsListBox(pointsListBox, Sampler);
+            }
         }
     }
 }

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SamplerViewer"
         mc:Ignorable="d"
-        Title="Sampler Viewer" Height="600" Width="550">
+        Title="Sampler Viewer" Height="615" Width="550">
     <StackPanel Margin="10" Orientation="Vertical">
-        <StackPanel  Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal">
             <Label>Sampler:</Label>
             <ComboBox x:Name="samplersCombo">
                 <ComboBoxItem>Regular</ComboBoxItem>
@@ -26,8 +26,16 @@
                 <ComboBoxItem>49</ComboBoxItem>
                 <ComboBoxItem>64</ComboBoxItem>
             </ComboBox>
-            <Button Margin="10,0,0,0" Click="RegenerateSamplerPlot" >Regenerate</Button>
+            <Button Margin="10,0,0,0" Click="GenerateSamplerPlot">Generate</Button>
         </StackPanel>
-        <Canvas x:Name="samplerCanvas" Margin="10"/>
+        <TabControl Height="555">
+            <TabItem Header="Plot">
+                <Canvas x:Name="samplerCanvas" Margin="10"/>
+            </TabItem>
+            <TabItem Header="Points">
+                <ListBox x:Name="pointsListBox" Margin="10" Height="470"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </TabItem>
+        </TabControl>
     </StackPanel>
 </Window>
