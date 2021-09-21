@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Samplers
 {
-    internal class NRooksSampler : Sampler
+    public class NRooksSampler : Sampler
     {
         /// <inheritdoc/>
         public NRooksSampler(int samplesPerSet, int sampleSets = 1) 

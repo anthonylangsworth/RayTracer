@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Test.Samplers
 {
-    internal class TestJitteredSampler
+    internal class TestNRooksSampler
     {
         [Test]
         public void Ctor()
         {
             int testSamplesPerSet = 64;
             int testSampleSets = 2;
-            JitteredSampler sampler = new JitteredSampler(testSamplesPerSet, testSampleSets);
+            NRooksSampler sampler = new NRooksSampler(testSamplesPerSet, testSampleSets);
             Assert.That(sampler.SamplesPerSet, Is.EqualTo(testSamplesPerSet));
             Assert.That(sampler.SampleSets, Is.EqualTo(testSampleSets));
         }
@@ -24,8 +24,8 @@ namespace RayTracer.Test.Samplers
         [Test]
         public void TestGenerateSamplesOnUnitSquare()
         {
-            int testSamplesPerSet = 64;
-            JitteredSampler sampler = new JitteredSampler(testSamplesPerSet, 1);
+            int testSamplesPerSet = 16;
+            NRooksSampler sampler = new NRooksSampler(testSamplesPerSet, 1);
             IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
             Assert.That(set.Count(), Is.EqualTo(testSamplesPerSet));
             Assert.IsTrue(set.All(p => p.X >= 0 && p.Y < 1 && p.Y >= 0 && p.Y < 1));
