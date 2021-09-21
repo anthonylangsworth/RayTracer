@@ -13,7 +13,7 @@ namespace RayTracer
     /// See https://docs.microsoft.com/en-us/dotnet/api/system.random?f1url=%3FappId%3DDev16IDEF1%26l%3DEN-US%26k%3Dk(System.Random);k(DevLang-csharp)%26rd%3Dtrue&view=net-5.0
     /// for discussion and details. Not all members need to be overridden.
     /// </remarks>
-    internal class ConcurrentRandom: Random
+    public class ConcurrentRandom: Random
     {
         private readonly object _lock = new object();
 

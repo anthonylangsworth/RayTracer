@@ -10,8 +10,8 @@ namespace RayTracer.Samplers
     public class NRooksSampler : Sampler
     {
         /// <inheritdoc/>
-        public NRooksSampler(int samplesPerSet, int sampleSets = 1) 
-            : base(samplesPerSet, sampleSets)
+        public NRooksSampler(Random random, int samplesPerSet, int sampleSets = 1) 
+            : base(random, samplesPerSet, sampleSets)
         {
             // Do nothing
         }

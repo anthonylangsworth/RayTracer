@@ -16,7 +16,7 @@ namespace RayTracer.Test
             int testVerticalResolution = 200;
             double testPixelSize = 1.0;
             double testGamma = 2.0;
-            Sampler testSampler = new RegularSampler();
+            Sampler testSampler = new RegularSampler(new Random());
             ViewPlane viewPlane = new ViewPlane(testHorizontalResolution, testVerticalResolution, testPixelSize, testGamma, testSampler);
             Assert.That(viewPlane.HorizontalResolution, Is.EqualTo(testHorizontalResolution));
             Assert.That(viewPlane.VerticalResolution, Is.EqualTo(testVerticalResolution));

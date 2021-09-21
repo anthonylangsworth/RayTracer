@@ -14,22 +14,23 @@ namespace RayTracer
     {
         public static void Main()
         {
+            ConcurrentRandom random = new ConcurrentRandom();
             World world = new World();
             foreach (var entry in new[]
             {
                 //new {
                 //    Scene = world.BuildSingleSphere(),
-                //    ViewPlane = new ViewPlane(200, 200, 1, 1, new RegularSampler()),
+                //    ViewPlane = new ViewPlane(200, 200, 1, 1, new RegularSampler(random)),
                 //    FileName = "3.18.png"
                 //},
                 //new {
                 //    Scene = world.BuildTwoSpheresAndPlane(),
-                //    ViewPlane = new ViewPlane(300, 300, 1, 1, new RegularSampler()),
+                //    ViewPlane = new ViewPlane(300, 300, 1, 1, new RegularSampler(random)),
                 //    FileName = "3.21.png"
                 //},
                 new {
                     Scene = world.BuildTwoSpheresAndPlane(),
-                    ViewPlane = new ViewPlane(300, 300, 1, 1, new NRooksSampler(6)), // new JitteredSampler(36)), // new RegularSampler()), // 
+                    ViewPlane = new ViewPlane(300, 300, 1, 1, new NRooksSampler(random, 6)), // new JitteredSampler(random, 36)), // new RegularSampler(random)), // 
                     FileName = "4.1.png"
                 }
             })

@@ -12,6 +12,9 @@ namespace RayTracer.Samplers
         /// <summary>
         /// Create a new <see cref="JitteredSampler"/>.
         /// </summary>
+        /// <param name="random">
+        /// The random number generator to use.
+        /// </param>
         /// <param name="samplesPerSet">
         /// The number of samples per set. This should be a square 
         /// number (e.g. 4, 9, 16, 25, 36, ...) and must be positive.
@@ -23,8 +26,8 @@ namespace RayTracer.Samplers
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        public JitteredSampler(int samplesPerSet, int sampleSets = 1) 
-            : base(samplesPerSet, sampleSets)
+        public JitteredSampler(Random random, int samplesPerSet, int sampleSets = 1) 
+            : base(random, samplesPerSet, sampleSets)
         {
             // Do nothing
         }

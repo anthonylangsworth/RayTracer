@@ -12,8 +12,11 @@ namespace RayTracer.Samplers
         /// <summary>
         /// Create a <see cref="RegularSampler"/>.
         /// </summary>
-        public RegularSampler() 
-            : base(1, 1)
+        /// <param name="random">
+        /// The random number generator (unused).
+        /// </param>
+        public RegularSampler(Random random) 
+            : base(random, 1, 1)
         {
             // Do nothing
         }

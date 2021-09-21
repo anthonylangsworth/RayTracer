@@ -13,11 +13,13 @@ namespace RayTracer.Samplers
     public abstract class Sampler
     {
         private readonly IEnumerable<Point2D>[] _samples;
-        readonly Random _random;
 
         /// <summary>
         /// Create a new <see cref="Sampler"/>.
         /// </summary>
+        /// <param name="random">
+        /// The random number generator to use.
+        /// </param>
         /// <param name="samplesPerSet">
         /// The number of samples per set. This must be positive.
         /// </param>
@@ -28,7 +30,7 @@ namespace RayTracer.Samplers
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        protected Sampler(int samplesPerSet, int sampleSets)
+        protected Sampler(Random random, int samplesPerSet, int sampleSets)
         {
             if (samplesPerSet <= 0)
             {
@@ -38,13 +40,13 @@ namespace RayTracer.Samplers
             {
                 throw new ArgumentException($"{ nameof(sampleSets)} must be positive", nameof(sampleSets));
             }
-
+            Random = random;
             SamplesPerSet = samplesPerSet;
             SampleSets = sampleSets;
-            _random = new Random();
-            _samples = Enumerable.Range(0, sampleSets).Select(i => GenerateSample(_random)).ToArray();
+            _samples = Enumerable.Range(0, sampleSets).Select(i => GenerateSample(Random)).ToArray();
         }
 
+        public Random Random { get; }
         public int SamplesPerSet { get; }
         public int SampleSets { get; }
 
@@ -56,11 +58,7 @@ namespace RayTracer.Samplers
         /// </returns>
         public IEnumerable<Point2D> GetSamplesOnUnitSquare()
         {
-            // _random is not threadsafe.
-            lock (_random)
-            {
-                return _samples[_random.Next() % SampleSets];
-            }
+            return _samples[Random.Next() % SampleSets];
         }
 
         protected abstract IEnumerable<Point2D> GenerateSample(Random random);
