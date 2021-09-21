@@ -29,6 +29,8 @@ namespace RayTracer.Samplers
         public JitteredSampler(Random random, int samplesPerSet, int sampleSets = 1) 
             : base(random, samplesPerSet, sampleSets)
         {
+            // We could save this value but GenerateSample is called from the base class
+            // constructor.
             int samplesPerSetSquareRoot = (int) Math.Sqrt(samplesPerSet);
             if (samplesPerSetSquareRoot * samplesPerSetSquareRoot != samplesPerSet)
             {
@@ -42,6 +44,7 @@ namespace RayTracer.Samplers
         {
             Point2D[] result = new Point2D[SamplesPerSet];
             int sampleMax = (int)Math.Sqrt(SamplesPerSet);
+
             for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
             {
                 for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
