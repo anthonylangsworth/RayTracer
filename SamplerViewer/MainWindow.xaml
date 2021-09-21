@@ -1,0 +1,33 @@
+﻿<Window x:Class="SamplerViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SamplerViewer"
+        mc:Ignorable="d"
+        Title="Sampler Viewer" Height="600" Width="550">
+    <StackPanel Margin="10" Orientation="Vertical">
+        <StackPanel  Orientation="Horizontal">
+            <Label>Sampler:</Label>
+            <ComboBox x:Name="samplersCombo">
+                <ComboBoxItem>Regular</ComboBoxItem>
+                <ComboBoxItem>Jittered</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">Multi-Jittered</ComboBoxItem>
+                <ComboBoxItem>n-Rooks</ComboBoxItem>
+            </ComboBox>
+            <Label>Samples per set:</Label>
+            <ComboBox x:Name="samplesPerSetCombo">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem>9</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">16</ComboBoxItem>
+                <ComboBoxItem>25</ComboBoxItem>
+                <ComboBoxItem>36</ComboBoxItem>
+                <ComboBoxItem>49</ComboBoxItem>
+                <ComboBoxItem>64</ComboBoxItem>
+            </ComboBox>
+            <Button Margin="10,0,0,0" Click="RegenerateSamplerPlot" >Regenerate</Button>
+        </StackPanel>
+        <Canvas x:Name="samplerCanvas" Margin="10"/>
+    </StackPanel>
+</Window>
