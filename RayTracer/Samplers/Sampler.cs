@@ -12,9 +12,8 @@ namespace RayTracer.Samplers
     /// </summary>
     public abstract class Sampler
     {
-        private IEnumerable<Point2D>[] _samples;
-        int _currentSample;
-        Random _random;
+        private readonly IEnumerable<Point2D>[] _samples;
+        readonly Random _random;
 
         /// <summary>
         /// Create a new <see cref="Sampler"/>.
@@ -44,21 +43,23 @@ namespace RayTracer.Samplers
             SampleSets = sampleSets;
             _random = new Random();
             _samples = Enumerable.Range(0, sampleSets).Select(i => GenerateSample(_random)).ToArray();
-            _currentSample = 0;
         }
 
         public int SamplesPerSet { get; }
         public int SampleSets { get; }
 
+        /// <summary>
+        /// Get a random next sample set.
+        /// </summary>
+        /// <returns>
+        /// The sample set.
+        /// </returns>
         public IEnumerable<Point2D> GetSamplesOnUnitSquare()
         {
-            // _random  and _currentSample access must be serialized to 
-            // prevent concurrency issues.
-            lock (_samples)
+            // _random is not threadsafe.
+            lock (_random)
             {
-                IEnumerable<Point2D> result = _samples[_currentSample];
-                _currentSample = (_currentSample + _random.Next()) % SampleSets;
-                return result;
+                return _samples[_random.Next() % SampleSets];
             }
         }
 
