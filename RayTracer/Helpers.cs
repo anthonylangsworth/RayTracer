@@ -10,7 +10,7 @@ namespace RayTracer
     public static class Helpers
     {
         /// <summary>
-        /// Perform a Fisher-Yates-Durstenfeld shuffle (see https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm).
+        /// Perform a Fisher-Yates-Durstenfeld shuffle.
         /// </summary>
         /// <param name="source">
         /// The source collection.
@@ -19,6 +19,7 @@ namespace RayTracer
         /// A <see cref="Random"/>.
         /// </param>
         /// <remarks>
+        /// See https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm.
         /// Copied from https://stackoverflow.com/questions/5807128/an-extension-method-on-ienumerable-needed-for-shuffling.
         /// </remarks>
         /// <returns>
