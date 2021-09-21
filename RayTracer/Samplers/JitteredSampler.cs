@@ -30,23 +30,19 @@ namespace RayTracer.Samplers
         }
 
         /// <inheritdoc/>
-        protected override Point2D[][] GenerateSamples(Random random)
+        protected override IEnumerable<Point2D> GenerateSample(Random random)
         {
-            Point2D[][] result = new Point2D[SampleSets][];
-
             int sampleMax = (int) Math.Sqrt(SamplesPerSet);
-            for (int sample = 0; sample < SampleSets; sample++)
+            Point2D[] result = new Point2D[SamplesPerSet];
+
+            for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
             {
-                result[sample] = new Point2D[SamplesPerSet];
-                for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
+                for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
                 {
-                    for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
-                    {
-                        result[sample][sampleRow * sampleMax + sampleColumn] = new Point2D(
-                            (sampleColumn + random.NextDouble()) / sampleMax,
-                            (sampleRow + random.NextDouble()) / sampleMax
-                        );
-                    }
+                    result[sampleRow * sampleMax + sampleColumn] = new Point2D(
+                        (sampleColumn + random.NextDouble()) / sampleMax,
+                        (sampleRow + random.NextDouble()) / sampleMax
+                    );
                 }
             }
 
