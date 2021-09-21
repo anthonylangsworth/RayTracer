@@ -97,9 +97,9 @@ namespace SamplerViewer
 
         private void DrawSamplerPoints(Canvas canvas, Sampler sampler, double extent)
         {
-            foreach(Point2D point2D in sampler.GetSamplesOnUnitSquare())
+            double diameter = 10;
+            foreach (Point2D point2D in sampler.GetSamplesOnUnitSquare())
             {
-                double diameter = 10;
                 Ellipse dot = new Ellipse
                 {
                     Height = diameter,
