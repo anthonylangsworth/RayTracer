@@ -24,13 +24,36 @@ namespace RayTracer.Test.Samplers
         }
 
         [Test]
-        public void TestGenerateSamplesOnUnitSquare()
+        public void GenerateSamplesOnUnitSquare()
         {
             int testSamplesPerSet = 64;
             MultiJitteredSampler sampler = new MultiJitteredSampler(new Random(), testSamplesPerSet, 1);
             IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
             Assert.That(set.Count(), Is.EqualTo(testSamplesPerSet));
             Assert.IsTrue(set.All(p => p.X >= 0 && p.Y < 1 && p.Y >= 0 && p.Y < 1));
+        }
+
+        [Test]
+        [Ignore("Failing due to bug in shuffling")]
+        public void GenerateSamplesOnUnitSquareInCells()
+        {
+            int sampleMax = 8;
+            MultiJitteredSampler sampler = new MultiJitteredSampler(new Random(), sampleMax * sampleMax);
+            IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
+            for(int row = 0; row < sampleMax; row++)
+            {
+                for(int column = 0; column < sampleMax; column++)
+                {
+                    double minX = (sampleMax - column - 1) / (double)sampleMax;
+                    double maxX = (sampleMax - column) / (double)sampleMax;
+                    double minY = (sampleMax - row - 1) / (double)sampleMax;
+                    double maxY = (sampleMax - row) / (double)sampleMax;
+                    Assert.That(
+                        set.Count(p => p.X >= minX && p.X < maxX && p.Y >= minY && p.Y < maxY), 
+                        Is.EqualTo(1),
+                        "Zero or multiple points in a cell");
+                }
+            }
         }
     }
 }

@@ -42,21 +42,41 @@ namespace RayTracer.Samplers
         /// <inheritdoc/>
         protected override IEnumerable<Point2D> GenerateSample(Random random)
         {
-            Point2D[] result = new Point2D[SamplesPerSet];
             int sampleMax = (int)Math.Sqrt(SamplesPerSet);
+            Point2D[,] result = new Point2D[sampleMax, sampleMax];
 
             for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
             {
                 for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
                 {
-                    result[sampleRow * sampleMax + sampleColumn] = new Point2D(
-                        (sampleColumn + ((sampleRow + random.NextDouble()) / sampleMax)) / sampleMax,
-                        (sampleRow + ((sampleColumn + random.NextDouble()) / sampleMax)) / sampleMax
+                    result[sampleRow, sampleColumn] = new Point2D(
+                        (sampleColumn + (((double) sampleRow) / sampleMax)) / sampleMax, // + random.NextDouble()
+                        (sampleRow + (((double) sampleColumn) / sampleMax)) / sampleMax // + random.NextDouble()
                     );
                 }
             }
 
-            return NRooksSampler.ShuffleXAndYCoords(result, random);
+            // Shuffle the X values within each row
+            for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++)
+            {
+                double[] newXs = Enumerable.Range(0, sampleMax).Shuffle(random).Select(index => result[sampleRow, index].X).ToArray();
+                for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++)
+                {
+                    result[sampleRow, sampleColumn] = new Point2D(newXs[sampleColumn], result[sampleRow, sampleColumn].Y);
+                }
+            }
+
+            // Shuffle the Y values within each column
+            for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++)
+            {
+                double[] newYs = Enumerable.Range(0, sampleMax).Shuffle(random).Select(index => result[index, sampleColumn].Y).ToArray();
+                for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++)
+                {
+                    result[sampleRow, sampleColumn] = new Point2D(result[sampleRow, sampleColumn].X, newYs[sampleRow]);
+                }
+            }
+
+            return result.Cast<Point2D>();
         }
     }
 }
