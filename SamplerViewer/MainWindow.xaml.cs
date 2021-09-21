@@ -30,15 +30,15 @@ namespace SamplerViewer
 
         public Sampler? Sampler { get; set; }
         
-        private void CreateSamplePlot(Canvas canvas, Sampler sampler)
+        private void CreateSamplePlot(Canvas canvas, Sampler sampler, int sqrtSamplesPerSet)
         {
             double extent = 5 * 96; // plot is 5 inches wide and high
             canvas.Children.Clear();
-            DrawAxes(canvas, extent);
+            DrawAxes(canvas, extent, sqrtSamplesPerSet);
             DrawSamplerPoints(canvas, sampler, extent);
         }
 
-        private void DrawAxes(Canvas canvas, double extent)
+        private void DrawAxes(Canvas canvas, double extent, int sqrtSamplesPerSet)
         {
             Line horizontalAxis = new()
             {
@@ -52,6 +52,21 @@ namespace SamplerViewer
             Canvas.SetLeft(horizontalAxis, 0);
             Canvas.SetTop(horizontalAxis, 0);
 
+            for(int i = 1; i < sqrtSamplesPerSet; i++)
+            {
+                Line guide = new()
+                {
+                    X1 = 0,
+                    Y1 = (sqrtSamplesPerSet - i) / (double) sqrtSamplesPerSet * extent,
+                    X2 = extent,
+                    Y2 = (sqrtSamplesPerSet - i) / (double) sqrtSamplesPerSet * extent,
+                    Stroke = Brushes.LightGray
+                };
+                canvas.Children.Add(guide);
+                Canvas.SetLeft(guide, 0);
+                Canvas.SetTop(guide, 0);
+            }
+
             Line verticalAxis = new()
             {
                 X1 = 0,
@@ -63,6 +78,21 @@ namespace SamplerViewer
             canvas.Children.Add(verticalAxis);
             Canvas.SetLeft(verticalAxis, 0);
             Canvas.SetTop(verticalAxis, 0);
+
+            for (int i = 1; i < sqrtSamplesPerSet; i++)
+            {
+                Line guide = new()
+                {
+                    X1 = (sqrtSamplesPerSet - i) / (double)sqrtSamplesPerSet * extent,
+                    Y1 = 0,
+                    X2 = (sqrtSamplesPerSet - i) / (double)sqrtSamplesPerSet * extent,
+                    Y2 = extent,
+                    Stroke = Brushes.LightGray
+                };
+                canvas.Children.Add(guide);
+                Canvas.SetLeft(guide, 0);
+                Canvas.SetTop(guide, 0);
+            }
         }
 
         private void DrawSamplerPoints(Canvas canvas, Sampler sampler, double extent)
@@ -119,7 +149,7 @@ namespace SamplerViewer
 
             if (Sampler != null)
             {
-                CreateSamplePlot(samplerCanvas, Sampler);
+                CreateSamplePlot(samplerCanvas, Sampler, (int) Math.Sqrt(samplesPerSet));
                 FillPointsListBox(pointsListBox, Sampler);
             }
         }
