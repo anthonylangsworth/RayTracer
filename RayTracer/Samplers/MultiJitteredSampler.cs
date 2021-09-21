@@ -50,8 +50,8 @@ namespace RayTracer.Samplers
                 for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
                 {
                     result[sampleRow * sampleMax + sampleColumn] = new Point2D(
-                        (sampleColumn + ((sampleColumn + random.NextDouble()) / sampleMax)) / sampleMax,
-                        (sampleRow + ((sampleRow + random.NextDouble()) / sampleMax)) / sampleMax
+                        (sampleColumn + ((sampleRow + random.NextDouble()) / sampleMax)) / sampleMax,
+                        (sampleRow + ((sampleColumn + random.NextDouble()) / sampleMax)) / sampleMax
                     );
                 }
             }
