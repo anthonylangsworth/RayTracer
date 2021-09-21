@@ -30,7 +30,7 @@ namespace RayTracer
                 //},
                 new {
                     Scene = world.BuildTwoSpheresAndPlane(),
-                    ViewPlane = new ViewPlane(300, 300, 1, 1, new NRooksSampler(random, 6)), // new JitteredSampler(random, 36)), // new RegularSampler(random)), // 
+                    ViewPlane = new ViewPlane(300, 300, 1, 1, new MultiJitteredSampler(random, 16)), // new NRooksSampler(random, 6)), // new JitteredSampler(random, 36)), // new RegularSampler(random)), // 
                     FileName = "4.1.png"
                 }
             })
