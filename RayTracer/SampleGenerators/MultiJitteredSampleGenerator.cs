@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.SampleGenerators
 {
-    public class MultiJitteredSampleGenerator: SampleGenerator
+    public class MultiJitteredSampleGenerator: JitteredSampleGenerator
     {
         /// <summary>
         /// Create a new <see cref="MultiJitteredSampleGenerator"/>.
@@ -29,20 +29,13 @@ namespace RayTracer.SampleGenerators
         public MultiJitteredSampleGenerator(Random random, int samplesPerSet, int sampleSets = 1)
             : base(random, samplesPerSet, sampleSets)
         {
-            // We could save this value but GenerateSample is called from the base class
-            // constructor.
-            int samplesPerSetSquareRoot = (int)Math.Sqrt(samplesPerSet);
-            if (samplesPerSetSquareRoot * samplesPerSetSquareRoot != samplesPerSet)
-            {
-                throw new ArgumentOutOfRangeException(nameof(samplesPerSet),
-                    $"{ nameof(samplesPerSet) } must be a square number");
-            }
+            // Do nothing
         }
 
         /// <inheritdoc/>
         protected override IEnumerable<Point2D> GenerateSample(Random random)
         {
-            int sampleMax = (int)Math.Sqrt(SamplesPerSet);
+            int sampleMax = SamplesPerSetSquareRoot;
             Point2D[,] result = new Point2D[sampleMax, sampleMax];
 
             for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up

@@ -12,7 +12,6 @@ namespace RayTracer.SampleGenerators
     /// </summary>
     public abstract class SampleGenerator
     {
-        private readonly IEnumerable<Point2D>[] _samples;
 
         /// <summary>
         /// Create a new <see cref="Sampler"/>.
@@ -43,12 +42,13 @@ namespace RayTracer.SampleGenerators
             Random = random;
             SamplesPerSet = samplesPerSet;
             SampleSets = sampleSets;
-            _samples = Enumerable.Range(0, sampleSets).Select(i => GenerateSample(Random)).ToArray();
+            Samples = new Lazy<IEnumerable<Point2D>[]>(() => Enumerable.Range(0, sampleSets).Select(i => GenerateSample(Random)).ToArray(), true);
         }
 
         public Random Random { get; }
         public int SamplesPerSet { get; }
         public int SampleSets { get; }
+        public Lazy<IEnumerable<Point2D>[]> Samples { get; }
 
         /// <summary>
         /// Get a random next sample set.
@@ -58,9 +58,18 @@ namespace RayTracer.SampleGenerators
         /// </returns>
         public IEnumerable<Point2D> GetSamplesOnUnitSquare()
         {
-            return _samples[Random.Next() % SampleSets];
+            return Samples.Value[Random.Next() % SampleSets];
         }
 
+        /// <summary>
+        /// Called lazily on first access.
+        /// </summary>
+        /// <param name="random">
+        /// A <see cref="Random"/> to use.
+        /// </param>
+        /// <returns>
+        /// A sample set.
+        /// </returns>
         protected abstract IEnumerable<Point2D> GenerateSample(Random random);
     }
 }

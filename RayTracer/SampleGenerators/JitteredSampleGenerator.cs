@@ -29,34 +29,32 @@ namespace RayTracer.SampleGenerators
         public JitteredSampleGenerator(Random random, int samplesPerSet, int sampleSets = 1) 
             : base(random, samplesPerSet, sampleSets)
         {
-            // We could save this value but GenerateSample is called from the base class
-            // constructor.
-            int samplesPerSetSquareRoot = (int) Math.Sqrt(samplesPerSet);
-            if (samplesPerSetSquareRoot * samplesPerSetSquareRoot != samplesPerSet)
+            SamplesPerSetSquareRoot = (int)Math.Sqrt(samplesPerSet);
+            if (SamplesPerSetSquareRoot * SamplesPerSetSquareRoot != samplesPerSet)
             {
-                throw new ArgumentOutOfRangeException(nameof(samplesPerSet), 
+                throw new ArgumentOutOfRangeException(nameof(samplesPerSet),
                     $"{ nameof(samplesPerSet) } must be a square number");
             }
         }
+
+        public int SamplesPerSetSquareRoot { get; }
 
         /// <inheritdoc/>
         protected override IEnumerable<Point2D> GenerateSample(Random random)
         {
             Point2D[] result = new Point2D[SamplesPerSet];
-            int sampleMax = (int)Math.Sqrt(SamplesPerSet);
+            int sampleMax = SamplesPerSetSquareRoot;
 
             for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++) // up
             {
                 for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++) // left to right
                 {
-                    result[sampleRow * sampleMax + sampleColumn] = new Point2D(
+                    yield return new Point2D(
                         (sampleColumn + random.NextDouble()) / sampleMax,
                         (sampleRow + random.NextDouble()) / sampleMax
                     );
                 }
             }
-
-            return result;
         }
     }
 }
