@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RayTracer.Samplers
+namespace RayTracer.SampleGenerators
 {
-    public class RegularSampler : Sampler
+    public class RegularSampleGenerator : SampleGenerator
     {
         /// <summary>
-        /// Create a <see cref="RegularSampler"/>.
+        /// Create a <see cref="RegularSampleGenerator"/>.
         /// </summary>
         /// <param name="random">
         /// The random number generator (unused).
         /// </param>
-        public RegularSampler(Random random) 
+        public RegularSampleGenerator(Random random) 
             : base(random, 1, 1)
         {
             // Do nothing

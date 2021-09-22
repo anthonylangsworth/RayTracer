@@ -1,5 +1,5 @@
 ﻿using RayTracer.Primitives;
-using RayTracer.Samplers;
+using RayTracer.SampleGenerators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,14 +28,14 @@ namespace SamplerViewer
             GenerateSamplerPlot(this, EventArgs.Empty);
         }
 
-        public Sampler? Sampler { get; set; }
+        public SampleGenerator? SampleGenerator { get; set; }
         
-        private void CreateSamplePlot(Canvas canvas, Sampler sampler, int sqrtSamplesPerSet)
+        private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet)
         {
             double extent = 5 * 96; // plot is 5 inches wide and high
             canvas.Children.Clear();
             DrawAxes(canvas, extent, sqrtSamplesPerSet);
-            DrawSamplerPoints(canvas, sampler, extent);
+            DrawSamplerPoints(canvas, sampleGenerator, extent);
         }
 
         private void DrawAxes(Canvas canvas, double extent, int sqrtSamplesPerSet)
@@ -95,10 +95,10 @@ namespace SamplerViewer
             }
         }
 
-        private void DrawSamplerPoints(Canvas canvas, Sampler sampler, double extent)
+        private void DrawSamplerPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent)
         {
             double diameter = 10;
-            foreach (Point2D point2D in sampler.GetSamplesOnUnitSquare())
+            foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
             {
                 Ellipse dot = new Ellipse
                 {
@@ -112,10 +112,10 @@ namespace SamplerViewer
             }
         }
 
-        private void FillPointsListBox(ListBox listbox, Sampler sampler)
+        private void FillPointsListBox(ListBox listbox, SampleGenerator sampleGenerator)
         {
             listbox.Items.Clear();
-            foreach (Point2D point2D in sampler.GetSamplesOnUnitSquare())
+            foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
             {
                 ListBoxItem listBoxItem = new ListBoxItem();
                 listBoxItem.Content = point2D.ToString();
@@ -130,27 +130,27 @@ namespace SamplerViewer
             switch(samplerName)
             {
                 case "Regular":
-                    Sampler = new RegularSampler(new Random());
+                    SampleGenerator = new RegularSampleGenerator(new Random());
                     break;
                 case "Jittered":
-                    Sampler = new JitteredSampler(new Random(), samplesPerSet);
+                    SampleGenerator = new JitteredSampleGenerator(new Random(), samplesPerSet);
                     break;
                 case "Multi-Jittered":
-                    Sampler = new MultiJitteredSampler(new Random(), samplesPerSet);
+                    SampleGenerator = new MultiJitteredSampleGenerator(new Random(), samplesPerSet);
                     break;
                 case "n-Rooks":
-                    Sampler = new NRooksSampler(new Random(), samplesPerSet);
+                    SampleGenerator = new NRooksSampleGenerator(new Random(), samplesPerSet);
                     break;
                 default:
                     MessageBox.Show($"Unknown sampler name: '{samplerName}'");
-                    Sampler = null;
+                    SampleGenerator = null;
                     break;
             }
 
-            if (Sampler != null)
+            if (SampleGenerator != null)
             {
-                CreateSamplePlot(samplerCanvas, Sampler, (int) Math.Sqrt(samplesPerSet));
-                FillPointsListBox(pointsListBox, Sampler);
+                CreateSamplePlot(samplerCanvas, SampleGenerator, (int) Math.Sqrt(samplesPerSet));
+                FillPointsListBox(pointsListBox, SampleGenerator);
             }
         }
     }

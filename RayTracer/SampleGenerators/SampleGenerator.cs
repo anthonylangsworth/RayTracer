@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RayTracer.Samplers
+namespace RayTracer.SampleGenerators
 {
     /// <summary>
     /// Generate "subpixels" to render within a pixel to get a better image.`
     /// </summary>
-    public abstract class Sampler
+    public abstract class SampleGenerator
     {
         private readonly IEnumerable<Point2D>[] _samples;
 
@@ -30,7 +30,7 @@ namespace RayTracer.Samplers
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        protected Sampler(Random random, int samplesPerSet, int sampleSets)
+        protected SampleGenerator(Random random, int samplesPerSet, int sampleSets)
         {
             if (samplesPerSet <= 0)
             {

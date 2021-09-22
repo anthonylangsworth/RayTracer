@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using RayTracer.Primitives;
-using RayTracer.Samplers;
+using RayTracer.SampleGenerators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Test.Samplers
 {
-    internal class TestMultiJitteredSampler
+    internal class TestMultiJitteredSampleGenerator
     {
         [Test]
         public void Ctor()
@@ -17,7 +17,7 @@ namespace RayTracer.Test.Samplers
             int testSamplesPerSet = 64;
             int testSampleSets = 2;
             Random random = new Random();
-            MultiJitteredSampler sampler = new MultiJitteredSampler(random, testSamplesPerSet, testSampleSets);
+            MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(random, testSamplesPerSet, testSampleSets);
             Assert.That(sampler.SamplesPerSet, Is.EqualTo(testSamplesPerSet));
             Assert.That(sampler.SampleSets, Is.EqualTo(testSampleSets));
             Assert.That(sampler.Random, Is.EqualTo(random));
@@ -27,7 +27,7 @@ namespace RayTracer.Test.Samplers
         public void GenerateSamplesOnUnitSquare()
         {
             int testSamplesPerSet = 64;
-            MultiJitteredSampler sampler = new MultiJitteredSampler(new Random(), testSamplesPerSet, 1);
+            MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(new Random(), testSamplesPerSet, 1);
             IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
             Assert.That(set.Count(), Is.EqualTo(testSamplesPerSet));
             Assert.IsTrue(set.All(p => p.X >= 0 && p.Y < 1 && p.Y >= 0 && p.Y < 1));
@@ -38,7 +38,7 @@ namespace RayTracer.Test.Samplers
         public void GenerateSamplesOnUnitSquareInCells()
         {
             int sampleMax = 8;
-            MultiJitteredSampler sampler = new MultiJitteredSampler(new Random(), sampleMax * sampleMax);
+            MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(new Random(), sampleMax * sampleMax);
             IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
             for(int row = 0; row < sampleMax; row++)
             {

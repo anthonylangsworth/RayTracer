@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RayTracer.Samplers
+namespace RayTracer.SampleGenerators
 {
-    public class NRooksSampler : Sampler
+    public class NRooksSampleGenerator : SampleGenerator
     {
         /// <inheritdoc/>
-        public NRooksSampler(Random random, int samplesPerSet, int sampleSets = 1) 
+        public NRooksSampleGenerator(Random random, int samplesPerSet, int sampleSets = 1) 
             : base(random, samplesPerSet, sampleSets)
         {
             // Do nothing

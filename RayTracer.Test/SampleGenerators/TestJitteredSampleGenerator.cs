@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using RayTracer.Primitives;
-using RayTracer.Samplers;
+using RayTracer.SampleGenerators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Test.Samplers
 {
-    internal class TestNRooksSampler
+    internal class TestJitteredSampleGenerator
     {
         [Test]
         public void Ctor()
@@ -17,7 +17,7 @@ namespace RayTracer.Test.Samplers
             int testSamplesPerSet = 64;
             int testSampleSets = 2;
             Random random = new Random();
-            NRooksSampler sampler = new NRooksSampler(random, testSamplesPerSet, testSampleSets);
+            JitteredSampleGenerator sampler = new JitteredSampleGenerator(random, testSamplesPerSet, testSampleSets);
             Assert.That(sampler.SamplesPerSet, Is.EqualTo(testSamplesPerSet));
             Assert.That(sampler.SampleSets, Is.EqualTo(testSampleSets));
             Assert.That(sampler.Random, Is.EqualTo(random));
@@ -26,9 +26,8 @@ namespace RayTracer.Test.Samplers
         [Test]
         public void TestGenerateSamplesOnUnitSquare()
         {
-            int testSamplesPerSet = 16;
-            Random random = new Random();
-            NRooksSampler sampler = new NRooksSampler(random, testSamplesPerSet, 1);
+            int testSamplesPerSet = 64;
+            JitteredSampleGenerator sampler = new JitteredSampleGenerator(new Random(), testSamplesPerSet, 1);
             IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
             Assert.That(set.Count(), Is.EqualTo(testSamplesPerSet));
             Assert.IsTrue(set.All(p => p.X >= 0 && p.Y < 1 && p.Y >= 0 && p.Y < 1));

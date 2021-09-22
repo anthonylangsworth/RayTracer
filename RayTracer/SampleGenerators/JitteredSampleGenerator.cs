@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RayTracer.Samplers
+namespace RayTracer.SampleGenerators
 {
-    public class JitteredSampler : Sampler
+    public class JitteredSampleGenerator : SampleGenerator
     {
         /// <summary>
-        /// Create a new <see cref="JitteredSampler"/>.
+        /// Create a new <see cref="JitteredSampleGenerator"/>.
         /// </summary>
         /// <param name="random">
         /// The random number generator to use.
@@ -26,7 +26,7 @@ namespace RayTracer.Samplers
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        public JitteredSampler(Random random, int samplesPerSet, int sampleSets = 1) 
+        public JitteredSampleGenerator(Random random, int samplesPerSet, int sampleSets = 1) 
             : base(random, samplesPerSet, sampleSets)
         {
             // We could save this value but GenerateSample is called from the base class
