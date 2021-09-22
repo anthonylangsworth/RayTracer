@@ -19,8 +19,8 @@
             <ComboBox x:Name="samplesPerSetCombo">
                 <ComboBoxItem>1</ComboBoxItem>
                 <ComboBoxItem>4</ComboBoxItem>
-                <ComboBoxItem>9</ComboBoxItem>
-                <ComboBoxItem IsSelected="True">16</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">9</ComboBoxItem>
+                <ComboBoxItem>16</ComboBoxItem>
                 <ComboBoxItem>25</ComboBoxItem>
                 <ComboBoxItem>36</ComboBoxItem>
                 <ComboBoxItem>49</ComboBoxItem>

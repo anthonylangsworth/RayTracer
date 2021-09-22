@@ -98,8 +98,14 @@ namespace SamplerViewer
         private void DrawSamplerPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent)
         {
             double diameter = 10;
+            // int index = 1;
             foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
             {
+                //Label dot = new Label()
+                //{
+                //    Content = index++.ToString(),
+                //    HorizontalAlignment = HorizontalAlignment.Center
+                //};
                 Ellipse dot = new Ellipse
                 {
                     Height = diameter,
@@ -126,7 +132,7 @@ namespace SamplerViewer
         private void GenerateSamplerPlot(object sender, EventArgs e)
         {
             int samplesPerSet = Convert.ToInt32(((ComboBoxItem) samplesPerSetCombo.SelectedValue).Content);
-            string? samplerName = Convert.ToString(((ComboBoxItem)samplersCombo.SelectedValue).Content);
+            string? samplerName = Convert.ToString(((ComboBoxItem) samplersCombo.SelectedValue).Content);
             switch(samplerName)
             {
                 case "Regular":
