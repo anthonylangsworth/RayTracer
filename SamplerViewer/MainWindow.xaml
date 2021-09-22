@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SamplerViewer"
         mc:Ignorable="d"
-        Title="Sampler Viewer" Height="615" Width="550">
+        Title="Sampler Viewer" Height="615" Width="550" ResizeMode="NoResize">
     <StackPanel Margin="10" Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
             <Label>Sampler:</Label>
