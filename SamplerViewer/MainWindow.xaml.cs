@@ -98,20 +98,20 @@ namespace SamplerViewer
         private void DrawSamplerPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent)
         {
             double diameter = 10;
-            // int index = 1;
+            int index = 0;
             foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
             {
-                //Label dot = new Label()
-                //{
-                //    Content = index++.ToString(),
-                //    HorizontalAlignment = HorizontalAlignment.Center
-                //};
-                Ellipse dot = new Ellipse
+                Label dot = new Label()
                 {
-                    Height = diameter,
-                    Width = diameter,
-                    Fill = Brushes.Black
+                    Content = index++.ToString(),
+                    HorizontalAlignment = HorizontalAlignment.Center
                 };
+                //Ellipse dot = new Ellipse
+                //{
+                //    Height = diameter,
+                //    Width = diameter,
+                //    Fill = Brushes.Black
+                //};
                 canvas.Children.Add(dot);
                 Canvas.SetLeft(dot, point2D.X * extent - diameter / 2);
                 Canvas.SetTop(dot, extent - point2D.Y * extent - diameter / 2); // Invert due top down drawing coordinate system
@@ -121,10 +121,11 @@ namespace SamplerViewer
         private void FillPointsListBox(ListBox listbox, SampleGenerator sampleGenerator)
         {
             listbox.Items.Clear();
+            int i = 0;
             foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
             {
                 ListBoxItem listBoxItem = new ListBoxItem();
-                listBoxItem.Content = point2D.ToString();
+                listBoxItem.Content = i++ + ": " + point2D.ToString();
                 listbox.Items.Add(listBoxItem);
             }
         }
