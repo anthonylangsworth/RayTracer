@@ -21,24 +21,33 @@ namespace RayTracer.SampleGenerators
         {
             int resolution = SamplesPerSetSquareRoot;
             Point2D[,] result = GeneratePoints(random, resolution);
-            result = ShuffleXValuesInRows(random, result);
-            result = ShuffleYValuesInColumns(random, result);
 
-            //for (int row = 0; row < sampleMax; row++)
+            //// Shuffle the X values within each row
+            //for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++)
             //{
-            //    for (int column = 0; column < sampleMax; column++)
+            //    for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++)
             //    {
-            //        double minX = (sampleMax - column - 1) / (double)sampleMax;
-            //        double maxX = (sampleMax - column) / (double)sampleMax;
-            //        double minY = (sampleMax - row - 1) / (double)sampleMax;
-            //        double maxY = (sampleMax - row) / (double)sampleMax;
-            //        Assert.That(
-            //            set.Count(p => p.X >= minX && p.X < maxX && p.Y >= minY && p.Y < maxY),
-            //            Is.EqualTo(1),
-            //            "Zero or multiple points in a cell");
+            //        int swapColumn = random.Next(sampleColumn, sampleMax);
+            //        double swapColumnX = result[sampleRow, swapColumn].X;
+            //        result[sampleRow, swapColumn] = new Point2D(result[sampleRow, sampleColumn].X, result[sampleRow, swapColumn].Y);
+            //        result[sampleRow, sampleColumn] = new Point2D(swapColumnX, result[sampleRow, sampleColumn].Y);
             //    }
             //}
 
+            //// Shuffle the Y values within each column
+            //for (int sampleColumn = 0; sampleColumn < sampleMax; sampleColumn++)
+            //{
+            //    for (int sampleRow = 0; sampleRow < sampleMax; sampleRow++)
+            //    {
+            //        int swapRow = random.Next(sampleRow, sampleMax);
+            //        double swapRowY = result[swapRow, sampleColumn].Y;
+            //        result[swapRow, sampleColumn] = new Point2D(result[swapRow, sampleColumn].X, result[sampleRow, sampleColumn].Y);
+            //        result[sampleRow, sampleColumn] = new Point2D(result[sampleRow, sampleColumn].X, swapRowY);
+            //    }
+            //}
+
+            result = ShuffleXValuesInRows(random, result);
+            result = ShuffleYValuesInColumns(random, result);
             return result.Cast<Point2D>();
         }
 
