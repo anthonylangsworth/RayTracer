@@ -34,8 +34,6 @@ namespace SamplerViewer
             GenerateSamplerPlot(this, EventArgs.Empty);
         }
 
-        public SampleGenerator? SampleGenerator { get; set; }
-        
         private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet, DotType dotType)
         {
             const double pixelsPerInch = 96; // Cannot find this constant in WPF
@@ -166,31 +164,46 @@ namespace SamplerViewer
         {
             int samplesPerSet = Convert.ToInt32(((ComboBoxItem) samplesPerSetCombo.SelectedValue).Content);
             string? samplerName = Convert.ToString(((ComboBoxItem) samplersCombo.SelectedValue).Content);
+            SampleGenerator? sampleGenerator;
             switch(samplerName)
             {
                 case "Regular":
-                    SampleGenerator = new RegularSampleGenerator(new Random());
+                    sampleGenerator = new RegularSampleGenerator(new Random());
                     break;
                 case "Jittered":
-                    SampleGenerator = new JitteredSampleGenerator(new Random(), samplesPerSet);
+                    sampleGenerator = new JitteredSampleGenerator(new Random(), samplesPerSet);
                     break;
                 case "Multi-Jittered":
-                    SampleGenerator = new MultiJitteredSampleGenerator(new Random(), samplesPerSet);
+                    sampleGenerator = new MultiJitteredSampleGenerator(new Random(), samplesPerSet);
                     break;
                 case "n-Rooks":
-                    SampleGenerator = new NRooksSampleGenerator(new Random(), samplesPerSet);
+                    sampleGenerator = new NRooksSampleGenerator(new Random(), samplesPerSet);
                     break;
                 default:
                     MessageBox.Show($"Unknown sampler name: '{samplerName}'");
-                    SampleGenerator = null;
+                    sampleGenerator = null;
                     break;
             }
-            DotType dotType = Enum.Parse<DotType>(Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content) ?? "");
-
-            if (SampleGenerator != null)
+            string? dotTypeName = Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content);
+            DotType dotType = DotType.Dot;
+            switch (dotTypeName) // Nicer than Enum.Parse
             {
-                CreateSamplePlot(samplerCanvas, SampleGenerator, (int) Math.Sqrt(samplesPerSet), dotType);
-                FillPointsListBox(pointsListBox, SampleGenerator);
+                case "Dot":
+                    dotType = DotType.Dot;
+                    break;
+                case "Digit":
+                    dotType = DotType.Digit;
+                    break;
+                default:
+                    MessageBox.Show($"Unknown dot type: '{dotTypeName ?? "(null)"}'");
+                    sampleGenerator = null;
+                    break;
+            }
+
+            if (sampleGenerator != null)
+            {
+                CreateSamplePlot(samplerCanvas, sampleGenerator, (int) Math.Sqrt(samplesPerSet), dotType);
+                FillPointsListBox(pointsListBox, sampleGenerator);
             }
         }
     }

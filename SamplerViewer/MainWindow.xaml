@@ -28,8 +28,8 @@
             </ComboBox>
             <Label>Dot Type:</Label>
             <ComboBox x:Name="dotTypeCombo">    
-                <ComboBoxItem IsSelected="True" Tag="0">Dot</ComboBoxItem>
-                <ComboBoxItem Tag="1">Digit</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">Dot</ComboBoxItem>
+                <ComboBoxItem>Digit</ComboBoxItem>
             </ComboBox>
             <Button Margin="10,0,0,0" Click="GenerateSamplerPlot">Generate</Button>
         </StackPanel>
