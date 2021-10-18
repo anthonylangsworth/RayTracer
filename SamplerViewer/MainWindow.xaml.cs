@@ -17,6 +17,12 @@ using System.Windows.Shapes;
 
 namespace SamplerViewer
 {
+    internal enum DotType
+    {
+        Dot,
+        Digit
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -30,12 +36,13 @@ namespace SamplerViewer
 
         public SampleGenerator? SampleGenerator { get; set; }
         
-        private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet)
+        private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet, DotType dotType)
         {
-            double extent = 5 * 96; // plot is 5 inches wide and high
+            const double pixelsPerInch = 96; // Cannot find this constant in WPF
+            double extent = 5 * pixelsPerInch; // plot is 5 inches wide and high
             canvas.Children.Clear();
             DrawAxes(canvas, extent, sqrtSamplesPerSet);
-            DrawSamplerPoints(canvas, sampleGenerator, extent);
+            DrawSampleGeneratorPoints(canvas, sampleGenerator, extent, dotType);
         }
 
         private void DrawAxes(Canvas canvas, double extent, int sqrtSamplesPerSet)
@@ -95,23 +102,48 @@ namespace SamplerViewer
             }
         }
 
-        private void DrawSamplerPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent)
+        private void DrawSampleGeneratorPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent, DotType dotType)
         {
-            double diameter = 16;
+            double diameter;
+            switch(dotType)
+            {
+                case DotType.Dot:
+                    diameter = 10;
+                    break;
+                case DotType.Digit:
+                    // Getting this fromt dot.ActualHeight is not possible at this rendering stage
+                    diameter = 16; 
+                    break;
+                default:
+                    throw new ArgumentException($"Unknown DotType: '{dotType}'", nameof(dotType));
+            }
+
             int index = 0;
             foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
             {
-                Label dot = new Label()
+                FrameworkElement dot;
+                if (dotType == DotType.Digit)
                 {
-                    Content = index++.ToString(),
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-                //Ellipse dot = new Ellipse
-                //{
-                //    Height = diameter,
-                //    Width = diameter,
-                //    Fill = Brushes.Black
-                //};
+                    dot = new Label()
+                    {
+                        Content = index++.ToString(),
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    };
+                }
+                else if (dotType == DotType.Dot)
+                {
+                    dot = new Ellipse()
+                    {
+                        Height = diameter,
+                        Width = diameter,
+                        Fill = Brushes.Black
+                    };
+                }
+                else
+                {
+                    throw new ArgumentException($"Unknown DotType: '{dotType}'", nameof(dotType));
+                }
+
                 canvas.Children.Add(dot);
                 Canvas.SetLeft(dot, point2D.X * extent - diameter / 2);
                 Canvas.SetTop(dot, extent - point2D.Y * extent - diameter / 2); // Invert due top down drawing coordinate system
@@ -153,10 +185,11 @@ namespace SamplerViewer
                     SampleGenerator = null;
                     break;
             }
+            DotType dotType = Enum.Parse<DotType>(Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content) ?? "");
 
             if (SampleGenerator != null)
             {
-                CreateSamplePlot(samplerCanvas, SampleGenerator, (int) Math.Sqrt(samplesPerSet));
+                CreateSamplePlot(samplerCanvas, SampleGenerator, (int) Math.Sqrt(samplesPerSet), dotType);
                 FillPointsListBox(pointsListBox, SampleGenerator);
             }
         }
