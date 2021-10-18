@@ -14,6 +14,7 @@
                 <ComboBoxItem>Jittered</ComboBoxItem>
                 <ComboBoxItem IsSelected="True">Multi-Jittered</ComboBoxItem>
                 <ComboBoxItem>n-Rooks</ComboBoxItem>
+                <ComboBoxItem>Hammersley</ComboBoxItem>
             </ComboBox>
             <Label>Samples per set:</Label>
             <ComboBox x:Name="samplesPerSetCombo">

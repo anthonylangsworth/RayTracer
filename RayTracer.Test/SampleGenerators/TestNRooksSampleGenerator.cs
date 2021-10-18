@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Test.Samplers
 {
-    internal class TestNRooksSampler
+    internal class TestNRooksSampleGenerator
     {
         [Test]
         public void Ctor()

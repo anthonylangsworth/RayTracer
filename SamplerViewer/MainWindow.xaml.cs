@@ -179,6 +179,9 @@ namespace SamplerViewer
                 case "n-Rooks":
                     sampleGenerator = new NRooksSampleGenerator(new Random(), samplesPerSet);
                     break;
+                case "Hammersley":
+                    sampleGenerator = new HammersleySampleGenerator(new Random(), samplesPerSet);
+                    break;
                 default:
                     MessageBox.Show($"Unknown sampler name: '{samplerName}'");
                     sampleGenerator = null;
