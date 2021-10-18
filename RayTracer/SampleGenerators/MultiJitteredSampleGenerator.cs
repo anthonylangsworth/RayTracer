@@ -19,6 +19,8 @@ namespace RayTracer.SampleGenerators
         /// <inheritdoc/>
         protected override IEnumerable<Point2D> GenerateSample(Random random)
         {
+            // See http://graphics.cs.cmu.edu/courses/15-468/lectures/lecture20.pdf for a good description
+
             int resolution = SamplesPerSetSquareRoot;
             Point2D[,] result = GeneratePoints(random, resolution);
             result = ShufflePoints(random, result);
@@ -27,8 +29,6 @@ namespace RayTracer.SampleGenerators
 
         public static Point2D[,] GeneratePoints(Random random, int resolution)
         {
-            // See http://graphics.cs.cmu.edu/courses/15-468/lectures/lecture20.pdf for a good description
-
             Point2D[,] result = new Point2D[resolution, resolution];
             for (int sampleRow = 0; sampleRow < resolution; sampleRow++) // up
             {

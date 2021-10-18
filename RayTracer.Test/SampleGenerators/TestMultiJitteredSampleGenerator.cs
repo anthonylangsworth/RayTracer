@@ -34,26 +34,24 @@ namespace RayTracer.Test.Samplers
         }
 
         [Test]
+        [Repeat(10)] // Repeat to test randomness
         public void GenerateSamplesOnUnitSquareInCells()
         {
             int resolution = 8;
-            for (int times = 0; times < 10; times++)
+            MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(new Random(), resolution * resolution);
+            IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
+            for (int row = 0; row < resolution; row++)
             {
-                MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(new Random(), resolution * resolution);
-                IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
-                for (int row = 0; row < resolution; row++)
+                for (int column = 0; column < resolution; column++)
                 {
-                    for (int column = 0; column < resolution; column++)
-                    {
-                        double minX = (resolution - column - 1) / (double)resolution;
-                        double maxX = (resolution - column) / (double)resolution;
-                        double minY = (resolution - row - 1) / (double)resolution;
-                        double maxY = (resolution - row) / (double)resolution;
-                        Assert.That(
-                            set.Count(p => p.X >= minX && p.X < maxX && p.Y >= minY && p.Y < maxY),
-                            Is.EqualTo(1),
-                            "Zero or multiple points in a cell");
-                    }
+                    double minX = (resolution - column - 1) / (double)resolution;
+                    double maxX = (resolution - column) / (double)resolution;
+                    double minY = (resolution - row - 1) / (double)resolution;
+                    double maxY = (resolution - row) / (double)resolution;
+                    Assert.That(
+                        set.Count(p => p.X >= minX && p.X < maxX && p.Y >= minY && p.Y < maxY),
+                        Is.EqualTo(1),
+                        "Zero or multiple points in a cell");
                 }
             }
         }
