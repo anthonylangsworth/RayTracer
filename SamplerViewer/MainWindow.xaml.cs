@@ -97,7 +97,7 @@ namespace SamplerViewer
 
         private void DrawSamplerPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent)
         {
-            double diameter = 10;
+            double diameter = 16;
             int index = 0;
             foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
             {

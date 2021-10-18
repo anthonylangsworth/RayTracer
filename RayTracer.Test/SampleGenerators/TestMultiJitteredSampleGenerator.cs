@@ -34,7 +34,6 @@ namespace RayTracer.Test.Samplers
         }
 
         [Test]
-        [Ignore("Failing due to bug in shuffling")]
         public void GenerateSamplesOnUnitSquareInCells()
         {
             int resolution = 8;
@@ -56,50 +55,6 @@ namespace RayTracer.Test.Samplers
                             "Zero or multiple points in a cell");
                     }
                 }
-            }
-        }
-
-        [Test]
-        public void ShuffleYValuesInColumns()
-        {
-            Nonrandom nonrandom = new Nonrandom(); // Fixed values
-            const int resolution = 4;
-            Point2D[,] result = MultiJitteredSampleGenerator.GeneratePoints(nonrandom, resolution);
-            result = MultiJitteredSampleGenerator.ShuffleYValuesInColumns(nonrandom, result);
-
-            for (int sampleColumn = 0; sampleColumn < resolution; sampleColumn++)
-            {
-                var expectedYs = Enumerable.Range(0, resolution).Select(row =>
-                    (row + ((sampleColumn + Nonrandom.Value) / resolution)) / resolution);
-                var actualYs = Enumerable.Range(0, resolution).Select(row => result[row, sampleColumn].Y);
-                Assert.That(actualYs, Is.EquivalentTo(expectedYs));
-
-                var expectedXs = Enumerable.Range(0, resolution).Select(row =>
-                    (sampleColumn + ((row + Nonrandom.Value) / resolution)) / resolution);
-                var actualXs = Enumerable.Range(0, resolution).Select(row => result[row, sampleColumn].X);
-                Assert.That(actualXs, Is.EqualTo(expectedXs));
-            }
-        }
-
-        [Test]
-        public void ShuffleXValuesInRows()
-        {
-            Nonrandom nonrandom = new Nonrandom(); // Fixed values
-            const int resolution = 4;
-            Point2D[,] result = MultiJitteredSampleGenerator.GeneratePoints(nonrandom, resolution);
-            result = MultiJitteredSampleGenerator.ShuffleXValuesInRows(nonrandom, result);
-
-            for (int sampleRow = 0; sampleRow < resolution; sampleRow++)
-            {
-                var expectedYs = Enumerable.Range(0, resolution).Select(column =>
-                    (sampleRow + ((column + Nonrandom.Value) / resolution)) / resolution);
-                var actualYs = Enumerable.Range(0, resolution).Select(column => result[sampleRow, column].Y);
-                Assert.That(actualYs, Is.EqualTo(expectedYs));
-
-                var expectedXs = Enumerable.Range(0, resolution).Select(column =>
-                    (column + ((sampleRow + Nonrandom.Value) / resolution)) / resolution);
-                var actualXs = Enumerable.Range(0, resolution).Select(column => result[sampleRow, column].X);
-                Assert.That(actualXs, Is.EquivalentTo(expectedXs));
             }
         }
     }
