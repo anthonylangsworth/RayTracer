@@ -31,52 +31,29 @@ namespace RayTracer
         public BitmapSource Serialize(RGBColor[,] output, double gamma)
         {
             WriteableBitmap writeableBitmap = new WriteableBitmap(
-                output.GetLength(0), output.GetLength(1), 96, 96, PixelFormats.Rgba128Float, null);
+                output.GetLength(0), output.GetLength(1), 96, 96, PixelFormats.Rgb24, null);
 
-            float[] buffer = new float[output.GetLength(0) * output.GetLength(1) * 4];
+            byte[] buffer = new byte[output.GetLength(0) * output.GetLength(1) * 3];
             int current = 0;
-            for (int row = 0; row < output.GetLength(0); row++)
+            double inverseGamma = 1 / gamma;
+            // Invert due to rows being bottom up in the output
+            for (int row = output.GetLength(0) - 1; row >= 0; row--)
             {
                 for (int column = 0; column < output.GetLength(1); column++)
                 {
-                    buffer[current++] = 0;
-                    buffer[current++] = (float) output[row, column].Red;
-                    buffer[current++] = (float) output[row, column].Green;
-                    buffer[current++] = (float) output[row, column].Blue;
+                    buffer[current++] = Convert.ToByte(Math.Pow(output[row, column].Red, inverseGamma) * byte.MaxValue);
+                    buffer[current++] = Convert.ToByte(Math.Pow(output[row, column].Green, inverseGamma) * byte.MaxValue);
+                    buffer[current++] = Convert.ToByte(Math.Pow(output[row, column].Blue, inverseGamma) * byte.MaxValue);
                 }
             }
 
             writeableBitmap.WritePixels(
                 new Int32Rect(0, 0, output.GetLength(0), output.GetLength(1)),
                 buffer,
-                output.GetLength(0) * 4 * sizeof(float), // "Stride" means the size of each line in bytes
+                output.GetLength(0) * 3, // "Stride" means the size of each line in bytes
                 0);
 
             return writeableBitmap;
         }
-
-        ///// <summary>
-        ///// Convert an <see cref="RGBColor"/> to <see cref="Color"/>.
-        ///// </summary>
-        ///// <param name="rgbColor">
-        ///// The <see cref="RGBColor"/> to convert.
-        ///// </param>
-        ///// <param name="gamma">
-        ///// The inverse gamma to use for the colour conversion.
-        ///// </param>
-        ///// <returns>
-        ///// The converted <see cref="Color"/>.
-        ///// </returns>
-        ///// <exception cref="OverflowException">
-        ///// The <see cref="RGBColor.Red"/>, <see cref="RGBColor.Green"/> or <see cref="RGBColor.Blue"/> values
-        ///// must be between 0 to 1 inclusive.
-        ///// </exception>
-        //public Color ConvertColor(RGBColor rgbColor, double inverseGamma)
-        //{
-        //    return Color.FromArgb(
-        //        Convert.ToByte(Math.Pow(rgbColor.Red, inverseGamma) * byte.MaxValue),
-        //        Convert.ToByte(Math.Pow(rgbColor.Green, inverseGamma) * byte.MaxValue),
-        //        Convert.ToByte(Math.Pow(rgbColor.Blue, inverseGamma )* byte.MaxValue));
-        //}
     }
 }

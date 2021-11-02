@@ -34,12 +34,9 @@ namespace Viewer
 
             ConcurrentRandom random = new ConcurrentRandom();
             World world = new World("4.1", Scene.BuildTwoSpheresAndPlane(), new ViewPlane(300, 300, 1, 1, new MultiJitteredSampleGenerator(random, 16)));
-            RGBColor[,] result = world.Render();
-            BitmapSource bitmapSource = new MediaImageSerializer().Serialize(result, world.ViewPlane.Gamma);
-            samplerCanvas.Background = new ImageBrush(bitmapSource);
+            BitmapSource bitmapSource = new MediaImageSerializer().Serialize(world.Render(), world.ViewPlane.Gamma);
+            image.Source = bitmapSource;
         }
-
-        // public IEnumerable<View> Views{ get; }
 
         private void SaveMenu_Click(object sender, RoutedEventArgs e)
         {

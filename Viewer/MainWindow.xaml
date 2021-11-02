@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Viewer"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <StackPanel Orientation="Vertical">
+    <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Save" Click="SaveMenu_Click"/>
@@ -14,6 +14,6 @@
                 <MenuItem Header="_Exit" />
             </MenuItem>
         </Menu>
-        <Canvas x:Name="samplerCanvas" Margin="10"/>
-    </StackPanel>
+        <Image x:Name="image" DockPanel.Dock="Bottom" Stretch="None"/>
+    </DockPanel>
 </Window>
