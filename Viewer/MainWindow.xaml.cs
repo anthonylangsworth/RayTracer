@@ -52,7 +52,7 @@ namespace Viewer
             image.Source = bitmapSource;
         }
 
-        public World World { get; set; }
+        public World World { get; }
 
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
