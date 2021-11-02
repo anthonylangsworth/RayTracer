@@ -48,7 +48,6 @@ namespace RayTracer
         }
 
         public Tracer Tracer { get; }
-
         public string Name { get; }
         public Scene Scene { get; }
         public ViewPlane ViewPlane { get; }
