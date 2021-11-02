@@ -28,17 +28,17 @@ namespace Viewer
             Views = new[]
             {
                 //new View(
-                //    world.BuildSingleSphere(),
+                //    Scene.BuildSingleSphere(),
                 //    new ViewPlane(200, 200, 1, 1, new RegularSampleGenerator(random)),
                 //    "3.18"
                 //),
                 //new View(
-                //    world.BuildTwoSpheresAndPlane(),
+                //    Scene.BuildTwoSpheresAndPlane(),
                 //    new ViewPlane(300, 300, 1, 1, new RegularSampleGenerator(random)),
                 //    "3.21"
                 //),
                 new View(
-                    World.BuildTwoSpheresAndPlane(),
+                    Scene.BuildTwoSpheresAndPlane(),
                     new ViewPlane(300, 300, 1, 1, new MultiJitteredSampleGenerator(random, 16)), // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
                     "4.1"
                 )

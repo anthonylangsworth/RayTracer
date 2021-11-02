@@ -19,17 +19,17 @@ namespace RayTracer
             foreach (var entry in new[]
             {
                 //new {
-                //    Scene = world.BuildSingleSphere(),
+                //    Scene = Scene.BuildSingleSphere(),
                 //    ViewPlane = new ViewPlane(200, 200, 1, 1, new RegularSampleGenerator(random)),
                 //    FileName = "3.18.png"
                 //},
                 //new {
-                //    Scene = world.BuildTwoSpheresAndPlane(),
+                //    Scene = Scene.BuildTwoSpheresAndPlane(),
                 //    ViewPlane = new ViewPlane(300, 300, 1, 1, new RegularSampleGenerator(random)),
                 //    FileName = "3.21.png"
                 //},
                 new {
-                    Scene = World.BuildTwoSpheresAndPlane(),
+                    Scene = Scene.BuildTwoSpheresAndPlane(),
                     ViewPlane = new ViewPlane(300, 300, 1, 1, new MultiJitteredSampleGenerator(random, 16)), // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
                     FileName = "4.1.png"
                 }
@@ -49,32 +49,6 @@ namespace RayTracer
         public Tracer Tracer { get; }
 
         public ImageSerializer Serializer { get; }
-
-        public static Scene BuildSingleSphere()
-        {
-            return new Scene(
-                new Camera(), 
-                new[] 
-                { 
-                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 85) 
-                }, 
-                new LightSource[0],
-                RGBColor.Black);
-        }
-
-        public static Scene BuildTwoSpheresAndPlane()
-        {
-            return new Scene(
-                new Camera(),
-                new GeometricObject[]
-                {
-                    new Sphere(new Point3D(0, -25, 0), new Material(RGBColor.BrightRed), 80),
-                    new Sphere(new Point3D(0, 30, 0), new Material(RGBColor.Yellow), 60),
-                    new Plane(new Point3D(0, 0, 0), new Material(RGBColor.DarkGreen), new Vector3D(0, 1, 1))
-                },
-                new LightSource[0],
-                RGBColor.Black);
-        }
 
         /// <summary>
         /// Render the <see cref="Scene"/> to the <see cref="ViewPlane"/>.

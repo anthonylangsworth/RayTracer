@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using RayTracer.Objects;
+using RayTracer.Primitives;
 
 namespace RayTracer
 {
@@ -19,5 +20,31 @@ namespace RayTracer
         public RGBColor BackgroundColor { get; }
         public ISet<GeometricObject> Objects { get; }
         public ISet<LightSource> LightSources { get; }
+
+        public static Scene BuildSingleSphere()
+        {
+            return new Scene(
+                new Camera(),
+                new[]
+                {
+                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 85)
+                },
+                new LightSource[0],
+                RGBColor.Black);
+        }
+
+        public static Scene BuildTwoSpheresAndPlane()
+        {
+            return new Scene(
+                new Camera(),
+                new GeometricObject[]
+                {
+                    new Sphere(new Point3D(0, -25, 0), new Material(RGBColor.BrightRed), 80),
+                    new Sphere(new Point3D(0, 30, 0), new Material(RGBColor.Yellow), 60),
+                    new Plane(new Point3D(0, 0, 0), new Material(RGBColor.DarkGreen), new Vector3D(0, 1, 1))
+                },
+                new LightSource[0],
+                RGBColor.Black);
+        }
     }
 }
