@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer
 {
-    internal class World
+    public class World
     {
         public static void Main()
         {
@@ -29,7 +29,7 @@ namespace RayTracer
                 //    FileName = "3.21.png"
                 //},
                 new {
-                    Scene = world.BuildTwoSpheresAndPlane(),
+                    Scene = World.BuildTwoSpheresAndPlane(),
                     ViewPlane = new ViewPlane(300, 300, 1, 1, new MultiJitteredSampleGenerator(random, 16)), // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
                     FileName = "4.1.png"
                 }
@@ -50,7 +50,7 @@ namespace RayTracer
 
         public ImageSerializer Serializer { get; }
 
-        public Scene BuildSingleSphere()
+        public static Scene BuildSingleSphere()
         {
             return new Scene(
                 new Camera(), 
@@ -62,7 +62,7 @@ namespace RayTracer
                 RGBColor.Black);
         }
 
-        public Scene BuildTwoSpheresAndPlane()
+        public static Scene BuildTwoSpheresAndPlane()
         {
             return new Scene(
                 new Camera(),
