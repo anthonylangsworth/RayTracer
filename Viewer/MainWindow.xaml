@@ -11,7 +11,7 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_Save" Click="SaveMenuItem_Click"/>
                 <Separator />
-                <MenuItem Header="_Exit" Click="ExitMenuItem_Click"/>
+                <MenuItem Header="E_xit" Click="ExitMenuItem_Click"/>
             </MenuItem>
         </Menu>
         <Image x:Name="image" DockPanel.Dock="Bottom" Stretch="None"/>
