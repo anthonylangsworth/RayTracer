@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
 
 namespace Viewer
 {
@@ -24,30 +25,21 @@ namespace Viewer
     {
         public MainWindow()
         {
-            ConcurrentRandom random = new ConcurrentRandom();
-            Views = new[]
-            {
-                //new View(
-                //    Scene.BuildSingleSphere(),
-                //    new ViewPlane(200, 200, 1, 1, new RegularSampleGenerator(random)),
-                //    "3.18"
-                //),
-                //new View(
-                //    Scene.BuildTwoSpheresAndPlane(),
-                //    new ViewPlane(300, 300, 1, 1, new RegularSampleGenerator(random)),
-                //    "3.21"
-                //),
-                new View(
-                    Scene.BuildTwoSpheresAndPlane(),
-                    new ViewPlane(300, 300, 1, 1, new MultiJitteredSampleGenerator(random, 16)), // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
-                    "4.1"
-                )
-            };
-
-            // RGBColor[,] result = World.Render(view.Scene, view.ViewPlane);
+            // Do nothing
         }
 
-        public IEnumerable<View> Views{ get; }
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            ConcurrentRandom random = new ConcurrentRandom();
+            World world = new World("4.1", Scene.BuildTwoSpheresAndPlane(), new ViewPlane(300, 300, 1, 1, new MultiJitteredSampleGenerator(random, 16)));
+            RGBColor[,] result = world.Render();
+            BitmapSource bitmapSource = new MediaImageSerializer().Serialize(result, world.ViewPlane.Gamma);
+            samplerCanvas.Background = new ImageBrush(bitmapSource);
+        }
+
+        // public IEnumerable<View> Views{ get; }
 
         private void SaveMenu_Click(object sender, RoutedEventArgs e)
         {

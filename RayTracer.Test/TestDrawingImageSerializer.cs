@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Test
 {
-    internal class TestImageSerializer
+    internal class TestDrawingImageSerializer
     {
         [TestCase(0, 0, 0, 0, 0, 0)]
         [TestCase(0.5, 0, 0, 128, 0, 0)]
@@ -18,7 +18,7 @@ namespace RayTracer.Test
         public void TestConvertColor(double red, double green, double blue, byte expectedRed, byte expectedGreen, byte expectedBlue)
         {
             Assert.That(
-                new ImageSerializer().ConvertColor(new RGBColor(red, green, blue), 1.0),
+                new DrawingImageSerializer().ConvertColor(new RGBColor(red, green, blue), 1.0),
                 Is.EqualTo(Color.FromArgb(expectedRed, expectedGreen, expectedBlue)));
         }
     }

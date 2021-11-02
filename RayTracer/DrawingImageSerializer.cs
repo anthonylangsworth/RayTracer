@@ -9,9 +9,9 @@ using System.Drawing.Imaging;
 namespace RayTracer
 {
     /// <summary>
-    /// Save an RGBColor array as a PNG.
+    /// Save an RGBColor array as <see cref="System.Drawing.Bitmap"/>.
     /// </summary>
-    public class ImageSerializer
+    public class DrawingImageSerializer
     {
         /// <summary>
         /// Save an RGBColor array as a PNG.
@@ -28,6 +28,25 @@ namespace RayTracer
         /// </param>
         public void Save(RGBColor[,] output, string fileName, double gamma)
         {
+            Bitmap bitmap = Serialize(output, gamma);
+            bitmap.Save(fileName + ".png", ImageFormat.Png);
+        }
+
+        /// <summary>
+        /// Convert the RGBColor array to a <see cref="Bitmap"/>.
+        /// </summary>
+        /// <param name="output">
+        /// The ray tracer output. Note that the rows are return in bottom-up instead
+        /// of top-down order.
+        /// </param>
+        /// <param name="gamma">
+        /// The gamma to use for the colour conversion.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Bitmap"/> from <paramref name="output"/>.
+        /// </returns>
+        public Bitmap Serialize(RGBColor[,] output, double gamma)
+        {
             Bitmap bitmap = new Bitmap(output.GetLength(0), output.GetLength(1));
             double inverseGamma = 1 / gamma;
             for (int row = 0; row < output.GetLength(0); row++)
@@ -37,13 +56,14 @@ namespace RayTracer
                     // Invert the row because rows are returned bottom-up instead of
                     // top down.
                     bitmap.SetPixel(
-                        column, 
-                        output.GetLength(0) - row - 1, 
+                        column,
+                        output.GetLength(0) - row - 1,
                         ConvertColor(output[row, column], inverseGamma)
                     );
                 }
             }
-            bitmap.Save(Path.ChangeExtension(fileName, "png"), ImageFormat.Png);
+
+            return bitmap;
         }
 
         /// <summary>
@@ -67,7 +87,7 @@ namespace RayTracer
             return Color.FromArgb(
                 Convert.ToByte(Math.Pow(rgbColor.Red, inverseGamma) * byte.MaxValue),
                 Convert.ToByte(Math.Pow(rgbColor.Green, inverseGamma) * byte.MaxValue),
-                Convert.ToByte(Math.Pow(rgbColor.Blue, inverseGamma )* byte.MaxValue));
+                Convert.ToByte(Math.Pow(rgbColor.Blue, inverseGamma) * byte.MaxValue));
         }
     }
 }
