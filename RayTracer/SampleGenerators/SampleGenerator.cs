@@ -51,7 +51,7 @@ namespace RayTracer.SampleGenerators
         public Lazy<IEnumerable<Point2D>[]> Samples { get; }
 
         /// <summary>
-        /// Get a random next sample set.
+        /// Get a random next sample set, mapped to a unit square.
         /// </summary>
         /// <returns>
         /// The sample set.
@@ -59,6 +59,17 @@ namespace RayTracer.SampleGenerators
         public IEnumerable<Point2D> GetSamplesOnUnitSquare()
         {
             return Samples.Value[Random.Next() % SampleSets];
+        }
+
+        /// <summary>
+        /// Get a random next sample set, mapped to a unit disk.
+        /// </summary>
+        /// <returns>
+        /// The sample set.
+        /// </returns>
+        public IEnumerable<Point2D> GetSamplesOnUnitDisk()
+        {
+            return GetSamplesOnUnitSquare().Select(p => new Point2D(Math.Cos(2 * Math.PI * p.X), Math.Sin(2 * Math.PI * p.Y)));
         }
 
         /// <summary>
