@@ -18,16 +18,16 @@ namespace RayTracer
             DrawingImageSerializer imageSerializer = new DrawingImageSerializer();
             foreach (World world in new[]
             {
-                //new {
-                //    Scene = Scene.BuildSingleSphere(),
-                //    ViewPlane = new ViewPlane(200, 200, 1, 1, new RegularSampleGenerator(random)),
-                //    FileName = "3.18.png"
-                //},
-                //new {
-                //    Scene = Scene.BuildTwoSpheresAndPlane(),
-                //    ViewPlane = new ViewPlane(300, 300, 1, 1, new RegularSampleGenerator(random)),
-                //    FileName = "3.21.png"
-                //},
+                //new World(
+                //    "3.18",
+                //    Scene.BuildSingleSphere(),
+                //    new ViewPlane(200, 200, 1, 1, new RegularSampleGenerator(random))
+                //),
+                //new World(
+                //    "3.21",
+                //    Scene.BuildTwoSpheresAndPlane(),
+                //    new ViewPlane(300, 300, 1, 1, new RegularSampleGenerator(random))
+                //),
                 new World(
                     "4.1",
                     Scene.BuildTwoSpheresAndPlane(),
