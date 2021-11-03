@@ -37,7 +37,7 @@ namespace SamplerViewer
         private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet, DotType dotType)
         {
             const double pixelsPerInch = 96; // Cannot find this constant in WPF
-            double extent = 5 * pixelsPerInch; // plot is 5 inches wide and high
+            double extent = 6 * pixelsPerInch; // plot is 6 inches wide and high
             canvas.Children.Clear();
             DrawAxes(canvas, extent, sqrtSamplesPerSet);
             DrawSampleGeneratorPoints(canvas, sampleGenerator, extent, dotType);
