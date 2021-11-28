@@ -23,6 +23,12 @@ namespace SamplerViewer
         Digit
     }
 
+    internal enum SampleProjection
+    {
+        UnitSquare,
+        UnitDisk
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -34,13 +40,28 @@ namespace SamplerViewer
             GenerateSamplerPlot(this, EventArgs.Empty);
         }
 
-        private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet, DotType dotType)
+        private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet, DotType dotType, SampleProjection sampleProjection)
         {
             const double pixelsPerInch = 96; // Cannot find this constant in WPF
             double extent = 6 * pixelsPerInch; // plot is 6 inches wide and high
             canvas.Children.Clear();
-            DrawAxes(canvas, extent, sqrtSamplesPerSet);
-            DrawSampleGeneratorPoints(canvas, sampleGenerator, extent, dotType);
+            try
+            {
+                if (sampleProjection == SampleProjection.UnitSquare)
+                {
+                    DrawAxes(canvas, extent, sqrtSamplesPerSet);
+                }
+                else if (sampleProjection == SampleProjection.UnitDisk)
+                {
+                    DrawCircle(canvas, extent);
+                }
+                DrawSampleGeneratorPoints(canvas, sampleGenerator, extent, dotType, sampleProjection);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                canvas.Children.Clear();
+            }
         }
 
         private void DrawAxes(Canvas canvas, double extent, int sqrtSamplesPerSet)
@@ -100,7 +121,20 @@ namespace SamplerViewer
             }
         }
 
-        private void DrawSampleGeneratorPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent, DotType dotType)
+        private void DrawCircle(Canvas canvas, double extent)
+        {
+            Ellipse ellipse = new()
+            {
+                Height = extent,
+                Width = extent,
+                Stroke = Brushes.LightGray
+            };
+            canvas.Children.Add(ellipse);
+            Canvas.SetLeft(ellipse, 0);
+            Canvas.SetTop(ellipse, 0);
+        }
+
+        private void DrawSampleGeneratorPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent, DotType dotType, SampleProjection sampleProjection)
         {
             double diameter;
             switch(dotType)
@@ -109,11 +143,24 @@ namespace SamplerViewer
                     diameter = 10;
                     break;
                 case DotType.Digit:
-                    // Getting this fromt dot.ActualHeight is not possible at this rendering stage
+                    // Getting this from dot.ActualHeight is not possible at this rendering stage
                     diameter = 16; 
                     break;
                 default:
                     throw new ArgumentException($"Unknown DotType: '{dotType}'", nameof(dotType));
+            }
+
+            IEnumerable<Point2D> samples;
+            switch(sampleProjection)
+            {
+                case SampleProjection.UnitSquare:
+                    samples = sampleGenerator.GetSamplesOnUnitSquare();
+                    break;
+                case SampleProjection.UnitDisk:
+                    samples = sampleGenerator.GetSamplesOnUnitDisk();
+                    break;
+                default:
+                    throw new ArgumentException($"Unknown sample projection: '{sampleProjection}'", nameof(sampleProjection));
             }
 
             int index = 0;
@@ -163,6 +210,7 @@ namespace SamplerViewer
         private void GenerateSamplerPlot(object sender, EventArgs e)
         {
             int samplesPerSet = Convert.ToInt32(((ComboBoxItem) samplesPerSetCombo.SelectedValue).Content);
+
             string? samplerName = Convert.ToString(((ComboBoxItem) samplersCombo.SelectedValue).Content);
             SampleGenerator? sampleGenerator;
             switch(samplerName)
@@ -183,10 +231,9 @@ namespace SamplerViewer
                     sampleGenerator = new HammersleySampleGenerator(new Random(), samplesPerSet);
                     break;
                 default:
-                    MessageBox.Show($"Unknown sampler name: '{samplerName}'");
-                    sampleGenerator = null;
-                    break;
+                    throw new InvalidOperationException($"Unknown sampler name: '{samplerName}'");
             }
+
             string? dotTypeName = Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content);
             DotType dotType = DotType.Dot;
             switch (dotTypeName) // Nicer than Enum.Parse
@@ -198,14 +245,26 @@ namespace SamplerViewer
                     dotType = DotType.Digit;
                     break;
                 default:
-                    MessageBox.Show($"Unknown dot type: '{dotTypeName ?? "(null)"}'");
-                    sampleGenerator = null;
+                    throw new InvalidOperationException($"Unknown dot type: '{dotTypeName ?? "(null)"}'");
+            }
+
+            string? projectionName = Convert.ToString(((ComboBoxItem)projectionCombo.SelectedValue).Content);
+            SampleProjection sampleProjection = SampleProjection.UnitSquare;
+            switch (projectionName) // Nicer than Enum.Parse
+            {
+                case "Square":
+                    sampleProjection = SampleProjection.UnitSquare;
                     break;
+                case "Disk":
+                    sampleProjection = SampleProjection.UnitDisk;
+                    break;
+                default:
+                    throw new InvalidOperationException($"Unknown projection: '{projectionName ?? "(null)"}'");
             }
 
             if (sampleGenerator != null)
             {
-                CreateSamplePlot(samplerCanvas, sampleGenerator, (int) Math.Sqrt(samplesPerSet), dotType);
+                CreateSamplePlot(samplerCanvas, sampleGenerator, (int) Math.Sqrt(samplesPerSet), dotType, sampleProjection);
                 FillPointsListBox(pointsListBox, sampleGenerator);
             }
         }

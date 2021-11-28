@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SamplerViewer"
         mc:Ignorable="d"
-        Title="Sample Generator Viewer" Height="715" Width="650" ResizeMode="NoResize">
+        Title="Sample Generator Viewer" Height="715" Width="680" ResizeMode="NoResize">
     <StackPanel Margin="10" Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
             <Label>Sample Generator:</Label>
@@ -16,7 +16,7 @@
                 <ComboBoxItem>n-Rooks</ComboBoxItem>
                 <ComboBoxItem>Hammersley</ComboBoxItem>
             </ComboBox>
-            <Label>Samples per set:</Label>
+            <Label>Samples per Set:</Label>
             <ComboBox x:Name="samplesPerSetCombo">
                 <ComboBoxItem>1</ComboBoxItem>
                 <ComboBoxItem>4</ComboBoxItem>
@@ -31,6 +31,11 @@
             <ComboBox x:Name="dotTypeCombo">    
                 <ComboBoxItem IsSelected="True">Dot</ComboBoxItem>
                 <ComboBoxItem>Digit</ComboBoxItem>
+            </ComboBox>
+            <Label>Projection:</Label>
+            <ComboBox x:Name="projectionCombo">
+                <ComboBoxItem IsSelected="True">Square</ComboBoxItem>
+                <ComboBoxItem>Disk</ComboBoxItem>
             </ComboBox>
             <Button Margin="10,0,0,0" Click="GenerateSamplerPlot">Generate</Button>
         </StackPanel>
