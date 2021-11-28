@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.SampleGenerators
 {
-    public class JitteredSampleAlgorithm : ISampleAlgorithm
+    internal class JitteredSampleAlgorithm : ISampleAlgorithm
     {
         /// <inheritdoc/>
         public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)

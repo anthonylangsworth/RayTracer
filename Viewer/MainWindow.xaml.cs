@@ -41,7 +41,7 @@ namespace Viewer
 
             // Create world
             ConcurrentRandom random = new ConcurrentRandom();
-            World = new World("4.1", Scene.BuildTwoSpheresAndPlane(), new ViewPlane(300, 300, 1, 1, new SampleGenerator(new MultiJitteredSampleAlgorithm(), random, 16, 16)));
+            World = new World("4.1", Scene.BuildTwoSpheresAndPlane(), new ViewPlane(300, 300, 1, 1, new SampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)));
         }
 
         protected override void OnInitialized(EventArgs e)

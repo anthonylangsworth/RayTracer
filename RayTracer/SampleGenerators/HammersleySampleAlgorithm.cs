@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.SampleGenerators
 {
-    public class HammersleySampleAlgorithm : ISampleAlgorithm
+    internal class HammersleySampleAlgorithm : ISampleAlgorithm
     {
         /// <inheritdoc/>
         public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)
