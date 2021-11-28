@@ -19,7 +19,7 @@ namespace RayTracer.SampleGenerators
         /// A <see cref="Random"/> to use.
         /// </param>
         /// <param name="samplesPerSet">
-        /// The number of samples to generate in the set.
+        /// The number of samples to generate in the set. This will be positive.
         /// </param>
         /// <returns>
         /// A sample set of <see cref="Point2D"/> in the range [0, 1].

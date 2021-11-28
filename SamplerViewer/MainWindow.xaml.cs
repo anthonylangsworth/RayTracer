@@ -151,16 +151,15 @@ namespace SamplerViewer
                     throw new ArgumentException($"Unknown DotType: '{dotType}'", nameof(dotType));
             }
 
-            IEnumerable<Point2D> samples;
+            IEnumerable<Point2D> samples = sampleGenerator.GetSamples();
+
             Func<Point2D, Point2D> pointTransform;
             switch(sampleProjection)
             {
                 case SampleProjection.UnitSquare:
-                    samples = sampleGenerator.GetSamplesOnUnitSquare();
                     pointTransform = p => p;
                     break;
                 case SampleProjection.UnitDisk:
-                    samples = sampleGenerator.GetSamplesOnUnitDisk();
                     pointTransform = p => new Point2D(p.X / 2 + 0.5, p.Y / 2 + 0.5); // Map from [-1, 1] to [0, 1]
                     break;
                 default:
@@ -203,7 +202,7 @@ namespace SamplerViewer
         {
             listbox.Items.Clear();
             int i = 0;
-            foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
+            foreach (Point2D point2D in sampleGenerator.GetSamples())
             {
                 ListBoxItem listBoxItem = new ListBoxItem();
                 listBoxItem.Content = i++ + ": " + point2D.ToString();
@@ -237,7 +236,25 @@ namespace SamplerViewer
                 default:
                     throw new InvalidOperationException($"Unknown sampler name: '{samplerName}'");
             }
-            SampleGenerator sampleGenerator = new SampleGenerator(algorithm, new Random(), samplesPerSet, 1);
+
+            string? projectionName = Convert.ToString(((ComboBoxItem)projectionCombo.SelectedValue).Content);
+            SampleProjection sampleProjection = SampleProjection.UnitSquare;
+            ISampleMapper mapper = SampleMappers.UnitSquare;
+            switch (projectionName) // Nicer than Enum.Parse
+            {
+                case "Square":
+                    sampleProjection = SampleProjection.UnitSquare;
+                    mapper = SampleMappers.UnitSquare;
+                    break;
+                case "Disk":
+                    sampleProjection = SampleProjection.UnitDisk;
+                    mapper = SampleMappers.UnitDisk;
+                    break;
+                default:
+                    throw new InvalidOperationException($"Unknown projection: '{projectionName ?? "(null)"}'");
+            }
+
+            SampleGenerator sampleGenerator = new SampleGenerator(algorithm, mapper, new Random(), samplesPerSet, 1);
 
             string? dotTypeName = Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content);
             DotType dotType = DotType.Dot;
@@ -251,20 +268,6 @@ namespace SamplerViewer
                     break;
                 default:
                     throw new InvalidOperationException($"Unknown dot type: '{dotTypeName ?? "(null)"}'");
-            }
-
-            string? projectionName = Convert.ToString(((ComboBoxItem)projectionCombo.SelectedValue).Content);
-            SampleProjection sampleProjection = SampleProjection.UnitSquare;
-            switch (projectionName) // Nicer than Enum.Parse
-            {
-                case "Square":
-                    sampleProjection = SampleProjection.UnitSquare;
-                    break;
-                case "Disk":
-                    sampleProjection = SampleProjection.UnitDisk;
-                    break;
-                default:
-                    throw new InvalidOperationException($"Unknown projection: '{projectionName ?? "(null)"}'");
             }
 
             if (sampleGenerator != null)

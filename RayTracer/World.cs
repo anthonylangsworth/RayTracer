@@ -31,7 +31,7 @@ namespace RayTracer
                 new World(
                     "4.1",
                     Scene.BuildTwoSpheresAndPlane(),
-                    new ViewPlane(300, 300, 1, 1, new SampleGenerator(new MultiJitteredSampleAlgorithm(), random, 16, 1)) // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
+                    new ViewPlane(300, 300, 1, 1, new SampleGenerator(SampleAlgorithms.MultiJittered, SampleMappers.UnitSquare, random, 16, 1)) // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
                 )
             })
             {
@@ -79,7 +79,7 @@ namespace RayTracer
                 for (int column = 0; column < ViewPlane.HorizontalResolution; column++) // left to right
                 {
                     RGBColor pixelColor = RGBColor.Black;
-                    foreach (Point2D samplePoint in ViewPlane.SampleGenerator.GetSamplesOnUnitSquare())
+                    foreach (Point2D samplePoint in ViewPlane.SampleGenerator.GetSamples())
                     {
                         x = ViewPlane.PixelSize * (column - 0.5 * ViewPlane.HorizontalResolution + samplePoint.X);
                         y = ViewPlane.PixelSize * (row - 0.5 * ViewPlane.VerticalResolution + samplePoint.Y);
