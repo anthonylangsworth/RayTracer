@@ -47,14 +47,15 @@ namespace SamplerViewer
             canvas.Children.Clear();
             try
             {
-                if (sampleProjection == SampleProjection.UnitSquare)
-                {
-                    DrawAxes(canvas, extent, sqrtSamplesPerSet);
-                }
-                else if (sampleProjection == SampleProjection.UnitDisk)
+                if (sampleProjection == SampleProjection.UnitDisk)
                 {
                     DrawCircle(canvas, extent);
                 }
+                else
+                {
+                    DrawAxes(canvas, extent, sqrtSamplesPerSet);
+                }
+
                 DrawSampleGeneratorPoints(canvas, sampleGenerator, extent, dotType, sampleProjection);
             }
             catch(Exception ex)
@@ -151,20 +152,23 @@ namespace SamplerViewer
             }
 
             IEnumerable<Point2D> samples;
+            Func<Point2D, Point2D> pointTransform;
             switch(sampleProjection)
             {
                 case SampleProjection.UnitSquare:
                     samples = sampleGenerator.GetSamplesOnUnitSquare();
+                    pointTransform = p => p;
                     break;
                 case SampleProjection.UnitDisk:
                     samples = sampleGenerator.GetSamplesOnUnitDisk();
+                    pointTransform = p => new Point2D(p.X / 2 + 0.5, p.Y / 2 + 0.5);
                     break;
                 default:
                     throw new ArgumentException($"Unknown sample projection: '{sampleProjection}'", nameof(sampleProjection));
             }
 
             int index = 0;
-            foreach (Point2D point2D in sampleGenerator.GetSamplesOnUnitSquare())
+            foreach (Point2D point2D in samples.Select(pointTransform))
             {
                 FrameworkElement dot;
                 if (dotType == DotType.Digit)
