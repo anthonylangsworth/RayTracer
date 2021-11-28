@@ -21,13 +21,14 @@ namespace RayTracer.Test.Samplers
             Assert.IsTrue(set.All(p => p.X >= 0 && p.Y < 1 && p.Y >= 0 && p.Y < 1));
         }
 
-        // [Test]
+        [Test]
         [Repeat(10)] // Repeat to test randomness
         public void GenerateSamplesOnUnitSquareInCells()
         {
-            int resolution = 8;
+            int samplesPerSet = 64;
+            int resolution = (int) Math.Sqrt(samplesPerSet);
             MultiJitteredSampleAlgorithm sampler = new MultiJitteredSampleAlgorithm();
-            IEnumerable<Point2D> set = sampler.GenerateSampleSet(new Random(), 16);
+            IEnumerable<Point2D> set = sampler.GenerateSampleSet(new Random(), samplesPerSet);
             for (int row = 0; row < resolution; row++)
             {
                 for (int column = 0; column < resolution; column++)
