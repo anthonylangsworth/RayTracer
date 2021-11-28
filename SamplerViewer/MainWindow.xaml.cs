@@ -161,7 +161,7 @@ namespace SamplerViewer
                     break;
                 case SampleProjection.UnitDisk:
                     samples = sampleGenerator.GetSamplesOnUnitDisk();
-                    pointTransform = p => new Point2D(p.X / 2 + 0.5, p.Y / 2 + 0.5);
+                    pointTransform = p => new Point2D(p.X / 2 + 0.5, p.Y / 2 + 0.5); // Map from [-1, 1] to [0, 1]
                     break;
                 default:
                     throw new ArgumentException($"Unknown sample projection: '{sampleProjection}'", nameof(sampleProjection));
