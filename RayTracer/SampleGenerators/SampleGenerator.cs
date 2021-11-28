@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 namespace RayTracer.SampleGenerators
 {
     /// <summary>
-    /// Generate "subpixels" to render within a pixel to get a better image.`
+    /// Generate a set of samples used for anti-aliasing and similar techniques.
     /// </summary>
-    public abstract class SampleGenerator
+    public class SampleGenerator
     {
-
         /// <summary>
-        /// Create a new <see cref="Sampler"/>.
+        /// Create a new <see cref="SampleGenerator"/>.
         /// </summary>
+        /// <param name="algorithm">
+        /// The sample generation algorithm.
+        /// </param>
         /// <param name="random">
         /// The random number generator to use. This must be threadsafe.
         /// </param>
@@ -28,7 +30,7 @@ namespace RayTracer.SampleGenerators
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        protected SampleGenerator(Random random, int samplesPerSet, int sampleSets)
+        public SampleGenerator(ISampleAlgorithm algorithm, Random random, int samplesPerSet, int sampleSets)
         {
             if (samplesPerSet <= 0)
             {
@@ -40,16 +42,18 @@ namespace RayTracer.SampleGenerators
             }
 
             Random = random;
+            Algorithm = algorithm;
             SamplesPerSet = samplesPerSet;
             SampleSets = sampleSets;
 
             // Use Lazy evaluation to allow derived constructors to complete
             // before GenerateSample is called.
-            SamplesOnUnitSquare = new Lazy<IEnumerable<Point2D>[]>(() => Enumerable.Range(0, sampleSets).Select(i => GenerateSample(Random)).ToArray(), true);
+            SamplesOnUnitSquare = new Lazy<IEnumerable<Point2D>[]>(() => Enumerable.Range(0, sampleSets).Select(i => algorithm.GenerateSampleSet(Random, samplesPerSet)).ToArray(), true);
             SamplesOnUnitDisk = new Lazy<IEnumerable<Point2D>[]>(() => SamplesOnUnitSquare.Value.Select(samples => samples.Select(point => MapSquareToDisk(point))).ToArray(), true);
         }
 
         public Random Random { get; }
+        public ISampleAlgorithm Algorithm { get; }
         public int SamplesPerSet { get; }
         public int SampleSets { get; }
         public Lazy<IEnumerable<Point2D>[]> SamplesOnUnitSquare { get; }
@@ -133,15 +137,9 @@ namespace RayTracer.SampleGenerators
             return new Point2D(r * Math.Cos(phi), r * Math.Sin(phi));
         }
 
-        /// <summary>
-        /// Called lazily on first access.
-        /// </summary>
-        /// <param name="random">
-        /// A <see cref="Random"/> to use.
-        /// </param>
-        /// <returns>
-        /// A sample set.
-        /// </returns>
-        protected abstract IEnumerable<Point2D> GenerateSample(Random random);
+        private Point2D MapSquareToHemisphere(double e)
+        {
+            return new Point2D(0, 0);
+        }
     }
 }

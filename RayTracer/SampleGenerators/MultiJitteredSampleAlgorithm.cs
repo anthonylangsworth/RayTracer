@@ -7,21 +7,14 @@ using System.Threading.Tasks;
 
 namespace RayTracer.SampleGenerators
 {
-    public class MultiJitteredSampleGenerator: JitteredSampleGenerator
+    public class MultiJitteredSampleAlgorithm: ISampleAlgorithm
     {
         /// <inheritdoc/>
-        public MultiJitteredSampleGenerator(Random random, int samplesPerSet, int sampleSets = 1)
-            : base(random, samplesPerSet, sampleSets)
-        {
-            // Do nothing
-        }
-
-        /// <inheritdoc/>
-        protected override IEnumerable<Point2D> GenerateSample(Random random)
+        public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)
         {
             // See http://graphics.cs.cmu.edu/courses/15-468/lectures/lecture20.pdf for a good description
 
-            int resolution = SamplesPerSetSquareRoot;
+            int resolution = (int) Math.Floor(Math.Sqrt(samplesPerSet));
             Point2D[,] result = GeneratePoints(random, resolution);
             result = ShufflePoints(random, result);
             return result.Cast<Point2D>();

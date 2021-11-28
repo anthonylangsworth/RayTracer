@@ -7,24 +7,17 @@ using System.Threading.Tasks;
 
 namespace RayTracer.SampleGenerators
 {
-    public class NRooksSampleGenerator : SampleGenerator
+    public class NRooksSampleAlgorithm : ISampleAlgorithm
     {
         /// <inheritdoc/>
-        public NRooksSampleGenerator(Random random, int samplesPerSet, int sampleSets = 1) 
-            : base(random, samplesPerSet, sampleSets)
+        public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)
         {
-            // Do nothing
-        }
-
-        /// <inheritdoc/>
-        protected override IEnumerable<Point2D> GenerateSample(Random random)
-        {
-            Point2D[] result = new Point2D[SamplesPerSet];
-            for (int point = 0; point < SamplesPerSet; point++)
+            Point2D[] result = new Point2D[samplesPerSet];
+            for (int point = 0; point < samplesPerSet; point++)
             {
                 result[point] = new Point2D(
-                    (point + random.NextDouble()) / SamplesPerSet,
-                    (point + random.NextDouble()) / SamplesPerSet
+                    (point + random.NextDouble()) / samplesPerSet,
+                    (point + random.NextDouble()) / samplesPerSet
                 );
             }
             return ShuffleXAndYCoords(result, random);

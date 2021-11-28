@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace RayTracer.SampleGenerators
 {
-    public class HammersleySampleGenerator : SampleGenerator
+    public class HammersleySampleAlgorithm : ISampleAlgorithm
     {
         /// <inheritdoc/>
-        public HammersleySampleGenerator(Random random, int samplesPerSet) 
-            : base(random, samplesPerSet, 1)
+        public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)
         {
-            // Do nothing
-        }
-
-        protected override IEnumerable<Point2D> GenerateSample(Random random)
-        {
-            return Enumerable.Range(0, SamplesPerSet).Select(i => new Point2D(i / (double) SamplesPerSet, Phi(i)));
+            return Enumerable.Range(0, samplesPerSet).Select(i => new Point2D(i / (double) samplesPerSet, Phi(i)));
         }
 
         public static double Phi(int j)

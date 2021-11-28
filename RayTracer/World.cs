@@ -31,7 +31,7 @@ namespace RayTracer
                 new World(
                     "4.1",
                     Scene.BuildTwoSpheresAndPlane(),
-                    new ViewPlane(300, 300, 1, 1, new MultiJitteredSampleGenerator(random, 16)) // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
+                    new ViewPlane(300, 300, 1, 1, new SampleGenerator(new MultiJitteredSampleAlgorithm(), random, 16, 1)) // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
                 )
             })
             {

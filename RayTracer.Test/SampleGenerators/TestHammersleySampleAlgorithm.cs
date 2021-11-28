@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Test.SampleGenerators
 {
-    internal class TestHammersleySampleGenerator
+    internal class TestHammersleySampleAlgorithm
     {
         [TestCase(0, 0)]
         [TestCase(1, 0.5)]
@@ -17,7 +17,7 @@ namespace RayTracer.Test.SampleGenerators
         [TestCase(4, 0.125)]
         public void Phi(int i, double expectedPhi)
         {
-            Assert.That(HammersleySampleGenerator.Phi(i), Is.EqualTo(expectedPhi));
+            Assert.That(HammersleySampleAlgorithm.Phi(i), Is.EqualTo(expectedPhi));
         }
     }
 }

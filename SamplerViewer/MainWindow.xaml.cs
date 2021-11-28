@@ -216,27 +216,28 @@ namespace SamplerViewer
             int samplesPerSet = Convert.ToInt32(((ComboBoxItem) samplesPerSetCombo.SelectedValue).Content);
 
             string? samplerName = Convert.ToString(((ComboBoxItem) samplersCombo.SelectedValue).Content);
-            SampleGenerator? sampleGenerator;
+            ISampleAlgorithm algorithm;
             switch(samplerName)
             {
                 case "Regular":
-                    sampleGenerator = new RegularSampleGenerator(new Random());
+                    algorithm = SampleAlgorithms.Regular;
                     break;
                 case "Jittered":
-                    sampleGenerator = new JitteredSampleGenerator(new Random(), samplesPerSet);
+                    algorithm = SampleAlgorithms.Jittered;
                     break;
                 case "Multi-Jittered":
-                    sampleGenerator = new MultiJitteredSampleGenerator(new Random(), samplesPerSet);
+                    algorithm = SampleAlgorithms.MultiJittered;
                     break;
                 case "n-Rooks":
-                    sampleGenerator = new NRooksSampleGenerator(new Random(), samplesPerSet);
+                    algorithm = SampleAlgorithms.NRooks;
                     break;
                 case "Hammersley":
-                    sampleGenerator = new HammersleySampleGenerator(new Random(), samplesPerSet);
+                    algorithm = SampleAlgorithms.Hammersley;
                     break;
                 default:
                     throw new InvalidOperationException($"Unknown sampler name: '{samplerName}'");
             }
+            SampleGenerator sampleGenerator = new SampleGenerator(algorithm, new Random(), samplesPerSet, 1);
 
             string? dotTypeName = Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content);
             DotType dotType = DotType.Dot;

@@ -12,23 +12,11 @@ namespace RayTracer.Test.Samplers
     internal class TestMultiJitteredSampleGenerator
     {
         [Test]
-        public void Ctor()
-        {
-            int testSamplesPerSet = 64;
-            int testSampleSets = 2;
-            Random random = new Random();
-            MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(random, testSamplesPerSet, testSampleSets);
-            Assert.That(sampler.SamplesPerSet, Is.EqualTo(testSamplesPerSet));
-            Assert.That(sampler.SampleSets, Is.EqualTo(testSampleSets));
-            Assert.That(sampler.Random, Is.EqualTo(random));
-        }
-
-        [Test]
         public void GenerateSamplesOnUnitSquare()
         {
             int testSamplesPerSet = 64;
-            MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(new Random(), testSamplesPerSet, 1);
-            IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
+            MultiJitteredSampleAlgorithm sampler = new MultiJitteredSampleAlgorithm();
+            IEnumerable<Point2D> set = sampler.GenerateSampleSet(new Random(), testSamplesPerSet);
             Assert.That(set.Count(), Is.EqualTo(testSamplesPerSet));
             Assert.IsTrue(set.All(p => p.X >= 0 && p.Y < 1 && p.Y >= 0 && p.Y < 1));
         }
@@ -38,8 +26,8 @@ namespace RayTracer.Test.Samplers
         public void GenerateSamplesOnUnitSquareInCells()
         {
             int resolution = 8;
-            MultiJitteredSampleGenerator sampler = new MultiJitteredSampleGenerator(new Random(), resolution * resolution);
-            IEnumerable<Point2D> set = sampler.GetSamplesOnUnitSquare();
+            MultiJitteredSampleAlgorithm sampler = new MultiJitteredSampleAlgorithm();
+            IEnumerable<Point2D> set = sampler.GenerateSampleSet(new Random(), 16);
             for (int row = 0; row < resolution; row++)
             {
                 for (int column = 0; column < resolution; column++)
