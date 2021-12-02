@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RayTracer.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace RayTracer.SampleGenerators
     /// </summary>
     public static class SampleMappers
     {
-        public static ISampleMapper UnitSquare = new UnitSquareSampleMapper();
-        public static ISampleMapper UnitDisk = new UnitDiskSampleMapper();
+        public static ISampleMapper<Point2D> UnitSquare = new UnitSquareSampleMapper();
+        public static ISampleMapper<Point2D> UnitDisk = new UnitDiskSampleMapper();
     }
 }

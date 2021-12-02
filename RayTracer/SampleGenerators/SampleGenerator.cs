@@ -10,7 +10,8 @@ namespace RayTracer.SampleGenerators
     /// <summary>
     /// Generate a set of samples used for anti-aliasing and similar techniques.
     /// </summary>
-    public class SampleGenerator
+    public class SampleGenerator<T>
+        where T : class
     {
         /// <summary>
         /// Create a new <see cref="SampleGenerator"/>.
@@ -30,7 +31,7 @@ namespace RayTracer.SampleGenerators
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        public SampleGenerator(ISampleAlgorithm algorithm, ISampleMapper mapper, Random random, int samplesPerSet, int sampleSets)
+        public SampleGenerator(ISampleAlgorithm algorithm, ISampleMapper<T> mapper, Random random, int samplesPerSet, int sampleSets)
         {
             if (samplesPerSet <= 0)
             {
@@ -51,10 +52,10 @@ namespace RayTracer.SampleGenerators
 
         public Random Random { get; }
         public ISampleAlgorithm Algorithm { get; }
-        public ISampleMapper Mapper { get; }
+        public ISampleMapper<T> Mapper { get; }
         public int SamplesPerSet { get; }
         public int SampleSets { get; }
-        public IEnumerable<Point2D>[] Samples { get; }
+        public IEnumerable<T>[] Samples { get; }
 
         /// <summary>
         /// Get a random sample set, mapped to a unit square.
@@ -62,7 +63,7 @@ namespace RayTracer.SampleGenerators
         /// <returns>
         /// The sample set.
         /// </returns>
-        public IEnumerable<Point2D> GetSamples()
+        public IEnumerable<T> GetSamples()
         {
             return Samples[Random.Next() % SampleSets];
         }

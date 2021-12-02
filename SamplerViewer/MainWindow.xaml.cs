@@ -40,7 +40,7 @@ namespace SamplerViewer
             GenerateSamplerPlot(this, EventArgs.Empty);
         }
 
-        private void CreateSamplePlot(Canvas canvas, SampleGenerator sampleGenerator, int sqrtSamplesPerSet, DotType dotType, SampleProjection sampleProjection)
+        private void CreateSamplePlot(Canvas canvas, SampleGenerator<Point2D> sampleGenerator, int sqrtSamplesPerSet, DotType dotType, SampleProjection sampleProjection)
         {
             const double pixelsPerInch = 96; // Cannot find this constant in WPF
             double extent = 6 * pixelsPerInch; // plot is 6 inches wide and high
@@ -135,7 +135,7 @@ namespace SamplerViewer
             Canvas.SetTop(ellipse, 0);
         }
 
-        private void DrawSampleGeneratorPoints(Canvas canvas, SampleGenerator sampleGenerator, double extent, DotType dotType, SampleProjection sampleProjection)
+        private void DrawSampleGeneratorPoints(Canvas canvas, SampleGenerator<Point2D> sampleGenerator, double extent, DotType dotType, SampleProjection sampleProjection)
         {
             double diameter;
             switch(dotType)
@@ -198,7 +198,7 @@ namespace SamplerViewer
             }
         }
 
-        private void FillPointsListBox(ListBox listbox, SampleGenerator sampleGenerator)
+        private void FillPointsListBox(ListBox listbox, SampleGenerator<Point2D> sampleGenerator)
         {
             listbox.Items.Clear();
             int i = 0;
@@ -239,7 +239,7 @@ namespace SamplerViewer
 
             string? projectionName = Convert.ToString(((ComboBoxItem)projectionCombo.SelectedValue).Content);
             SampleProjection sampleProjection = SampleProjection.UnitSquare;
-            ISampleMapper mapper = SampleMappers.UnitSquare;
+            ISampleMapper<Point2D> mapper = SampleMappers.UnitSquare;
             switch (projectionName) // Nicer than Enum.Parse
             {
                 case "Square":
@@ -254,7 +254,7 @@ namespace SamplerViewer
                     throw new InvalidOperationException($"Unknown projection: '{projectionName ?? "(null)"}'");
             }
 
-            SampleGenerator sampleGenerator = new SampleGenerator(algorithm, mapper, new Random(), samplesPerSet, 1);
+            SampleGenerator<Point2D> sampleGenerator = new SampleGenerator<Point2D>(algorithm, mapper, new Random(), samplesPerSet, 1);
 
             string? dotTypeName = Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content);
             DotType dotType = DotType.Dot;

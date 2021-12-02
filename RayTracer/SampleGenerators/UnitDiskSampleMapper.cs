@@ -10,7 +10,7 @@ namespace RayTracer.SampleGenerators
     /// <summary>
     /// Map a point on a unit square to a point on a unit disk using Shirley's mapping.
     /// </summary>
-    internal class UnitDiskSampleMapper : ISampleMapper
+    internal class UnitDiskSampleMapper : ISampleMapper<Point2D>
     {
         /// <inheritdoc/>
         public Point2D Map(Point2D point)

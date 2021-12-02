@@ -10,7 +10,8 @@ namespace RayTracer.SampleGenerators
     /// <summary>
     /// Map a point on a unit square to another distribution.
     /// </summary>
-    public interface ISampleMapper
+    public interface ISampleMapper<T>
+        where T : class
     {
         /// <summary>
         /// Map a point on a unit square to another distribution.
@@ -18,6 +19,6 @@ namespace RayTracer.SampleGenerators
         /// <returns>
         /// The mapped point.
         /// </returns>
-        public Point2D Map(Point2D point);
+        public T Map(Point2D point);
     }
 }

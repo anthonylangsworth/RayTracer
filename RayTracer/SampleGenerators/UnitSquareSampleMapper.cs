@@ -10,7 +10,7 @@ namespace RayTracer.SampleGenerators
     /// <summary>
     /// Map a point on a unit square to unit square. Yes, this is effectively a NOOP.
     /// </summary>
-    internal class UnitSquareSampleMapper : ISampleMapper
+    internal class UnitSquareSampleMapper : ISampleMapper<Point2D>
     {
         /// <inheritdoc/>
         public Point2D Map(Point2D point)

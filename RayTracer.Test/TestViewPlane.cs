@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using RayTracer.Primitives;
 using RayTracer.SampleGenerators;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace RayTracer.Test
             int testVerticalResolution = 200;
             double testPixelSize = 1.0;
             double testGamma = 2.0;
-            SampleGenerator testSampleGenerator = new SampleGenerator(SampleAlgorithms.Regular, SampleMappers.UnitSquare, new Random(), 1, 1);
+            SampleGenerator<Point2D> testSampleGenerator = new SampleGenerator<Point2D>(SampleAlgorithms.Regular, SampleMappers.UnitSquare, new Random(), 1, 1);
             ViewPlane viewPlane = new ViewPlane(testHorizontalResolution, testVerticalResolution, testPixelSize, testGamma, testSampleGenerator);
             Assert.That(viewPlane.HorizontalResolution, Is.EqualTo(testHorizontalResolution));
             Assert.That(viewPlane.VerticalResolution, Is.EqualTo(testVerticalResolution));
