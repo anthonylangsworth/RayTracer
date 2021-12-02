@@ -50,7 +50,7 @@ namespace Viewer
         {
             base.OnInitialized(e);
 
-            BitmapSource bitmapSource = new MediaImageSerializer().Serialize(World.Render(), World.ViewPlane.Gamma);
+            BitmapSource bitmapSource = new MediaImageSerializer().Serialize(World.RenderPerspective(), World.ViewPlane.Gamma); // World.Render()
             image.Source = bitmapSource;
         }
 

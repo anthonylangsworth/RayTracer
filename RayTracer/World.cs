@@ -93,5 +93,35 @@ namespace RayTracer
 
             return result;
         }
+
+        public RGBColor[,] RenderPerspective()
+        {
+            RGBColor[,] result = new RGBColor[ViewPlane.VerticalResolution, ViewPlane.HorizontalResolution];
+            Point3D eye = new Point3D(0, 0, 20);
+            double viewPlaneDistance = 1.0;
+
+            Parallel.For(0, ViewPlane.VerticalResolution, row => // up
+            {
+                for (int column = 0; column < ViewPlane.HorizontalResolution; column++) // left to right
+                {
+                    RGBColor pixelColor = RGBColor.Black;
+                    foreach (Point2D samplePoint in ViewPlane.SampleGenerator.GetSamples())
+                    {
+                        Ray ray = new Ray(eye,
+                            new Vector3D(
+                                ViewPlane.PixelSize * (column - 0.5 * (ViewPlane.HorizontalResolution - 1.0) + samplePoint.X),
+                                ViewPlane.PixelSize * (row - 0.5 * (ViewPlane.VerticalResolution - 1.0) + samplePoint.Y),
+                                -viewPlaneDistance
+                            ));
+                        ray.Direction.Normalize();
+                        pixelColor += Tracer.TraceRay(Scene, ray);
+                    }
+                    pixelColor /= ViewPlane.SampleGenerator.SamplesPerSet;
+                    result[row, column] = pixelColor;
+                }
+            });
+
+            return result;
+        }
     }
 }
