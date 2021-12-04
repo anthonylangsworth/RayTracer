@@ -19,8 +19,4 @@
     <ProjectReference Include="..\RayTracer\RayTracer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Cameras\" />
-  </ItemGroup>
-
 </Project>

@@ -4,6 +4,8 @@ namespace RayTracer.Cameras
 {
     public abstract class Camera
     {
+        public static readonly double DefaultExposureTime = 1;
+
         /// <summary>
         /// Create a new <see cref="Camera"/>.
         /// </summary>

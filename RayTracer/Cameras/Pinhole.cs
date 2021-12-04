@@ -12,6 +12,8 @@ namespace RayTracer.Cameras
     /// </summary>
     internal class Pinhole : Camera
     {
+        public static readonly double DefaultZoom = 1;
+
         /// <summary>
         /// Create a new <see cref="Pinhole"/> camera.
         /// </summary>
@@ -83,6 +85,7 @@ namespace RayTracer.Cameras
                 + y * pinholeCamera.ViewVAxis 
                 - pinholeCamera.ViewPlaneDistance * pinholeCamera.ViewWAxis;
             direction.Normalize();
+            // TODO: Handle singularity cases (p164)
             return direction;
         }
 
