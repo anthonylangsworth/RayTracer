@@ -12,7 +12,7 @@ namespace RayTracer.Cameras
     /// </summary>
     internal class Pinhole : Camera
     {
-        public static readonly double DefaultZoom = 1;
+        public const double DefaultZoom = 1;
 
         /// <summary>
         /// Create a new <see cref="Pinhole"/> camera.
@@ -30,12 +30,13 @@ namespace RayTracer.Cameras
         /// Project the scene on a plane this distance away from the camera.
         /// </param>
         /// <param name="zoom">
-        /// The zoom level, which defaults to 1.
+        /// The zoom level. Defaults to <see cref="DefaultZoom"/>.
         /// </param>
         /// <param name="exposureTime">
-        /// The time taken for an exposure, with 1 being a normal exposure. The default is 1.
+        /// The time taken for an exposure. Defaults to <see cref="DefaultExposureTime"/>.
         /// </param>
-        public Pinhole(Point3D eye, Point3D lookat, Vector3D up, double viewPlaneDistance, double zoom = 1, double exposureTime = 1) 
+        public Pinhole(Point3D eye, Point3D lookat, Vector3D up, double viewPlaneDistance, 
+            double zoom = DefaultZoom, double exposureTime = DefaultExposureTime) 
             : base(eye, lookat, up, exposureTime)
         {
             ViewPlaneDistance = viewPlaneDistance;

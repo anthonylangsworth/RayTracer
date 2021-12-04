@@ -4,7 +4,7 @@ namespace RayTracer.Cameras
 {
     public abstract class Camera
     {
-        public static readonly double DefaultExposureTime = 1;
+        public const double DefaultExposureTime = 1;
 
         /// <summary>
         /// Create a new <see cref="Camera"/>.
@@ -19,9 +19,9 @@ namespace RayTracer.Cameras
         /// The orientation of the camera.
         /// </param>
         /// <param name="exposureTime">
-        /// The time taken for an exposure, with 1.0 being a normal exposure.
+        /// The time taken for an exposure, with 1.0 being a normal exposure and the default.
         /// </param>
-        protected Camera(Point3D eye, Point3D lookat, Vector3D up, double exposureTime)
+        protected Camera(Point3D eye, Point3D lookat, Vector3D up, double exposureTime = DefaultExposureTime)
         {
             Eye = eye;
             Lookat = lookat;
