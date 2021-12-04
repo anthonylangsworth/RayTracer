@@ -42,7 +42,7 @@ namespace Viewer
 
             // Create world
             ConcurrentRandom random = new ConcurrentRandom();
-            World = new World("4.1", Scene.BuildTwoSpheresAndPlane(), new ViewPlane(300, 300, 1, 1, 
+            World = new World("4.1", Scene.BuildTwoSpheresAndPlane(), new ViewPlane(300, 300, 1, 1,
                 new SampleGenerator<Point2D>(SampleAlgorithms.MultiJittered, SampleMappers.UnitSquare, random, 16, 16)));
         }
 
@@ -50,7 +50,7 @@ namespace Viewer
         {
             base.OnInitialized(e);
 
-            BitmapSource bitmapSource = new MediaImageSerializer().Serialize(World.RenderPerspective(), World.ViewPlane.Gamma); // World.Render()
+            BitmapSource bitmapSource = new MediaImageSerializer().Serialize(World.Render(), World.ViewPlane.Gamma); // World.Render()
             image.Source = bitmapSource;
         }
 

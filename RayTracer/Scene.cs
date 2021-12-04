@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RayTracer.Cameras;
 using RayTracer.Objects;
 using RayTracer.Primitives;
 
@@ -24,7 +25,7 @@ namespace RayTracer
         public static Scene BuildSingleSphere()
         {
             return new Scene(
-                new Camera(),
+                new Pinhole(new Point3D(0, 0, 200), new Point3D(0, 0, 0), new Vector3D(0, 1, 0), 100),
                 new[]
                 {
                     new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 85)
@@ -36,7 +37,7 @@ namespace RayTracer
         public static Scene BuildTwoSpheresAndPlane()
         {
             return new Scene(
-                new Camera(),
+                new Pinhole(new Point3D(0, 0, 200), new Point3D(0, 0, 0), new Vector3D(0, 1, 0), 100),
                 new GeometricObject[]
                 {
                     new Sphere(new Point3D(0, -25, 0), new Material(RGBColor.BrightRed), 80),

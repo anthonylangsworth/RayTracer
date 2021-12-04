@@ -67,61 +67,79 @@ namespace RayTracer
         /// </returns>
         public RGBColor[,] Render()
         {
-            Vector3D rayDirection = new Vector3D(0, 0, -1);
-            const double zw = 100.0;
-            RGBColor[,] result = new RGBColor[ViewPlane.VerticalResolution, ViewPlane.HorizontalResolution];
-
-            Parallel.For(0, ViewPlane.VerticalResolution, row => // up
-            {
-                // Declare here because they are thread local
-                double x, y;
-                Ray ray;
-                for (int column = 0; column < ViewPlane.HorizontalResolution; column++) // left to right
-                {
-                    RGBColor pixelColor = RGBColor.Black;
-                    foreach (Point2D samplePoint in ViewPlane.SampleGenerator.GetSamples())
-                    {
-                        x = ViewPlane.PixelSize * (column - 0.5 * ViewPlane.HorizontalResolution + samplePoint.X);
-                        y = ViewPlane.PixelSize * (row - 0.5 * ViewPlane.VerticalResolution + samplePoint.Y);
-                        ray = new Ray(new Point3D(x, y, zw), rayDirection);
-                        pixelColor += Tracer.TraceRay(Scene, ray);
-                    }
-                    pixelColor /= ViewPlane.SampleGenerator.SamplesPerSet;
-                    result[row, column] = pixelColor;
-                }
-            });
-
-            return result;
+            return Scene.Camera.Render(this);
         }
 
-        public RGBColor[,] RenderPerspective()
-        {
-            RGBColor[,] result = new RGBColor[ViewPlane.VerticalResolution, ViewPlane.HorizontalResolution];
-            Point3D eye = new Point3D(0, 0, 20);
-            double viewPlaneDistance = 1.0;
+        ///// <summary>
+        ///// Render the <see cref="Scene"/> to the <see cref="ViewPlane"/>.
+        ///// </summary>
+        ///// <param name="scene">
+        ///// The <see cref="Scene"/> to render.
+        ///// </param>
+        ///// <param name="viewPlane">
+        ///// The <see cref="ViewPlane"/> to render to.
+        ///// </param>
+        ///// <returns>
+        ///// A 2D array of <see cref="RGBColor"/>s representing pixels. The rows are returned in 
+        ///// bottom-up order, not top-down.
+        ///// </returns>
+        //public RGBColor[,] Render()
+        //{
+        //    Vector3D rayDirection = new Vector3D(0, 0, -1);
+        //    const double zw = 100.0;
+        //    RGBColor[,] result = new RGBColor[ViewPlane.VerticalResolution, ViewPlane.HorizontalResolution];
 
-            Parallel.For(0, ViewPlane.VerticalResolution, row => // up
-            {
-                for (int column = 0; column < ViewPlane.HorizontalResolution; column++) // left to right
-                {
-                    RGBColor pixelColor = RGBColor.Black;
-                    foreach (Point2D samplePoint in ViewPlane.SampleGenerator.GetSamples())
-                    {
-                        Ray ray = new Ray(eye,
-                            new Vector3D(
-                                ViewPlane.PixelSize * (column - 0.5 * (ViewPlane.HorizontalResolution - 1.0) + samplePoint.X),
-                                ViewPlane.PixelSize * (row - 0.5 * (ViewPlane.VerticalResolution - 1.0) + samplePoint.Y),
-                                -viewPlaneDistance
-                            ));
-                        ray.Direction.Normalize();
-                        pixelColor += Tracer.TraceRay(Scene, ray);
-                    }
-                    pixelColor /= ViewPlane.SampleGenerator.SamplesPerSet;
-                    result[row, column] = pixelColor;
-                }
-            });
+        //    Parallel.For(0, ViewPlane.VerticalResolution, row => // up
+        //    {
+        //        // Declare here because they are thread local
+        //        double x, y;
+        //        Ray ray;
+        //        for (int column = 0; column < ViewPlane.HorizontalResolution; column++) // left to right
+        //        {
+        //            RGBColor pixelColor = RGBColor.Black;
+        //            foreach (Point2D samplePoint in ViewPlane.SampleGenerator.GetSamples())
+        //            {
+        //                x = ViewPlane.PixelSize * (column - 0.5 * ViewPlane.HorizontalResolution + samplePoint.X);
+        //                y = ViewPlane.PixelSize * (row - 0.5 * ViewPlane.VerticalResolution + samplePoint.Y);
+        //                ray = new Ray(new Point3D(x, y, zw), rayDirection);
+        //                pixelColor += Tracer.TraceRay(Scene, ray);
+        //            }
+        //            pixelColor /= ViewPlane.SampleGenerator.SamplesPerSet;
+        //            result[row, column] = pixelColor;
+        //        }
+        //    });
 
-            return result;
-        }
+        //    return result;
+        //}
+
+        //public RGBColor[,] RenderPerspective()
+        //{
+        //    RGBColor[,] result = new RGBColor[ViewPlane.VerticalResolution, ViewPlane.HorizontalResolution];
+        //    Point3D eye = new Point3D(0, 0, 20);
+        //    double viewPlaneDistance = 1.0;
+
+        //    Parallel.For(0, ViewPlane.VerticalResolution, row => // up
+        //    {
+        //        for (int column = 0; column < ViewPlane.HorizontalResolution; column++) // left to right
+        //        {
+        //            RGBColor pixelColor = RGBColor.Black;
+        //            foreach (Point2D samplePoint in ViewPlane.SampleGenerator.GetSamples())
+        //            {
+        //                Ray ray = new Ray(eye,
+        //                    new Vector3D(
+        //                        ViewPlane.PixelSize * (column - 0.5 * (ViewPlane.HorizontalResolution - 1.0) + samplePoint.X),
+        //                        ViewPlane.PixelSize * (row - 0.5 * (ViewPlane.VerticalResolution - 1.0) + samplePoint.Y),
+        //                        -viewPlaneDistance
+        //                    ));
+        //                ray.Direction.Normalize();
+        //                pixelColor += Tracer.TraceRay(Scene, ray);
+        //            }
+        //            pixelColor /= ViewPlane.SampleGenerator.SamplesPerSet;
+        //            result[row, column] = pixelColor;
+        //        }
+        //    });
+
+        //    return result;
+        //}
     }
 }
