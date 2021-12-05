@@ -4,6 +4,8 @@
 
 This project implements and explores ray tracing based on Kevin Suffern's 2007 book "Ray Tracing from the Ground Up" published by A K Peters, Ltd ("the book"). Kevin was my graphics lecturer when I attended university. His enthusiasm and patience made the topic come alive. Thank you, Kevin!
 
+Ray tracing is the practice of generating images by mathematically firing light rays at observing their interaction, such as reflection or refraction. Ray tracing produces many of the scenes movies and is finding its way into games, based on the work from companies like NVidia.
+
 The goals of this project are to:
 1. Educate me (and hopefully others) on ray tracing concepts and execution.
 2. Create attractive images using multiple light sources, shading, texturing and meshes.
