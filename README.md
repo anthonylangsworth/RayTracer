@@ -9,7 +9,15 @@ The goals of this project are to:
 2. Create attractive images using multiple light sources, shading, texturing and meshes.
 3. NOT be a commercially viable or competitive product. That would require hardware acceleration and an extensive user interface. Either are potential future goals.
 
-Kevin wrote the code from "Ray Tracing from the Ground Up" in C++ because the processing power of personal computers at the time was limited. C++ emphasized efficiency while providing a native object oriented development environment. I converted the code C# to leverage C#'s relative brevity, the .Net standard library's features like parallelization and platform independence. 
+Kevin wrote the code from "Ray Tracing from the Ground Up" in C++ because the processing power of personal computers at the time was limited. C++ emphasized efficiency while providing a native object oriented development environment. I converted the code C# to leverage C#'s relative brevity and the .Net standard library's features like parallelization and platform independence. 
+
+## Structure
+
+The ray tracer consists of the following projects:
+1. RayTracer: The ray tracing library itself.
+2. RayTracer.Test: Automated tests for the ray tracer, written in NUnit.
+3. SampleViewer: A visualization for the sample generators.
+4. Viewer: Generate and display ray traced images using "RayTracer".
 
 ## Principles
 
@@ -39,7 +47,7 @@ Where automated tests are not possible, e.g. for randomness, create tools to vis
 
 Modern personal computers are significantly faster than when Kevin authored the book. However, execution speed is still a factor for large, complex scenes. Therefore, leverage parallel execution and similar capabilities where possible.
 
-Where execution speed conflicts with good design, optimize for good design. The execution speed differences are likely small, and the potential readability loss is significant (see the "Good Object Oriented Design and Readability" principle).
+Where execution speed conflicts with good design, optimize for good design. The execution speed differences are likely minor, and the potential readability loss is significant (see the "Good Object Oriented Design and Readability" principle).
 
 ### 5. Immutable Objects
 
