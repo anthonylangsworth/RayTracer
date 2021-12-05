@@ -15,11 +15,11 @@ Kevin wrote the code from "Ray Tracing from the Ground Up" in C++ because the pr
 
 I developed this project according to the following principles, listed in order from the most important to least:
 
-### Code as the user interface
+### 1. Code is the User Interface
 
 Developers are the target audience of this project. Therefore, this project is configured directly in code instead of spending development effort on parsing instruction files or a user interface. Exceptions include meshes and textures.
 
-### Good Object Oriented Design and Readability
+### 2. Good Object Oriented Design and Readability
 
 Many parts of a ray tracer are substitutable, such as cameras, materials and geometric objects. Object oriented design helps facilitate this while keeping the code readable. 
 
@@ -27,26 +27,26 @@ The book "Ray Tracing from the Ground Up" already follows an object oriented des
 
 The book favours one letter variable names to align with the mathematics more closely. Instead, use descriptive member and variable names for better readability.
 
-An object oriented design also makes building scenes easier (see the "Code as the User Interface" principle).
+An object oriented design also makes building scenes easier (see the "Code is the User Interface" principle).
 
-### Automated Testing and Visualization
+### 3. Automated Testing and Visualization
 
-Create automated tests to test each functional area during development, ensuring correctness before use. Testable code tends to be better designed (see the "Good Object Oriented Design" principle).
+Create automated tests to test each functional area during development, ensuring correctness before use. Testable code tends to be better designed (see the "Good Object Oriented Design" principle) and ensures the API is fit for purpose (see "Code is the User Interface").
 
 Where automated tests are not possible, e.g. for randomness, create tools to visualize output or otherwise help demonstrate correctness. A good example is sample generation (see the "SamplerViewer" project). 
 
-### Fast Execution
+### 4. Fast Execution
 
 Modern personal computers are significantly faster than when Kevin authored the book. However, execution speed is still a factor for large, complex scenes. Therefore, leverage parallel execution and similar capabilities where possible.
 
 Where execution speed conflicts with good design, optimize for good design. The execution speed differences are likely small, and the potential readability loss is significant (see the "Good Object Oriented Design" principle).
 
-### Immutable Objects
+### 5. Immutable Objects
 
 Initialize objects' state at construction, then prevent subsequent modification. This pattern ensures objects are never in an invalid state. As in functional programming, immutable objects are innately parallelizable (see the "Fast Execution" principle).
 
 Arguably already covered by "Fast Execution" and "Good Object Oriented Design and Readability", this is significant enough to be called out separately.
 
-### Follow the book
+### 6. Follow the Book
 
 Base the development order and code structure on the C++ code from "Ray Tracing from the Ground Up". This practice makes the book easier to follow. The exercises and illustrations help test and verify the code is correct.
