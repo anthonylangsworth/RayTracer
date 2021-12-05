@@ -13,11 +13,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70E4E5A4-E5EB-4564-8085-7F88AF90ACAA}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamplerViewer", "SamplerViewer\SamplerViewer.csproj", "{79051173-BF26-4FDC-BBBF-89DBE811ADF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viewer", "Viewer\Viewer.csproj", "{4D955D64-9A2A-40BF-8800-1F8C080078AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viewer", "Viewer\Viewer.csproj", "{4D955D64-9A2A-40BF-8800-1F8C080078AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
