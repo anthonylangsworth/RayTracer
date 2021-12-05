@@ -85,7 +85,7 @@ namespace RayTracer.Cameras
             Vector3D direction = x * pinholeCamera.ViewUAxis 
                 + y * pinholeCamera.ViewVAxis 
                 - pinholeCamera.ViewPlaneDistance * pinholeCamera.ViewWAxis;
-            direction.Normalize();
+            direction = direction.Normalize();
             // TODO: Handle singularity cases (p164)
             return direction;
         }
