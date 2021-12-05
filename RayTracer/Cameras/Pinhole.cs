@@ -10,7 +10,7 @@ namespace RayTracer.Cameras
     /// <summary>
     /// A Pinhole or default camera.
     /// </summary>
-    internal class Pinhole : Camera
+    public class Pinhole : Camera
     {
         public const double DefaultZoom = 1;
 

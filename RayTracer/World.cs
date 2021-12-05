@@ -1,4 +1,5 @@
-﻿using RayTracer.Objects;
+﻿using RayTracer.Cameras;
+using RayTracer.Objects;
 using RayTracer.Primitives;
 using RayTracer.SampleGenerators;
 using RayTracer.Tracers;
@@ -30,6 +31,7 @@ namespace RayTracer
                 //),
                 new World(
                     "4.1",
+                    new Pinhole(new Point3D(0, 0, 200), new Point3D(0, 0, 0), new Vector3D(0, 1, 0), 100),
                     Scene.BuildTwoSpheresAndPlane(),
                     new ViewPlane(300, 300, 1, 1, new SampleGenerator<Point2D>(SampleAlgorithms.MultiJittered, SampleMappers.UnitSquare, random, 16, 1)) // new NRooksSampleGenerator(random, 6)), // new JitteredSampleGenerator(random, 36)), // new RegularSampleGenerator(random)), // 
                 )
@@ -39,15 +41,17 @@ namespace RayTracer
             }
         }
 
-        public World(string name, Scene scene, ViewPlane viewPlane)
+        public World(string name, Camera camera, Scene scene, ViewPlane viewPlane)
         {
             Tracer = new Tracer();
+            Camera = camera;
             Name = name;
             Scene = scene;
             ViewPlane = viewPlane;
         }
 
         public Tracer Tracer { get; }
+        public Camera Camera { get; }
         public string Name { get; }
         public Scene Scene { get; }
         public ViewPlane ViewPlane { get; }
@@ -67,7 +71,7 @@ namespace RayTracer
         /// </returns>
         public RGBColor[,] Render()
         {
-            return Scene.Camera.Render(this);
+            return Camera.Render(this);
         }
 
         ///// <summary>
