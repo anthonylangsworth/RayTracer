@@ -39,14 +39,18 @@ Where automated tests are not possible, e.g. for randomness, create tools to vis
 
 Modern personal computers are significantly faster than when Kevin authored the book. However, execution speed is still a factor for large, complex scenes. Therefore, leverage parallel execution and similar capabilities where possible.
 
-Where execution speed conflicts with good design, optimize for good design. The execution speed differences are likely small, and the potential readability loss is significant (see the "Good Object Oriented Design" principle).
+Where execution speed conflicts with good design, optimize for good design. The execution speed differences are likely small, and the potential readability loss is significant (see the "Good Object Oriented Design and Readability" principle).
 
 ### 5. Immutable Objects
 
 Initialize objects' state at construction, then prevent subsequent modification. This pattern ensures objects are never in an invalid state. As in functional programming, immutable objects are innately parallelizable (see the "Fast Execution" principle).
 
-Arguably already covered by "Fast Execution" and "Good Object Oriented Design and Readability", this is significant enough to be called out separately.
+Arguably already covered by the "Fast Execution" and "Good Object Oriented Design and Readability" principles, this is significant enough to be called out separately.
 
 ### 6. Follow the Book
 
 Base the development order and code structure on the C++ code from "Ray Tracing from the Ground Up". This practice makes the book easier to follow. The exercises and illustrations help test and verify the code is correct.
+
+# License
+
+See [LICENSE](LICENSE) for the license.
