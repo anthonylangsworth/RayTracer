@@ -76,18 +76,42 @@ namespace RayTracer.Cameras
         /// <summary>
         /// Create a <see cref="Vector3D"/> representing the ray's direction.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="pinholeCamera"></param>
-        /// <returns></returns>
-        public static Vector3D GetRayDirection(double x, double y, Pinhole pinholeCamera)
+        /// <param name="x">
+        /// The ray's starting x coordinate in the view plane.
+        /// </param>
+        /// <param name="y">
+        /// The ray's starting y coordinate in the view plane.
+        /// </param>
+        /// <param name="camera">
+        /// The <see cref="Pinhole"/> camera used.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static Vector3D GetRayDirection(double x, double y, Pinhole camera)
         {
-            Vector3D direction = x * pinholeCamera.ViewUAxis 
-                + y * pinholeCamera.ViewVAxis 
-                - pinholeCamera.ViewPlaneDistance * pinholeCamera.ViewWAxis;
-            direction = direction.Normalize();
-            // TODO: Handle singularity cases (p164)
-            return direction;
+            Vector3D direction;
+
+            if (camera.Eye.X == camera.LookAt.X
+                && camera.Eye.Z == camera.LookAt.Z)
+            {
+                if(camera.Eye.Y < camera.LookAt.Y)
+                {
+                    direction = new Vector3D(0, 1, 0);
+                }
+                else
+                {
+                    direction = new Vector3D(0, -1, 0);
+                }
+            }
+            else
+            {
+
+                direction = x * camera.ViewUAxis
+                    + y * camera.ViewVAxis
+                    - camera.ViewPlaneDistance * camera.ViewWAxis;
+            }
+
+            return direction.Normalize();
         }
 
         public double ViewPlaneDistance { get; }

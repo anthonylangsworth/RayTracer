@@ -10,10 +10,10 @@ namespace RayTracer.Cameras
         /// Create a new <see cref="Camera"/>.
         /// </summary>
         /// <param name="eye">
-        /// The camera source point.
+        /// The camera source point. This cannot be <paramref name="lookAt"/>.
         /// </param>
-        /// <param name="lookat">
-        /// Where the camera looks.
+        /// <param name="lookAt">
+        /// Where the camera looks. This cannot be <paramref name="eye"/>.
         /// </param>
         /// <param name="up">
         /// The orientation of the camera.
@@ -21,14 +21,19 @@ namespace RayTracer.Cameras
         /// <param name="exposureTime">
         /// The time taken for an exposure, with 1.0 being a normal exposure and the default.
         /// </param>
-        protected Camera(Point3D eye, Point3D lookat, Vector3D up, double exposureTime = DefaultExposureTime)
+        protected Camera(Point3D eye, Point3D lookAt, Vector3D up, double exposureTime = DefaultExposureTime)
         {
+            if(eye == lookAt)
+            {
+                throw new ArgumentException($"{ nameof(eye) } cannot be the same as { nameof(lookAt) }", nameof(eye));
+            }
+
             Eye = eye;
-            Lookat = lookat;
+            LookAt = lookAt;
             ExposureTime = exposureTime;
             Up = up.Normalize();
 
-            ViewWAxis = (eye - lookat).Normalize();
+            ViewWAxis = (eye - lookAt).Normalize();
             ViewUAxis = up.Cross(ViewWAxis).Normalize();
             ViewVAxis = ViewWAxis.Cross(ViewUAxis).Normalize();
         }
@@ -49,7 +54,7 @@ namespace RayTracer.Cameras
         public abstract RGBColor[,] Render(World world);
 
         public Point3D Eye { get; }
-        public Point3D Lookat { get; }
+        public Point3D LookAt { get; }
         public double ExposureTime { get; }
         public Vector3D Up { get; }
         public Vector3D ViewUAxis { get; }

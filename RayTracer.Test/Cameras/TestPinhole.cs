@@ -20,17 +20,27 @@ namespace RayTracer.Test.Cameras
             double viewPlaneDistance = 100;
             Pinhole pinhole = new Pinhole(eye, lookat, up, viewPlaneDistance);
             Assert.That(pinhole.Eye, Is.EqualTo(eye));
-            Assert.That(pinhole.Lookat, Is.EqualTo(lookat));
+            Assert.That(pinhole.LookAt, Is.EqualTo(lookat));
             Assert.That(pinhole.Up.Normalize(), Is.EqualTo(up.Normalize()));
             Assert.That(pinhole.Zoom, Is.EqualTo(Pinhole.DefaultZoom));
             Assert.That(pinhole.ExposureTime, Is.EqualTo(Camera.DefaultExposureTime));
         }
 
         [Test]
+        public void CtorEqualEyeAndLookAt()
+        {
+            Point3D point = new Point3D(100, 100, 100);
+            Vector3D up = new Vector3D(0, 1, 0);
+            double viewPlaneDistance = 100;
+            Assert.That(() => new Pinhole(point, point, up, viewPlaneDistance),
+                Throws.ArgumentException);
+        }
+
+        [Test]
         [TestCaseSource(nameof(GetRayDirectionTestData))]
         public void GetRayDirection(double x, double y, Pinhole pinholeCamera, Vector3D expectedResult)
         {
-            Assert.That(Pinhole.GetRayDirection(x, y, pinholeCamera), Is.EqualTo(expectedResult));
+            Assert.That(Pinhole.GetRayDirection(x, y, pinholeCamera), Is.EqualTo(expectedResult.Normalize()));
         }
 
         public static IEnumerable<TestCaseData> GetRayDirectionTestData()
@@ -38,10 +48,14 @@ namespace RayTracer.Test.Cameras
             return new[] {
                 new TestCaseData(1, 1, 
                     new Pinhole(new Point3D(0, 0, 100), new Point3D(0, 0, 0), new Vector3D(0, 1, 0), 100), 
-                    new Vector3D(1, 1, -100))
+                    new Vector3D(1, 1, -100)),
+                new TestCaseData(1, 1,
+                    new Pinhole(new Point3D(0, 0, 0), new Point3D(0, 50, 0), new Vector3D(0, 1, 0), 100),
+                    new Vector3D(0, 1, 0)),
+                new TestCaseData(1, 1,
+                    new Pinhole(new Point3D(0, 0, 0), new Point3D(0, -50, 0), new Vector3D(0, 1, 0), 100),
+                    new Vector3D(0, -1, 0))
             };
-
-            // TODO: Handle singularity cases (p164)
         }
     }
 }
