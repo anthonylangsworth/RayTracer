@@ -30,15 +30,23 @@ namespace RayTracer.Cameras
         /// Project the scene on a plane this distance away from the camera.
         /// </param>
         /// <param name="zoom">
-        /// The zoom level. Defaults to <see cref="DefaultZoom"/>.
+        /// The zoom level. Defaults to <see cref="DefaultZoom"/>. Cannot be zero.
         /// </param>
         /// <param name="exposureTime">
         /// The time taken for an exposure. Defaults to <see cref="DefaultExposureTime"/>.
         /// </param>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="zoom"/> cannot be zero.
+        /// </exception>
         public Pinhole(Point3D eye, Point3D lookat, Vector3D up, double viewPlaneDistance, 
             double zoom = DefaultZoom, double exposureTime = DefaultExposureTime) 
             : base(eye, lookat, up, exposureTime)
         {
+            if(zoom == 0)
+            {
+                throw new ArgumentException($"{ nameof(zoom) } cannot be zero", nameof(zoom));
+            }
+
             ViewPlaneDistance = viewPlaneDistance;
             Zoom = zoom;
         }
@@ -59,8 +67,8 @@ namespace RayTracer.Cameras
                     RGBColor pixelColor = RGBColor.Black;
                     foreach (Point2D samplePoint in world.ViewPlane.SampleGenerator.GetSamples())
                     {
-                        x = world.ViewPlane.PixelSize * (column - 0.5 * world.ViewPlane.HorizontalResolution + samplePoint.X);
-                        y = world.ViewPlane.PixelSize * (row - 0.5 * world.ViewPlane.VerticalResolution + samplePoint.Y);
+                        x = world.ViewPlane.PixelSize / Zoom * (column - 0.5 * world.ViewPlane.HorizontalResolution + samplePoint.X);
+                        y = world.ViewPlane.PixelSize / Zoom * (row - 0.5 * world.ViewPlane.VerticalResolution + samplePoint.Y);
                         ray = new Ray(Eye, GetRayDirection(x, y, this));
                         pixelColor += world.Tracer.TraceRay(world.Scene, ray);
                     }
@@ -105,7 +113,6 @@ namespace RayTracer.Cameras
             }
             else
             {
-
                 direction = x * camera.ViewUAxis
                     + y * camera.ViewVAxis
                     - camera.ViewPlaneDistance * camera.ViewWAxis;
