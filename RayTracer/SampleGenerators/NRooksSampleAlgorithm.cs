@@ -10,7 +10,7 @@ namespace RayTracer.SampleGenerators
     internal class NRooksSampleAlgorithm : ISampleAlgorithm
     {
         /// <inheritdoc/>
-        public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)
+        public IEnumerable<Point2D> GenerateSampleSet(Random random, uint samplesPerSet)
         {
             Point2D[] result = new Point2D[samplesPerSet];
             for (int point = 0; point < samplesPerSet; point++)

@@ -10,9 +10,9 @@ namespace RayTracer.SampleGenerators
     internal class HammersleySampleAlgorithm : ISampleAlgorithm
     {
         /// <inheritdoc/>
-        public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)
+        public IEnumerable<Point2D> GenerateSampleSet(Random random, uint samplesPerSet)
         {
-            return Enumerable.Range(0, samplesPerSet).Select(i => new Point2D(i / (double) samplesPerSet, Phi(i)));
+            return Enumerable.Range(0, (int) samplesPerSet).Select(i => new Point2D(i / (double) samplesPerSet, Phi(i)));
         }
 
         public static double Phi(int j)

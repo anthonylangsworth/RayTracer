@@ -9,7 +9,7 @@ namespace RayTracer.SampleGenerators
 {
     public class HemisphereMappedSampleGenerator: SampleGenerator<Point3D>
     { 
-        public HemisphereMappedSampleGenerator(ISampleAlgorithm algorithm, Random random, int samplesPerSet, int sampleSets, double e) 
+        public HemisphereMappedSampleGenerator(ISampleAlgorithm algorithm, Random random, uint samplesPerSet, uint sampleSets, double e) 
             : base(algorithm, random, samplesPerSet, sampleSets)
         {
             E = e;

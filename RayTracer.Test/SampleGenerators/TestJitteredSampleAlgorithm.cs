@@ -14,7 +14,7 @@ namespace RayTracer.Test.Samplers
         [Test]
         public void GenerateSamplesSet()
         {
-            int testSamplesPerSet = 64;
+            uint testSamplesPerSet = 64;
             ISampleAlgorithm sampler = SampleAlgorithms.Jittered;
             IEnumerable<Point2D> set = sampler.GenerateSampleSet(new Random(), testSamplesPerSet);
             Assert.That(set.Count(), Is.EqualTo(testSamplesPerSet));

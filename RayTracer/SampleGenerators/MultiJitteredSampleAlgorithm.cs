@@ -10,7 +10,7 @@ namespace RayTracer.SampleGenerators
     internal class MultiJitteredSampleAlgorithm: ISampleAlgorithm
     {
         /// <inheritdoc/>
-        public IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet)
+        public IEnumerable<Point2D> GenerateSampleSet(Random random, uint samplesPerSet)
         {
             // See http://graphics.cs.cmu.edu/courses/15-468/lectures/lecture20.pdf for a good description
 

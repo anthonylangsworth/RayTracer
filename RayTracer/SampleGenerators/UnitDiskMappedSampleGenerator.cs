@@ -13,7 +13,7 @@ namespace RayTracer.SampleGenerators
     public class UnitDiskMappedSampleGenerator : SampleGenerator<Point2D>
     {
         /// <inheritdoc/>
-        public UnitDiskMappedSampleGenerator(ISampleAlgorithm algorithm, Random random, int samplesPerSet, int sampleSets) 
+        public UnitDiskMappedSampleGenerator(ISampleAlgorithm algorithm, Random random, uint samplesPerSet, uint sampleSets) 
             : base(algorithm, random, samplesPerSet, sampleSets)
         {
             // Do nothing

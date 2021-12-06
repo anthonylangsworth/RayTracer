@@ -211,7 +211,7 @@ namespace SamplerViewer
 
         private void GenerateSamplerPlot(object sender, EventArgs e)
         {
-            int samplesPerSet = Convert.ToInt32(((ComboBoxItem) samplesPerSetCombo.SelectedValue).Content);
+            uint samplesPerSet = Convert.ToUInt32(((ComboBoxItem) samplesPerSetCombo.SelectedValue).Content);
 
             string? samplerName = Convert.ToString(((ComboBoxItem) samplersCombo.SelectedValue).Content);
             ISampleAlgorithm algorithm;

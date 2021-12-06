@@ -14,7 +14,7 @@ namespace RayTracer.Test.Samplers
         [Test]
         public void GenerateSamplesOnUnitSquare()
         {
-            int testSamplesPerSet = 64;
+            uint testSamplesPerSet = 64;
             MultiJitteredSampleAlgorithm sampler = new MultiJitteredSampleAlgorithm();
             IEnumerable<Point2D> set = sampler.GenerateSampleSet(new Random(), testSamplesPerSet);
             Assert.That(set.Count(), Is.EqualTo(testSamplesPerSet));
@@ -25,8 +25,8 @@ namespace RayTracer.Test.Samplers
         [Repeat(10)] // Repeat to test randomness
         public void GenerateSamplesOnUnitSquareInCells()
         {
-            int samplesPerSet = 64;
-            int resolution = (int) Math.Sqrt(samplesPerSet);
+            uint samplesPerSet = 64;
+            uint resolution = (uint) Math.Sqrt(samplesPerSet);
             MultiJitteredSampleAlgorithm sampler = new MultiJitteredSampleAlgorithm();
             IEnumerable<Point2D> set = sampler.GenerateSampleSet(new Random(), samplesPerSet);
             for (int row = 0; row < resolution; row++)

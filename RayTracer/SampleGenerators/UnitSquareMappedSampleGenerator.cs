@@ -13,7 +13,7 @@ namespace RayTracer.SampleGenerators
     public class UnitSquareMappedSampleGenerator : SampleGenerator<Point2D>
     {
         /// <inheritdoc/>
-        public UnitSquareMappedSampleGenerator(ISampleAlgorithm algorithm, Random random, int samplesPerSet, int sampleSets) 
+        public UnitSquareMappedSampleGenerator(ISampleAlgorithm algorithm, Random random, uint samplesPerSet, uint sampleSets) 
             : base(algorithm, random, samplesPerSet, sampleSets)
         {
             // Do nothing

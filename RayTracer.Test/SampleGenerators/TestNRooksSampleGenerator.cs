@@ -14,7 +14,7 @@ namespace RayTracer.Test.Samplers
         [Test]
         public void TestGenerateSamplesOnUnitSquare()
         {
-            int testSamplesPerSet = 16;
+            uint testSamplesPerSet = 16;
             Random random = new Random();
             NRooksSampleAlgorithm sampleAlgorithm = new NRooksSampleAlgorithm();
             IEnumerable<Point2D> set = sampleAlgorithm.GenerateSampleSet(random, testSamplesPerSet);

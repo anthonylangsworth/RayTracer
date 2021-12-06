@@ -13,8 +13,8 @@ namespace RayTracer.Test.SampleGenerators
     {
         public void Ctor()
         {
-            int testSamplesPerSet = 64;
-            int testSampleSets = 2;
+            uint testSamplesPerSet = 64;
+            uint testSampleSets = 2;
             Random random = new Random();
             ISampleAlgorithm sampleAlgorithm = SampleAlgorithms.Regular;
             SampleGenerator<Point2D> sampleGenerator = new UnitSquareMappedSampleGenerator(sampleAlgorithm, random, testSamplesPerSet, testSampleSets);

@@ -31,7 +31,7 @@ namespace RayTracer.SampleGenerators
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        public SampleGenerator(ISampleAlgorithm algorithm, Random random, int samplesPerSet, int sampleSets)
+        public SampleGenerator(ISampleAlgorithm algorithm, Random random, uint samplesPerSet, uint sampleSets)
         {
             if (samplesPerSet <= 0)
             {
@@ -46,13 +46,13 @@ namespace RayTracer.SampleGenerators
             Algorithm = algorithm;
             SamplesPerSet = samplesPerSet;
             SampleSets = sampleSets;
-            Samples = Enumerable.Range(0, sampleSets).Select(i => algorithm.GenerateSampleSet(Random, samplesPerSet).Select(point => Map(point))).ToArray();
+            Samples = Enumerable.Range(0, (int) sampleSets).Select(i => algorithm.GenerateSampleSet(Random, samplesPerSet).Select(point => Map(point))).ToArray();
         }
 
         public Random Random { get; }
         public ISampleAlgorithm Algorithm { get; }
-        public int SamplesPerSet { get; }
-        public int SampleSets { get; }
+        public uint SamplesPerSet { get; }
+        public uint SampleSets { get; }
         public IEnumerable<T>[] Samples { get; }
 
         /// <summary>

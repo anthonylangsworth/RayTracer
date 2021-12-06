@@ -24,6 +24,6 @@ namespace RayTracer.SampleGenerators
         /// <returns>
         /// A sample set of <see cref="Point2D"/> in the range [0, 1].
         /// </returns>
-        public abstract IEnumerable<Point2D> GenerateSampleSet(Random random, int samplesPerSet);
+        public abstract IEnumerable<Point2D> GenerateSampleSet(Random random, uint samplesPerSet);
     }
 }
