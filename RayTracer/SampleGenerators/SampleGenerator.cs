@@ -69,6 +69,9 @@ namespace RayTracer.SampleGenerators
         /// <summary>
         /// Map a point on a unit square to another distribution.
         /// </summary>
+        /// <remarks>
+        /// This method is protected internal to allow easy testing.
+        /// </remarks>
         /// <returns>
         /// The mapped point.
         /// </returns>
