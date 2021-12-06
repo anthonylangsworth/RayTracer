@@ -50,10 +50,29 @@ namespace Viewer
             //    Scenes.BuildTwoSpheresAndPlane(),
             //    new ViewPlane(600, 600, 1, 1,
             //        new SampleGenerator<Point2D>(SampleAlgorithms.MultiJittered, SampleMappers.UnitSquare, random, 16, 16)));
-            World = new World("Three Spheres",
-                new Pinhole(new Point3D(0, 30, 100), new Point3D(0, 30, 0), new Vector3D(0, 1, 0), 300),
-                Scenes.BuildThreeSpheresAbovePlane(), 
-                new ViewPlane(600, 600, 1, 1, 
+
+            // Three spheres
+            //World = new World("Three Spheres with Pinhole Camera",
+            //    new Pinhole(new Point3D(0, 30, 100), new Point3D(0, 30, 0), new Vector3D(0, 1, 0), 300),
+            //    Scenes.BuildThreeSpheresAbovePlane(), 
+            //    new ViewPlane(600, 600, 1, 1, 
+            //        new UnitSquareMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)));
+
+            // Three spheres with a thin lens camera
+            World = new World(
+                name: "Three Spheres with Thin Lens Camera",
+                camera: new ThinLens(
+                    eye: new Point3D(0, 30, 100), 
+                    lookAt: new Point3D(0, 30, 0), 
+                    up: new Vector3D(0, 1, 0), 
+                    lensRadius: 5,
+                    viewPlaneDistance: 150,
+                    focalPlaneDistance: 150, 
+                    zoom: 2, 
+                    sampleGenerator: new UnitDiskMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)
+                ),
+                scene: Scenes.BuildThreeSpheresAbovePlane(),
+                viewPlane: new ViewPlane(600, 600, 1, 1,
                     new UnitSquareMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)));
         }
 

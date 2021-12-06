@@ -33,14 +33,26 @@ namespace RayTracer.Test.Cameras
             Vector3D up = new Vector3D(0, 1, 0);
             double viewPlaneDistance = 100;
             Assert.That(() => new Pinhole(point, point, up, viewPlaneDistance),
-                Throws.ArgumentException);
+                Throws.ArgumentException.With.Property("Message").EqualTo("eye cannot be the same as lookAt (Parameter 'eye')"));
+        }
+
+
+        [Test]
+        public void CtorZeroZoom()
+        {
+            Point3D eye = new Point3D(100, 100, 100);
+            Point3D lookAt = new Point3D(0, 0, 0);
+            Vector3D up = new Vector3D(0, 1, 0);
+            double viewPlaneDistance = 100;
+            Assert.That(() => new Pinhole(eye, lookAt, up, viewPlaneDistance, 0),
+                Throws.ArgumentException.With.Property("Message").EqualTo("zoom cannot be zero (Parameter 'zoom')"));
         }
 
         [Test]
         [TestCaseSource(nameof(GetRayDirectionTestData))]
         public void GetRayDirection(double x, double y, Pinhole pinholeCamera, Vector3D expectedResult)
         {
-            Assert.That(Pinhole.GetRayDirection(x, y, pinholeCamera), Is.EqualTo(expectedResult.Normalize()));
+            Assert.That(pinholeCamera.GetRayDirection(x, y), Is.EqualTo(expectedResult.Normalize()));
         }
 
         public static IEnumerable<TestCaseData> GetRayDirectionTestData()

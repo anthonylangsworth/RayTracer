@@ -41,8 +41,8 @@ namespace RayTracer.Cameras
         /// <summary>
         /// Render the <see cref="Scene"/> to the <see cref="ViewPlane"/>.
         /// </summary>
-        /// <param name="scene">
-        /// The <see cref="Scene"/> to render.
+        /// <param name="World">
+        /// The <see cref="world"/> to render.
         /// </param>
         /// <param name="viewPlane">
         /// The <see cref="ViewPlane"/> to render to.

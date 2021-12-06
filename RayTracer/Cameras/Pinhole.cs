@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RayTracer.Cameras
 {
     /// <summary>
-    /// A Pinhole or default camera.
+    /// A pinhole camera. See Chapter 9 "A Practical Viewing System".
     /// </summary>
     public class Pinhole : Camera
     {
@@ -54,7 +54,6 @@ namespace RayTracer.Cameras
         /// <inheritdoc/>
         public override RGBColor[,] Render(World world)
         {
-            // int depth = 0;
             RGBColor[,] result = new RGBColor[world.ViewPlane.VerticalResolution, world.ViewPlane.HorizontalResolution];
 
             Parallel.For(0, world.ViewPlane.VerticalResolution, row => // up
@@ -69,8 +68,8 @@ namespace RayTracer.Cameras
                     {
                         x = world.ViewPlane.PixelSize / Zoom * (column - 0.5 * world.ViewPlane.HorizontalResolution + samplePoint.X);
                         y = world.ViewPlane.PixelSize / Zoom * (row - 0.5 * world.ViewPlane.VerticalResolution + samplePoint.Y);
-                        ray = new Ray(Eye, GetRayDirection(x, y, this));
-                        pixelColor += world.Tracer.TraceRay(world.Scene, ray);
+                        ray = new Ray(Eye, GetRayDirection(x, y));
+                        pixelColor += world.Tracer.TraceRay(world.Scene, ray, 0);
                     }
                     pixelColor /= world.ViewPlane.SampleGenerator.SamplesPerSet;
                     pixelColor *= ExposureTime;
@@ -90,19 +89,16 @@ namespace RayTracer.Cameras
         /// <param name="y">
         /// The ray's starting y coordinate in the view plane.
         /// </param>
-        /// <param name="camera">
-        /// The <see cref="Pinhole"/> camera used.
-        /// </param>
         /// <returns>
         /// </returns>
-        public static Vector3D GetRayDirection(double x, double y, Pinhole camera)
+        protected internal Vector3D GetRayDirection(double x, double y)
         {
             Vector3D direction;
 
-            if (camera.Eye.X == camera.LookAt.X
-                && camera.Eye.Z == camera.LookAt.Z)
+            if (Eye.X == LookAt.X
+                && Eye.Z == LookAt.Z)
             {
-                if(camera.Eye.Y < camera.LookAt.Y)
+                if(Eye.Y < LookAt.Y)
                 {
                     direction = new Vector3D(0, 1, 0);
                 }
@@ -113,9 +109,9 @@ namespace RayTracer.Cameras
             }
             else
             {
-                direction = x * camera.ViewUAxis
-                    + y * camera.ViewVAxis
-                    - camera.ViewPlaneDistance * camera.ViewWAxis;
+                direction = x * ViewUAxis
+                    + y * ViewVAxis
+                    - ViewPlaneDistance * ViewWAxis;
             }
 
             return direction.Normalize();

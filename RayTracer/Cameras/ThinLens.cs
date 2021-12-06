@@ -8,13 +8,38 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Cameras
 {
-    internal class ThinLens : Camera
+    /// <summary>
+    /// A lens-based camera. See Chapter 10 "Depth of Field".
+    /// </summary>
+    public class ThinLens : Camera
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eye"></param>
+        /// <param name="lookAt"></param>
+        /// <param name="up"></param>
+        /// <param name="lensRadius"></param>
+        /// <param name="viewPlaneDistance"></param>
+        /// <param name="focalPlaneDistance"></param>
+        /// <param name="zoom"></param>
+        /// <param name="sampleGenerator"></param>
+        /// <param name="exposureTime"></param>
+        /// <exception cref="ArgumentException"></exception>
         public ThinLens(Point3D eye, Point3D lookAt, Vector3D up, double lensRadius,
             double viewPlaneDistance, double focalPlaneDistance, double zoom,
-            SampleGenerator<Point2D> sampleGenerator, double exposureTime = DefaultExposureTime) 
+            UnitDiskMappedSampleGenerator sampleGenerator, double exposureTime = DefaultExposureTime) 
             : base(eye, lookAt, up, exposureTime)
         {
+            if(viewPlaneDistance == 0)
+            {
+                throw new ArgumentException($"{ nameof(viewPlaneDistance) } cannot be zero", nameof(viewPlaneDistance));
+            }
+            if (zoom == 0)
+            {
+                throw new ArgumentException($"{ nameof(zoom) } cannot be zero", nameof(zoom));
+            }
+
             LensRadius = lensRadius;
             ViewPlaneDistance = viewPlaneDistance;
             FocalPlaneDistance = focalPlaneDistance;
@@ -26,11 +51,70 @@ namespace RayTracer.Cameras
         public double ViewPlaneDistance { get; }
         public double FocalPlaneDistance { get; }
         public double Zoom { get; }
-        public SampleGenerator<Point2D> SampleGenerator { get; }
+        public UnitDiskMappedSampleGenerator SampleGenerator { get; }
 
         public override RGBColor[,] Render(World world)
         {
-            throw new NotImplementedException();
+            if(world.ViewPlane.SampleGenerator.Samples.Count() != SampleGenerator.Samples.Count())
+            {
+                throw new InvalidOperationException($"Sample count of { nameof(ViewPlane) }.{ nameof(ViewPlane.SampleGenerator) } and { nameof(SampleGenerator) } must be equal");
+            }
+
+            RGBColor[,] result = new RGBColor[world.ViewPlane.VerticalResolution, world.ViewPlane.HorizontalResolution];
+
+            Parallel.For(0, world.ViewPlane.VerticalResolution, row => // up
+            {
+                for (int column = 0; column < world.ViewPlane.HorizontalResolution; column++) // left to right
+                {
+                    RGBColor pixelColor = RGBColor.Black;
+                    foreach (var sample in world.ViewPlane.SampleGenerator.GetSamples().Zip(SampleGenerator.GetSamples()))
+                    {
+                        // sample.First is the view plane sample, sample.Second is the camera sample
+                        Point2D pixelPoint = new Point2D(
+                            world.ViewPlane.PixelSize / Zoom * (column - world.ViewPlane.HorizontalResolution / 2 + sample.First.X),
+                            world.ViewPlane.PixelSize / Zoom * (row - world.ViewPlane.VerticalResolution / 2 + sample.First.Y)
+                        );
+
+                        Point2D lensPoint = sample.Second * LensRadius;
+
+                        Ray ray = new Ray(
+                            Eye + lensPoint.X * ViewUAxis + lensPoint.Y * ViewVAxis, 
+                            GetRayDirection(pixelPoint, lensPoint)
+                        );
+
+                        pixelColor += world.Tracer.TraceRay(world.Scene, ray, 0);
+                    }
+                    pixelColor /= world.ViewPlane.SampleGenerator.SamplesPerSet;
+                    pixelColor *= ExposureTime;
+                    result[row, column] = pixelColor;
+                }
+            });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Create a <see cref="Vector3D"/> representing the ray's direction.
+        /// </summary>
+        /// <param name="x">
+        /// The ray's starting x coordinate in the view plane.
+        /// </param>
+        /// <param name="y">
+        /// The ray's starting y coordinate in the view plane.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        protected internal Vector3D GetRayDirection(Point2D pixelPoint, Point2D lensPoint)
+        {
+            Point2D p = new Point2D(
+                pixelPoint.X * FocalPlaneDistance / ViewPlaneDistance,
+                pixelPoint.Y * FocalPlaneDistance / ViewPlaneDistance);
+
+            Vector3D direction = (p.X - lensPoint.X) * ViewUAxis
+                 + (p.Y - lensPoint.Y) * ViewVAxis
+                 - FocalPlaneDistance * ViewWAxis;
+
+            return direction.Normalize();
         }
     }
 }

@@ -70,6 +70,11 @@ namespace RayTracer.Primitives
             return !(left == right);
         }
 
+        public static Point2D operator *(Point2D left, double d)
+        {
+            return new Point2D(left.X * d, left.Y * d);
+        }
+
         public override string? ToString()
         {
             return $"x: {X}, y: {Y}";

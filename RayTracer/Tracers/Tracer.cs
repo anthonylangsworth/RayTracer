@@ -9,7 +9,7 @@ namespace RayTracer.Tracers
 {
     public class Tracer
     {
-        public RGBColor TraceRay(Scene scene, Ray ray)
+        public RGBColor TraceRay(Scene scene, Ray ray, uint depth)
         {
             RGBColor result;
             Hit? hit = scene.Objects
