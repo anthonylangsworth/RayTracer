@@ -23,7 +23,7 @@ namespace RayTracer.Test
             Assert.That(viewPlane.VerticalResolution, Is.EqualTo(testVerticalResolution));
             Assert.That(viewPlane.PixelSize, Is.EqualTo(testPixelSize));
             Assert.That(viewPlane.Gamma, Is.EqualTo(testGamma));
-            Assert.That(viewPlane.SampleGenerator, Is.EqualTo(testSampleGenerator));
+            Assert.That(viewPlane.AntiAliasing, Is.EqualTo(testSampleGenerator));
         }
     }
 }

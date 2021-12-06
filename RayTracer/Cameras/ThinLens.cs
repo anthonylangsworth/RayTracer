@@ -23,12 +23,12 @@ namespace RayTracer.Cameras
         /// <param name="viewPlaneDistance"></param>
         /// <param name="focalPlaneDistance"></param>
         /// <param name="zoom"></param>
-        /// <param name="sampleGenerator"></param>
+        /// <param name="blur"></param>
         /// <param name="exposureTime"></param>
         /// <exception cref="ArgumentException"></exception>
         public ThinLens(Point3D eye, Point3D lookAt, Vector3D up, double lensRadius,
             double viewPlaneDistance, double focalPlaneDistance, double zoom,
-            UnitDiskMappedSampleGenerator sampleGenerator, double exposureTime = DefaultExposureTime) 
+            UnitDiskMappedSampleGenerator blur, double exposureTime = DefaultExposureTime) 
             : base(eye, lookAt, up, exposureTime)
         {
             if(viewPlaneDistance == 0)
@@ -44,20 +44,20 @@ namespace RayTracer.Cameras
             ViewPlaneDistance = viewPlaneDistance;
             FocalPlaneDistance = focalPlaneDistance;
             Zoom = zoom;
-            SampleGenerator = sampleGenerator;
+            Blur = blur;
         }
 
         public double LensRadius { get; }
         public double ViewPlaneDistance { get; }
         public double FocalPlaneDistance { get; }
         public double Zoom { get; }
-        public UnitDiskMappedSampleGenerator SampleGenerator { get; }
+        public UnitDiskMappedSampleGenerator Blur { get; }
 
         public override RGBColor[,] Render(World world)
         {
-            if(world.ViewPlane.SampleGenerator.Samples.Count() != SampleGenerator.Samples.Count())
+            if(world.ViewPlane.AntiAliasing.Samples.Count() != Blur.Samples.Count())
             {
-                throw new InvalidOperationException($"Sample count of { nameof(ViewPlane) }.{ nameof(ViewPlane.SampleGenerator) } and { nameof(SampleGenerator) } must be equal");
+                throw new InvalidOperationException($"Sample count of { nameof(ViewPlane) }.{ nameof(ViewPlane.AntiAliasing) } and { nameof(Blur) } must be equal");
             }
 
             RGBColor[,] result = new RGBColor[world.ViewPlane.VerticalResolution, world.ViewPlane.HorizontalResolution];
@@ -67,7 +67,7 @@ namespace RayTracer.Cameras
                 for (int column = 0; column < world.ViewPlane.HorizontalResolution; column++) // left to right
                 {
                     RGBColor pixelColor = RGBColor.Black;
-                    foreach (var sample in world.ViewPlane.SampleGenerator.GetSamples().Zip(SampleGenerator.GetSamples()))
+                    foreach (var sample in world.ViewPlane.AntiAliasing.GetSamples().Zip(Blur.GetSamples()))
                     {
                         // sample.First is the view plane sample, sample.Second is the camera sample
                         Point2D pixelPoint = new Point2D(
@@ -84,7 +84,7 @@ namespace RayTracer.Cameras
 
                         pixelColor += world.Tracer.TraceRay(world.Scene, ray, 0);
                     }
-                    pixelColor /= world.ViewPlane.SampleGenerator.SamplesPerSet;
+                    pixelColor /= world.ViewPlane.AntiAliasing.SamplesPerSet;
                     pixelColor *= ExposureTime;
                     result[row, column] = pixelColor;
                 }

@@ -10,7 +10,7 @@ namespace RayTracer
 {
     public class ViewPlane
     {
-        public ViewPlane(int horizontalResolution, int verticalResolution, double pixelSize, double gamma, UnitSquareMappedSampleGenerator sampler)
+        public ViewPlane(int horizontalResolution, int verticalResolution, double pixelSize, double gamma, UnitSquareMappedSampleGenerator antialiasing)
         {
             if(horizontalResolution <= 0)
             {
@@ -33,13 +33,13 @@ namespace RayTracer
             VerticalResolution = verticalResolution;
             PixelSize = pixelSize;
             Gamma = gamma;
-            SampleGenerator = sampler;
+            AntiAliasing = antialiasing;
         }
 
         public int HorizontalResolution { get; }
         public int VerticalResolution { get; }
         public double PixelSize { get; }
         public double Gamma { get; }
-        public SampleGenerator<Point2D> SampleGenerator { get; }
+        public SampleGenerator<Point2D> AntiAliasing { get; }
     }
 }

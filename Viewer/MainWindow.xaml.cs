@@ -69,11 +69,15 @@ namespace Viewer
                     viewPlaneDistance: 150,
                     focalPlaneDistance: 150, 
                     zoom: 2, 
-                    sampleGenerator: new UnitDiskMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)
+                    blur: new UnitDiskMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)
                 ),
                 scene: Scenes.BuildThreeSpheresAbovePlane(),
-                viewPlane: new ViewPlane(600, 600, 1, 1,
-                    new UnitSquareMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)));
+                viewPlane: new ViewPlane(
+                    horizontalResolution: 600,
+                    verticalResolution: 600, 
+                    pixelSize: 1, 
+                    gamma: 1,
+                    antialiasing: new UnitSquareMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)));
         }
 
         protected override void OnInitialized(EventArgs e)

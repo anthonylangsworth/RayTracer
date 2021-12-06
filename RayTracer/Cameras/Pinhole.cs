@@ -64,14 +64,14 @@ namespace RayTracer.Cameras
                 for (int column = 0; column < world.ViewPlane.HorizontalResolution; column++) // left to right
                 {
                     RGBColor pixelColor = RGBColor.Black;
-                    foreach (Point2D samplePoint in world.ViewPlane.SampleGenerator.GetSamples())
+                    foreach (Point2D samplePoint in world.ViewPlane.AntiAliasing.GetSamples())
                     {
                         x = world.ViewPlane.PixelSize / Zoom * (column - 0.5 * world.ViewPlane.HorizontalResolution + samplePoint.X);
                         y = world.ViewPlane.PixelSize / Zoom * (row - 0.5 * world.ViewPlane.VerticalResolution + samplePoint.Y);
                         ray = new Ray(Eye, GetRayDirection(x, y));
                         pixelColor += world.Tracer.TraceRay(world.Scene, ray, 0);
                     }
-                    pixelColor /= world.ViewPlane.SampleGenerator.SamplesPerSet;
+                    pixelColor /= world.ViewPlane.AntiAliasing.SamplesPerSet;
                     pixelColor *= ExposureTime;
                     result[row, column] = pixelColor;
                 }
