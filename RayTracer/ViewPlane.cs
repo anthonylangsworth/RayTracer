@@ -10,7 +10,7 @@ namespace RayTracer
 {
     public class ViewPlane
     {
-        public ViewPlane(int horizontalResolution, int verticalResolution, double pixelSize, double gamma, SampleGenerator<Point2D> sampler)
+        public ViewPlane(int horizontalResolution, int verticalResolution, double pixelSize, double gamma, UnitSquareMappedSampleGenerator sampler)
         {
             if(horizontalResolution <= 0)
             {

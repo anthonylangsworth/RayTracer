@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Test.SampleGenerators
 {
-    internal class TestUnitDiskSampleMapper
+    internal class TestUnitDiskMappedSampleGenerator
     {
         [Test]
         [Repeat(10)]
         public void Map()
         {
-            IEnumerable<Point2D> mappedPoints = SampleAlgorithms.Hammersley.GenerateSampleSet(new Random(), 64).Select(point => SampleMappers.UnitDisk.Map(point));
+            IEnumerable<Point2D> mappedPoints = new UnitDiskMappedSampleGenerator(SampleAlgorithms.Hammersley, new Random(), 64, 1).GetSamples();
             Assert.That(mappedPoints.Select(point => Math.Sqrt(point.X * point.X + point.Y * point.Y)), Is.All.LessThanOrEqualTo(1));
         }
     }

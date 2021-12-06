@@ -10,7 +10,7 @@ namespace RayTracer.SampleGenerators
     /// <summary>
     /// Generate a set of samples used for anti-aliasing and similar techniques.
     /// </summary>
-    public class SampleGenerator<T>
+    public abstract class SampleGenerator<T>
         where T : class
     {
         /// <summary>
@@ -31,7 +31,7 @@ namespace RayTracer.SampleGenerators
         /// <exception cref="ArgumentException">
         /// All arguments must be positive.
         /// </exception>
-        public SampleGenerator(ISampleAlgorithm algorithm, ISampleMapper<T> mapper, Random random, int samplesPerSet, int sampleSets)
+        public SampleGenerator(ISampleAlgorithm algorithm, Random random, int samplesPerSet, int sampleSets)
         {
             if (samplesPerSet <= 0)
             {
@@ -44,15 +44,13 @@ namespace RayTracer.SampleGenerators
 
             Random = random;
             Algorithm = algorithm;
-            Mapper = mapper;
             SamplesPerSet = samplesPerSet;
             SampleSets = sampleSets;
-            Samples = Enumerable.Range(0, sampleSets).Select(i => algorithm.GenerateSampleSet(Random, samplesPerSet).Select(point => mapper.Map(point))).ToArray();
+            Samples = Enumerable.Range(0, sampleSets).Select(i => algorithm.GenerateSampleSet(Random, samplesPerSet).Select(point => Map(point))).ToArray();
         }
 
         public Random Random { get; }
         public ISampleAlgorithm Algorithm { get; }
-        public ISampleMapper<T> Mapper { get; }
         public int SamplesPerSet { get; }
         public int SampleSets { get; }
         public IEnumerable<T>[] Samples { get; }
@@ -67,5 +65,13 @@ namespace RayTracer.SampleGenerators
         {
             return Samples[Random.Next() % SampleSets];
         }
+
+        /// <summary>
+        /// Map a point on a unit square to another distribution.
+        /// </summary>
+        /// <returns>
+        /// The mapped point.
+        /// </returns>
+        protected internal abstract T Map(Point2D point);
     }
 }

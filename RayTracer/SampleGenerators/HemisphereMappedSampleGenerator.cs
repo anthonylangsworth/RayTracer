@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace RayTracer.SampleGenerators
 {
-    internal class HemisphereSampleMapping: ISampleMapper<Point3D>
-    {
-        public HemisphereSampleMapping(double e)
+    public class HemisphereMappedSampleGenerator: SampleGenerator<Point3D>
+    { 
+        public HemisphereMappedSampleGenerator(ISampleAlgorithm algorithm, Random random, int samplesPerSet, int sampleSets, double e) 
+            : base(algorithm, random, samplesPerSet, sampleSets)
         {
             E = e;
         }
@@ -17,7 +18,7 @@ namespace RayTracer.SampleGenerators
         public double E { get; }
 
         /// <inheritdoc/>
-        public Point3D Map(Point2D point)
+        protected internal override Point3D Map(Point2D point)
         {
             double cosPhi = Math.Cos(2 * Math.PI * point.X);
             double sinPhi = Math.Sin(2 * Math.PI * point.X);

@@ -23,12 +23,6 @@ namespace SamplerViewer
         Digit
     }
 
-    internal enum SampleProjection
-    {
-        UnitSquare,
-        UnitDisk
-    }
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -40,23 +34,27 @@ namespace SamplerViewer
             GenerateSamplerPlot(this, EventArgs.Empty);
         }
 
-        private void CreateSamplePlot(Canvas canvas, SampleGenerator<Point2D> sampleGenerator, int sqrtSamplesPerSet, DotType dotType, SampleProjection sampleProjection)
+        private void CreateSamplePlot(Canvas canvas, SampleGenerator<Point2D> sampleGenerator, int sqrtSamplesPerSet, DotType dotType)
         {
             const double pixelsPerInch = 96; // Cannot find this constant in WPF
             double extent = 6 * pixelsPerInch; // plot is 6 inches wide and high
             canvas.Children.Clear();
             try
             {
-                if (sampleProjection == SampleProjection.UnitDisk)
+                if (sampleGenerator is UnitDiskMappedSampleGenerator)
                 {
                     DrawCircle(canvas, extent);
                 }
-                else
+                else if (sampleGenerator is UnitSquareMappedSampleGenerator)
                 {
                     DrawAxes(canvas, extent, sqrtSamplesPerSet);
                 }
+                else
+                {
+                    throw new ArgumentException($"{ sampleGenerator.GetType().FullName } is an unknown mapping type", nameof(sampleGenerator));
+                }
 
-                DrawSampleGeneratorPoints(canvas, sampleGenerator, extent, dotType, sampleProjection);
+                DrawSampleGeneratorPoints(canvas, sampleGenerator, extent, dotType);
             }
             catch(Exception ex)
             {
@@ -135,7 +133,7 @@ namespace SamplerViewer
             Canvas.SetTop(ellipse, 0);
         }
 
-        private void DrawSampleGeneratorPoints(Canvas canvas, SampleGenerator<Point2D> sampleGenerator, double extent, DotType dotType, SampleProjection sampleProjection)
+        private void DrawSampleGeneratorPoints(Canvas canvas, SampleGenerator<Point2D> sampleGenerator, double extent, DotType dotType)
         {
             double diameter;
             switch(dotType)
@@ -154,16 +152,17 @@ namespace SamplerViewer
             IEnumerable<Point2D> samples = sampleGenerator.GetSamples();
 
             Func<Point2D, Point2D> pointTransform;
-            switch(sampleProjection)
+            if (sampleGenerator is UnitDiskMappedSampleGenerator)
             {
-                case SampleProjection.UnitSquare:
-                    pointTransform = p => p;
-                    break;
-                case SampleProjection.UnitDisk:
-                    pointTransform = p => new Point2D(p.X / 2 + 0.5, p.Y / 2 + 0.5); // Map from [-1, 1] to [0, 1]
-                    break;
-                default:
-                    throw new ArgumentException($"Unknown sample projection: '{sampleProjection}'", nameof(sampleProjection));
+                pointTransform = p => new Point2D(p.X / 2 + 0.5, p.Y / 2 + 0.5); // Map from [-1, 1] to [0, 1]
+            }
+            else if (sampleGenerator is UnitSquareMappedSampleGenerator)
+            {
+                pointTransform = p => p;
+            }
+            else
+            {
+                throw new ArgumentException($"{ sampleGenerator.GetType().FullName } is an unknown mapping type", nameof(sampleGenerator));
             }
 
             int index = 0;
@@ -238,23 +237,18 @@ namespace SamplerViewer
             }
 
             string? projectionName = Convert.ToString(((ComboBoxItem)projectionCombo.SelectedValue).Content);
-            SampleProjection sampleProjection = SampleProjection.UnitSquare;
-            ISampleMapper<Point2D> mapper = SampleMappers.UnitSquare;
+            SampleGenerator<Point2D>? sampleGenerator = null;
             switch (projectionName) // Nicer than Enum.Parse
             {
                 case "Square":
-                    sampleProjection = SampleProjection.UnitSquare;
-                    mapper = SampleMappers.UnitSquare;
+                    sampleGenerator = new UnitSquareMappedSampleGenerator(algorithm, new Random(), samplesPerSet, 1);
                     break;
                 case "Disk":
-                    sampleProjection = SampleProjection.UnitDisk;
-                    mapper = SampleMappers.UnitDisk;
+                    sampleGenerator = new UnitDiskMappedSampleGenerator(algorithm, new Random(), samplesPerSet, 1);
                     break;
                 default:
                     throw new InvalidOperationException($"Unknown projection: '{projectionName ?? "(null)"}'");
             }
-
-            SampleGenerator<Point2D> sampleGenerator = new SampleGenerator<Point2D>(algorithm, mapper, new Random(), samplesPerSet, 1);
 
             string? dotTypeName = Convert.ToString(((ComboBoxItem)dotTypeCombo.SelectedValue).Content);
             DotType dotType = DotType.Dot;
@@ -272,7 +266,7 @@ namespace SamplerViewer
 
             if (sampleGenerator != null)
             {
-                CreateSamplePlot(samplerCanvas, sampleGenerator, (int) Math.Sqrt(samplesPerSet), dotType, sampleProjection);
+                CreateSamplePlot(samplerCanvas, sampleGenerator, (int) Math.Sqrt(samplesPerSet), dotType);
                 FillPointsListBox(pointsListBox, sampleGenerator);
             }
         }

@@ -17,10 +17,8 @@ namespace RayTracer.Test.SampleGenerators
             int testSampleSets = 2;
             Random random = new Random();
             ISampleAlgorithm sampleAlgorithm = SampleAlgorithms.Regular;
-            ISampleMapper<Point2D> sampleMapper = SampleMappers.UnitSquare;
-            SampleGenerator<Point2D> sampleGenerator = new SampleGenerator<Point2D>(sampleAlgorithm, sampleMapper, random, testSamplesPerSet, testSampleSets);
+            SampleGenerator<Point2D> sampleGenerator = new UnitSquareMappedSampleGenerator(sampleAlgorithm, random, testSamplesPerSet, testSampleSets);
             Assert.That(sampleGenerator.Algorithm, Is.EqualTo(sampleAlgorithm));
-            Assert.That(sampleGenerator.Mapper, Is.EqualTo(sampleMapper));
             Assert.That(sampleGenerator.SamplesPerSet, Is.EqualTo(testSamplesPerSet));
             Assert.That(sampleGenerator.SampleSets, Is.EqualTo(testSampleSets));
             Assert.That(sampleGenerator.Random, Is.EqualTo(random));
@@ -29,7 +27,7 @@ namespace RayTracer.Test.SampleGenerators
         public void CtorZeroSamplePerSet()
         {
             Assert.That(
-                () => new SampleGenerator<Point2D>(SampleAlgorithms.Regular, SampleMappers.UnitSquare, new Random(), 0, 1),
+                () => new UnitSquareMappedSampleGenerator(SampleAlgorithms.Regular, new Random(), 0, 1),
                 Throws.ArgumentException.With.Property("Message").EqualTo("samplesPerSet must be positive"));
         }
 
@@ -37,7 +35,7 @@ namespace RayTracer.Test.SampleGenerators
         public void CtorZeroSampleSets()
         {
             Assert.That(
-                () => new SampleGenerator<Point2D>(SampleAlgorithms.Regular, SampleMappers.UnitSquare, new Random(), 1, 0),
+                () => new UnitSquareMappedSampleGenerator(SampleAlgorithms.Regular, new Random(), 1, 0),
                 Throws.ArgumentException.With.Property("Message").EqualTo("sampleSets must be positive"));
         }
     }

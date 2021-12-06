@@ -51,7 +51,7 @@ namespace Viewer
                 new Pinhole(new Point3D(-30, 30, 60), new Point3D(0, 30, 0), new Vector3D(0, 1, 0), 100),
                 Scene.BuildThreeSpheresAbovePlane(), 
                 new ViewPlane(400, 400, 1, 1, 
-                    new SampleGenerator<Point2D>(SampleAlgorithms.MultiJittered, SampleMappers.UnitSquare, random, 16, 16)));
+                    new UnitSquareMappedSampleGenerator(SampleAlgorithms.MultiJittered, random, 16, 16)));
         }
 
         protected override void OnInitialized(EventArgs e)
