@@ -3,22 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer", "RayTracer\RayTracer.csproj", "{A32124B6-45D5-41EB-83C9-7129BDF69F74}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer.Test", "RayTracer.Test\RayTracer.Test.csproj", "{BAD08A5D-7A8A-477F-912B-39541D5FBED4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A32124B6-45D5-41EB-83C9-7129BDF69F74} = {A32124B6-45D5-41EB-83C9-7129BDF69F74}
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70E4E5A4-E5EB-4564-8085-7F88AF90ACAA}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamplerViewer", "SamplerViewer\SamplerViewer.csproj", "{79051173-BF26-4FDC-BBBF-89DBE811ADF6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DFFC9A1B-A15E-46B3-82DF-98B91654ADE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viewer", "Viewer\Viewer.csproj", "{4D955D64-9A2A-40BF-8800-1F8C080078AE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A293CCB2-D6C3-47BF-A283-238B5037A89E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{F2276F26-F348-4BD7-8DF6-9F17F738DCF5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer", "src\RayTracer\RayTracer.csproj", "{ADD3933F-C666-40ED-A740-1AF32A7DBAF6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viewer", "src\Viewer\Viewer.csproj", "{302D4F12-D662-4AFC-979A-113FECF5101D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6} = {ADD3933F-C666-40ED-A740-1AF32A7DBAF6}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer.Test", "test\RayTracer.Test\RayTracer.Test.csproj", "{C0E83993-5CCB-471F-B181-AC94110DBBBE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6} = {ADD3933F-C666-40ED-A740-1AF32A7DBAF6}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamplerViewer", "tools\SamplerViewer\SamplerViewer.csproj", "{67E72C07-0C98-4330-9E98-6F119F269A65}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6} = {ADD3933F-C666-40ED-A740-1AF32A7DBAF6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,25 +38,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A32124B6-45D5-41EB-83C9-7129BDF69F74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAD08A5D-7A8A-477F-912B-39541D5FBED4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79051173-BF26-4FDC-BBBF-89DBE811ADF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79051173-BF26-4FDC-BBBF-89DBE811ADF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79051173-BF26-4FDC-BBBF-89DBE811ADF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79051173-BF26-4FDC-BBBF-89DBE811ADF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D955D64-9A2A-40BF-8800-1F8C080078AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D955D64-9A2A-40BF-8800-1F8C080078AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D955D64-9A2A-40BF-8800-1F8C080078AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D955D64-9A2A-40BF-8800-1F8C080078AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302D4F12-D662-4AFC-979A-113FECF5101D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302D4F12-D662-4AFC-979A-113FECF5101D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302D4F12-D662-4AFC-979A-113FECF5101D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302D4F12-D662-4AFC-979A-113FECF5101D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E83993-5CCB-471F-B181-AC94110DBBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E83993-5CCB-471F-B181-AC94110DBBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E83993-5CCB-471F-B181-AC94110DBBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E83993-5CCB-471F-B181-AC94110DBBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67E72C07-0C98-4330-9E98-6F119F269A65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E72C07-0C98-4330-9E98-6F119F269A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67E72C07-0C98-4330-9E98-6F119F269A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67E72C07-0C98-4330-9E98-6F119F269A65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ADD3933F-C666-40ED-A740-1AF32A7DBAF6} = {DFFC9A1B-A15E-46B3-82DF-98B91654ADE1}
+		{302D4F12-D662-4AFC-979A-113FECF5101D} = {DFFC9A1B-A15E-46B3-82DF-98B91654ADE1}
+		{C0E83993-5CCB-471F-B181-AC94110DBBBE} = {A293CCB2-D6C3-47BF-A283-238B5037A89E}
+		{67E72C07-0C98-4330-9E98-6F119F269A65} = {F2276F26-F348-4BD7-8DF6-9F17F738DCF5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15093CD1-FE3F-494D-8E16-29D0999CCB48}
