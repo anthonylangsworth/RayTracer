@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace RayTracer.Primitives
 {
@@ -132,21 +133,25 @@ namespace RayTracer.Primitives
             return new Vector3D(v.X / a, v.Y / a, v.Z / a);
         }
 
+        [Pure]
         public double Length()
         {
             return Math.Sqrt(X * X + Y * Y + Z * Z);
         }
 
+        [Pure]
         public double SquaredLength()
         {
             return X * X + Y * Y + Z * Z;
         }
 
+        [Pure]
         public double Dot(Vector3D v)
         {
             return X * v.X + Y * v.Y + Z * v.Z;
         }
 
+        [Pure]
         public Vector3D Cross(Vector3D v)
         {
             return new Vector3D(Y * v.Z - Z * v.Y, Z * v.X - X * v.Z, X * v.Y - Y * v.X);
@@ -163,6 +168,7 @@ namespace RayTracer.Primitives
         /// <returns>
         /// The normalized vector.
         /// </returns>
+        [Pure]
         public Vector3D Normalize()
         {
             double length = Length();

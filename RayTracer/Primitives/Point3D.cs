@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace RayTracer.Primitives
 {
@@ -105,6 +106,7 @@ namespace RayTracer.Primitives
             return new Point3D(p.X - v.X, p.Y - v.Y, p.Z - v.Z);
         }
 
+        [Pure]
         public double Distance(Point3D point)
         {
             return Math.Sqrt(
