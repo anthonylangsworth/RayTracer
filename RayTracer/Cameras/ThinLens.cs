@@ -67,15 +67,14 @@ namespace RayTracer.Cameras
                 for (int column = 0; column < world.ViewPlane.HorizontalResolution; column++) // left to right
                 {
                     RGBColor pixelColor = RGBColor.Black;
-                    foreach (var sample in world.ViewPlane.AntiAliasing.GetSamples().Zip(Blur.GetSamples()))
+                    foreach ((Point2D ViewPlaneSample, Point2D CameraSample) in world.ViewPlane.AntiAliasing.GetSamples().Zip(Blur.GetSamples()))
                     {
-                        // sample.First is the view plane sample, sample.Second is the camera sample
                         Point2D pixelPoint = new Point2D(
-                            world.ViewPlane.PixelSize / Zoom * (column - world.ViewPlane.HorizontalResolution / 2 + sample.First.X),
-                            world.ViewPlane.PixelSize / Zoom * (row - world.ViewPlane.VerticalResolution / 2 + sample.First.Y)
+                            world.ViewPlane.PixelSize / Zoom * (column - world.ViewPlane.HorizontalResolution / 2 + ViewPlaneSample.X),
+                            world.ViewPlane.PixelSize / Zoom * (row - world.ViewPlane.VerticalResolution / 2 + ViewPlaneSample.Y)
                         );
 
-                        Point2D lensPoint = sample.Second * LensRadius;
+                        Point2D lensPoint = CameraSample * LensRadius;
 
                         Ray ray = new Ray(
                             Eye + lensPoint.X * ViewUAxis + lensPoint.Y * ViewVAxis, 
