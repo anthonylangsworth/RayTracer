@@ -8,7 +8,7 @@ Ray tracing is the practice of generating images by mathematically firing light 
 
 The goals of this project are to:
 1. Educate me (and hopefully others) on ray tracing concepts and execution.
-2. Create attractive images using multiple light sources, shading, texturing and meshes.
+2. Create attractive images using light sources, shading, texturing and meshes.
 3. NOT be a commercially viable or competitive product. That would require hardware acceleration and an extensive user interface. Either are potential future goals.
 
 Kevin wrote the code from "Ray Tracing from the Ground Up" in C++ because the processing power of personal computers at the time was limited. C++ emphasized efficiency while providing a native object oriented development environment. I converted the code C# to leverage C#'s relative brevity and the .Net standard library's features like parallelization and platform independence. 
@@ -27,7 +27,9 @@ I developed this project according to the following principles, listed in order 
 
 ### 1. Code is the User Interface
 
-Developers are the target audience of this project. Therefore, this project is configured directly in code instead of spending development effort on parsing instruction files or a user interface. Exceptions include meshes and textures.
+Developers are the target audience of this project. Therefore, this project is configured directly in code instead of spending development effort on parsing instruction files or a user interface. This keeps the code simple, removing configuration and serialization code and dependencies.
+
+This excludes things traditionally loadex externally or pregenerated like meshes and textures.
 
 ### 2. Good Object Oriented Design and Readability
 
