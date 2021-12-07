@@ -43,8 +43,8 @@ namespace Viewer
             setAlignmentValue();
             SystemParameters.StaticPropertyChanged += (sender, e) => { setAlignmentValue(); };
 
-            // Create world
             ConcurrentRandom random = new ConcurrentRandom();
+
             //World = new World("4.1",
             //    new Pinhole(new Point3D(0, 0, 200), new Point3D(0, 0, 0), new Vector3D(0, 1, 0), 100),
             //    Scenes.BuildTwoSpheresAndPlane(),
