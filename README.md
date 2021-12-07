@@ -19,7 +19,7 @@ The ray tracer consists of the following projects:
 1. src/RayTracer: The ray tracing library.
 2. src/Viewer: Generate and display ray traced images using "RayTracer". Run this to see the output.
 3. test/RayTracer.Test: Automated tests for the ray tracer, written in NUnit.
-4. tools/SampleViewer: A visualization for the sample generators. Ensuring correct distribution and no outliers is easier visually than mathematically.
+4. tools/SamplerViewer: A visualization for the sample generators. Ensuring correct distribution and no outliers is easier visually than mathematically.
 
 ## Principles
 
@@ -45,7 +45,7 @@ An object oriented design also makes building scenes easier (see the "Code is th
 
 Create automated tests to test each functional area during development, ensuring correctness before use. Testable code tends to be better designed (see the "Good Object Oriented Design" principle) and ensures the API is fit for purpose (see "Code is the User Interface").
 
-Where automated tests are not possible, e.g. for randomness, create tools to visualize output or otherwise help demonstrate correctness. A good example is sample generation (see the "SamplerViewer" project). 
+Where automated tests are not possible, e.g. for randomness, create tools to visualize output or otherwise help demonstrate correctness. A good example is sample generation (see the "tools\SamplerViewer" project). 
 
 ### 4. Fast Execution
 
