@@ -16,10 +16,10 @@ Kevin wrote the code from "Ray Tracing from the Ground Up" in C++ because the pr
 ## Structure
 
 The ray tracer consists of the following projects:
-1. RayTracer: The ray tracing library itself.
-2. RayTracer.Test: Automated tests for the ray tracer, written in NUnit.
-3. SampleViewer: A visualization for the sample generators.
-4. Viewer: Generate and display ray traced images using "RayTracer".
+1. src/RayTracer: The ray tracing library.
+2. src/Viewer: Generate and display ray traced images using "RayTracer". Run this to see the output.
+3. test/RayTracer.Test: Automated tests for the ray tracer, written in NUnit.
+4. tools/SampleViewer: A visualization for the sample generators.
 
 ## Principles
 
