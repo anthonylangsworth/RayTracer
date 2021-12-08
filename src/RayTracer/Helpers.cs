@@ -35,5 +35,10 @@ namespace RayTracer
                 buffer[j] = buffer[i];
             }
         }
+
+        /// <summary>
+        /// Inverse PI. Used to speed up calculations.
+        /// </summary>
+        public const double InversePi = 1 / Math.PI;
     }
 }

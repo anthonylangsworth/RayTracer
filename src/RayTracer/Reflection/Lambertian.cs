@@ -48,7 +48,7 @@ namespace RayTracer.Reflection
 
         public override RGBColor F(ShadeRecord shadeRecord, Vector3D incoming, Vector3D outgoing)
         {
-            return DiffuseCoefficient * DiffuseColor / Math.PI;
+            return DiffuseCoefficient * DiffuseColor * Helpers.InversePi;
         }
 
         public override RGBColor Rho(ShadeRecord shadeRecord, Vector3D outgoing)
