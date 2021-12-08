@@ -94,6 +94,8 @@ namespace Viewer
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.CheckFileExists = false;
+            saveFileDialog.CheckPathExists = true;
             saveFileDialog.FileName = World.Name + ".png";
             saveFileDialog.Filter = "PNG Files|*.png";
             if (saveFileDialog.ShowDialog(this) == true)
@@ -111,6 +113,11 @@ namespace Viewer
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void CopyMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetImage((BitmapSource) image.Source);
         }
     }
 }

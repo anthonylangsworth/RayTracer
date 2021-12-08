@@ -6,12 +6,23 @@
         xmlns:local="clr-namespace:Viewer"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Control" Command="Save" />
+        <KeyBinding Key="C" Modifiers="Control" Command="Copy" />
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Save" Executed="SaveMenuItem_Click"/>
+        <CommandBinding Command="Copy" Executed="CopyMenuItem_Click"/>
+    </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top" >
             <MenuItem Header="_File">
-                <MenuItem Header="_Save" Click="SaveMenuItem_Click"/>
+                <MenuItem Header="_Save" Command="Save" InputGestureText="Ctrl+S"/>
                 <Separator />
                 <MenuItem Header="E_xit" Click="ExitMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Copy" Command="Copy" InputGestureText="Ctrl+C"/>
             </MenuItem>
         </Menu>
         <Image x:Name="image" DockPanel.Dock="Bottom" Stretch="None"/>
