@@ -63,7 +63,7 @@ namespace RayTracer.Cameras
                 Ray ray;
                 for (int column = 0; column < world.ViewPlane.HorizontalResolution; column++) // left to right
                 {
-                    RGBColor pixelColor = RGBColor.Black;
+                    RGBColor pixelColor = RGBColors.Black;
                     foreach (Point2D samplePoint in world.ViewPlane.AntiAliasing.GetSamples())
                     {
                         x = world.ViewPlane.PixelSize / Zoom * (column - 0.5 * world.ViewPlane.HorizontalResolution + samplePoint.X);

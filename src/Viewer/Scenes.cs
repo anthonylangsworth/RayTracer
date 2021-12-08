@@ -16,10 +16,10 @@ namespace Viewer
             return new Scene(
                 new[]
                 {
-                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColor.BrightRed), 85)
+                    new Sphere(new Point3D(0, 0, 0), new Material(RGBColors.BrightRed), 85)
                 },
                 new LightSource[0],
-                RGBColor.Black);
+                RGBColors.Black);
         }
 
         public static Scene BuildTwoSpheresAndPlane()
@@ -27,12 +27,12 @@ namespace Viewer
             return new Scene(
                 new GeometricObject[]
                 {
-                    new Sphere(new Point3D(0, -25, 0), new Material(RGBColor.BrightRed), 80),
-                    new Sphere(new Point3D(0, 30, 0), new Material(RGBColor.Yellow), 60),
-                    new Plane(new Point3D(0, 0, 0), new Material(RGBColor.DarkGreen), new Vector3D(0, 1, 1))
+                    new Sphere(new Point3D(0, -25, 0), new Material(RGBColors.BrightRed), 80),
+                    new Sphere(new Point3D(0, 30, 0), new Material(RGBColors.Yellow), 60),
+                    new Plane(new Point3D(0, 0, 0), new Material(RGBColors.DarkGreen), new Vector3D(0, 1, 1))
                 },
                 new LightSource[0],
-                RGBColor.Black);
+                RGBColors.Black);
         }
 
         public static Scene BuildThreeSpheresAbovePlane()
@@ -40,13 +40,13 @@ namespace Viewer
             return new Scene(
                 new GeometricObject[]
                 {
-                    new Sphere(new Point3D(30, 30, 30), new Material(RGBColor.BrightRed), 15),
-                    new Sphere(new Point3D(0, 30, 0), new Material(RGBColor.Yellow), 15),
-                    new Sphere(new Point3D(-30, 30, -30), new Material(RGBColor.BrightBlue), 15),
-                    new Plane(new Point3D(0, 0, 0), new Material(RGBColor.DarkGreen), new Vector3D(0, 1, 0))
+                    new Sphere(new Point3D(30, 30, 30), new Material(RGBColors.BrightRed), 15),
+                    new Sphere(new Point3D(0, 30, 0), new Material(RGBColors.Yellow), 15),
+                    new Sphere(new Point3D(-30, 30, -30), new Material(RGBColors.BrightBlue), 15),
+                    new Plane(new Point3D(0, 0, 0), new Material(RGBColors.DarkGreen), new Vector3D(0, 1, 0))
                 },
                 new LightSource[0],
-                RGBColor.Black);
+                RGBColors.Black);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace RayTracer.Cameras
             {
                 for (int column = 0; column < world.ViewPlane.HorizontalResolution; column++) // left to right
                 {
-                    RGBColor pixelColor = RGBColor.Black;
+                    RGBColor pixelColor = RGBColors.Black;
                     foreach ((Point2D viewPlaneSample, Point2D cameraSample) in world.ViewPlane.AntiAliasing.GetSamples().Zip(Blur.GetSamples()))
                     {
                         Point2D pixelPoint = new Point2D(
