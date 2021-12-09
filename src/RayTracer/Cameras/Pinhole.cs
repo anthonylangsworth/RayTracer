@@ -55,20 +55,22 @@ namespace RayTracer.Cameras
         public override RGBColor[,] Render(World world)
         {
             RGBColor[,] result = new RGBColor[world.ViewPlane.VerticalResolution, world.ViewPlane.HorizontalResolution];
+            double pixelSize = world.ViewPlane.PixelSize / Zoom;
 
             Parallel.For(0, world.ViewPlane.VerticalResolution, row => // up
             {
-                // Declare here because they are thread local
-                double x, y;
-                Ray ray;
                 for (int column = 0; column < world.ViewPlane.HorizontalResolution; column++) // left to right
                 {
                     RGBColor pixelColor = RGBColors.Black;
                     foreach (Point2D samplePoint in world.ViewPlane.AntiAliasing.GetSamples())
                     {
-                        x = world.ViewPlane.PixelSize / Zoom * (column - 0.5 * world.ViewPlane.HorizontalResolution + samplePoint.X);
-                        y = world.ViewPlane.PixelSize / Zoom * (row - 0.5 * world.ViewPlane.VerticalResolution + samplePoint.Y);
-                        ray = new Ray(Eye, GetRayDirection(x, y));
+                        Point2D point = new Point2D(
+                            pixelSize * (column - 0.5 * world.ViewPlane.HorizontalResolution + samplePoint.X),
+                            pixelSize * (row - 0.5 * world.ViewPlane.VerticalResolution + samplePoint.Y)
+                        );
+
+                        Ray ray = new Ray(Eye, GetRayDirection(point));
+
                         pixelColor += world.Tracer.TraceRay(world.Scene, ray, 0);
                     }
                     pixelColor /= world.ViewPlane.AntiAliasing.SamplesPerSet;
@@ -91,7 +93,7 @@ namespace RayTracer.Cameras
         /// </param>
         /// <returns>
         /// </returns>
-        protected internal Vector3D GetRayDirection(double x, double y)
+        protected internal Vector3D GetRayDirection(Point2D point)
         {
             Vector3D direction;
 
@@ -109,8 +111,8 @@ namespace RayTracer.Cameras
             }
             else
             {
-                direction = x * ViewUAxis
-                    + y * ViewVAxis
+                direction = point.X * ViewUAxis
+                    + point.Y * ViewVAxis
                     - ViewPlaneDistance * ViewWAxis;
             }
 

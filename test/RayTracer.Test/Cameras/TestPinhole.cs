@@ -52,7 +52,7 @@ namespace RayTracer.Test.Cameras
         [TestCaseSource(nameof(GetRayDirectionTestData))]
         public void GetRayDirection(double x, double y, Pinhole pinholeCamera, Vector3D expectedResult)
         {
-            Assert.That(pinholeCamera.GetRayDirection(x, y), Is.EqualTo(expectedResult.Normalize()));
+            Assert.That(pinholeCamera.GetRayDirection(new Point2D(x, y)), Is.EqualTo(expectedResult.Normalize()));
         }
 
         public static IEnumerable<TestCaseData> GetRayDirectionTestData()
