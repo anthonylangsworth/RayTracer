@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RayTracer.Reflection
 {
-    public class Lambertian : BRDF
+    public record Lambertian : BidirectionalReflectanceDistributionFunction
     {
         /// <summary>
         /// Create a new <see cref="Lambertian"/> BRDF.

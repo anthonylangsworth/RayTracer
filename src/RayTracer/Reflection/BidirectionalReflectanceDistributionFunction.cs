@@ -11,9 +11,9 @@ namespace RayTracer.Reflection
     /// <summary>
     /// A Bidrectional Reflectance Distribution Function (BRDF).
     /// </summary>
-    public abstract class BRDF
+    public abstract record BidirectionalReflectanceDistributionFunction
     {
-        protected BRDF(SampleGenerator<Point2D> sampleGenerator)
+        protected BidirectionalReflectanceDistributionFunction(SampleGenerator<Point2D> sampleGenerator)
         {
             SampleGenerator = sampleGenerator;
         }
