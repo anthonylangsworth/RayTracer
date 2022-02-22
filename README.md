@@ -30,9 +30,9 @@ I developed this project according to the following principles, listed in order 
 
 ### 1. The User Interface is Code
 
-Developers are the target audience of this project. Therefore, this project is configured directly in code instead of spending development effort on parsing instruction files or a user interface. This keeps the code simple, removing configuration and serialization code and dependencies.
+Developers are the target audience of this project. Therefore, this project is configured directly in code instead of spending development effort on parsing instruction files or a user interface. This keeps the code simple, removing configuration and serialization code and dependencies. A UI or API can easily be added later.
 
-This excludes things traditionally loadex externally or pregenerated like meshes and textures.
+This excludes things traditionally loaded externally or pregenerated like meshes and textures.
 
 ### 2. Good Object Oriented Design and Readability
 
