@@ -11,7 +11,7 @@ Kevin wrote the code from "Ray Tracing from the Ground Up" in C++ because the pr
 The goals of this project are to:
 1. Educate me (and hopefully others) on ray tracing concepts and execution.
 2. Create attractive images using light sources, shading, texturing and meshes.
-3. Try new C# features, like the "record" keyword.
+3. Try new C# features, like the "record" keyword and nullability.
 4. NOT be a commercially viable or competitive product. That would require hardware acceleration and an extensive user interface. Both are potential future goals but not initially.
 
 ## Overview
