@@ -16,7 +16,7 @@ The goals of this project are to:
 
 ## Overview
 
-I developed using C# 10 and Visual Studio 2022 on Windows 11. I have not tested in on earlier versions of Visual Studio or other operating systems.
+I developed this project using C# 10 and Visual Studio 2022 on Windows 11. I have not tested in on earlier versions of Visual Studio or other operating systems.
 
 The ray tracer consists of the following projects:
 1. src/RayTracer: The ray tracing library.
