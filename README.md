@@ -4,7 +4,7 @@
 
 This project implements and explores ray tracing based on Kevin Suffern's 2007 book "Ray Tracing from the Ground Up" published by A K Peters, Ltd ("the book"). Kevin was my graphics lecturer when I attended university. His enthusiasm and patience made the topic come alive. Thank you, Kevin!
 
-Ray tracing is the practice of generating images by mathematically firing light rays at observing their interaction, such as reflection or refraction. Ray tracing produces many of the scenes movies and is finding its way into games, based on the work from companies like NVidia.
+Ray tracing is the practice of generating images by mathematically firing light rays at objects and observing their interaction, such as reflection or refraction. Ray tracing produces many of the scenes movies and is finding its way into games, based on the work from companies like NVidia.
 
 Kevin wrote the code from "Ray Tracing from the Ground Up" in C++ because the processing power of personal computers at the time was limited. C++ emphasized efficiency while providing a native object oriented development environment. I converted the code C# to leverage C#'s relative brevity and the .Net standard library's features like parallelization and platform independence. 
 
